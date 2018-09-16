@@ -24,6 +24,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     //强制所有的第三方包都使用统一版本的support包
     configurations.all {
         resolutionStrategy.eachDependency {
