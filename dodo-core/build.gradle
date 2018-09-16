@@ -1,0 +1,197 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    //强制所有的第三方包都使用统一版本的support包
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            DependencyResolveDetails details ->
+                def requested = details.requested
+                if (requested.group == 'com.android.support') {
+                    if (!requested.name.startsWith('multidex')) {
+                        details.useVersion '27.1.1'
+                    }
+                }
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Android Support包
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:design:27.1.1'
+
+    //字体图标
+    api 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2' // (v4.5)
+//    compile 'com.joanzapata.iconify:android-iconify-entypo:2.2.2' // (v3,2015)
+//    compile 'com.joanzapata.iconify:android-iconify-typicons:2.2.2' // (v2.0.7)
+//    compile 'com.joanzapata.iconify:android-iconify-material:2.2.2' // (v2.0.0)
+//    compile 'com.joanzapata.iconify:android-iconify-material-community:2.2.2' // (v1.4.57)
+//    compile 'com.joanzapata.iconify:android-iconify-meteocons:2.2.2' // (latest)
+//    compile 'com.joanzapata.iconify:android-iconify-weathericons:2.2.2' // (v2.0)
+//    compile 'com.joanzapata.iconify:android-iconify-simplelineicons:2.2.2' // (v1.0.0)
+    api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2' // (v2.0.1)
+
+    //Fragment依赖
+    api 'me.yokeyword:fragmentation:1.3.6'
+    api 'me.yokeyword:fragmentation-swipeback:1.3.6'
+
+    //Activity作用域的EventBus，更安全，可有效避免after onSavenInstanceState()异常
+    //需同时依赖EventBus
+    api 'me.yokeyword:eventbus-activity-scope:1.1.0'
+
+    //EventBus 事件总线
+    api 'org.greenrobot:eventbus:3.1.1'
+
+    //ButterKnife依赖
+    api 'com.jakewharton:butterknife:8.8.1'
+    //需要build当前module,会自动生成id和方法
+    //每个module都需要添加注解处理器
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //网络请求依赖
+    api 'com.squareup.okio:okio:2.0.0'
+    api 'com.squareup.okhttp3:okhttp:3.11.0'
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+
+    //转换器 支持返回String类型 最原始的
+    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+
+    //Loader依赖
+    api 'com.wang.avi:library:2.1.3'
+
+    //Banner依赖
+//    api 'com.bigkoo:convenientbanner:2.1.4'
+    api 'com.youth.banner:banner:1.4.10'
+
+    //Banner依赖 - ViewPager页面变换，3D效果等
+    api 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+
+    //Stetho查看数据库，网络抓包，视图等
+    api 'com.facebook.stetho:stetho:1.5.0'
+    api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    //Json依赖
+    //compile 'com.alibaba:fastjson:1.2.49'
+    //Json依赖 Android版
+    //noinspection GradleDependency
+    api 'com.alibaba:fastjson:1.1.70.android'
+
+    //Log
+    api 'com.orhanobut:logger:2.2.0'
+
+    //数据库
+    api 'org.greenrobot:greendao:3.2.2'
+    api 'org.greenrobot:greendao-generator:3.2.2'
+
+    //RecyclerView依赖
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
+
+    //RecyclerView 分割线
+    api 'com.github.fondesa:recycler-view-divider:2.0.1'
+
+    //图片处理
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'com.github.bumptech.glide:okhttp3-integration:4.8.0@aar'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+    //沉浸式状态栏
+    api('com.github.niorgai:StatusBarCompat:2.1.4', {
+        exclude group: 'com.android.support'
+    })
+    api 'com.jaeger.statusbarutil:library:1.5.1'
+
+    //Google AutoValue
+    implementation "com.google.auto.value:auto-value-annotations:1.6.2"
+    annotationProcessor "com.google.auto.value:auto-value:1.6.2"
+
+    //CircleImageView
+    api 'de.hdodenhof:circleimageview:2.2.0'
+    api 'com.makeramen:roundedimageview:2.3.0'
+
+    //View动画依赖
+    api 'com.daimajia.easing:library:2.0@aar'
+    api 'com.daimajia.androidanimations:library:2.3@aar'
+
+    //TextView渐变特效
+    api 'com.sdsmdg.harjot:rotatingtext:1.0.2'
+
+    //TabLayout库
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    //流式布局
+    api('com.google.android:flexbox:1.0.0', {
+        exclude group: 'com.android.support'
+    })
+
+    //工具包
+    api 'com.blankj:utilcode:1.20.1'
+
+    //动态权限处理
+    compileOnly ('com.github.hotchemi:permissionsdispatcher:3.2.0'){
+        exclude module: 'support-v13'
+    }
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0'
+
+    //下拉列表
+    //    compile('com.github.ganfra:material-spinner:2.0.0') {
+    //        exclude group: 'com.android.support'
+    //    }
+    //    compile 'com.github.arcadefire:nice-spinner:1.3'
+    //    compile project(':material-spinner-1.0.5')
+
+    //dialog
+    api 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
+
+    //java 8 stream支持
+    api 'com.annimon:stream:1.2.1'
+
+    //内存泄漏检测
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+    debugApi 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+
+    //二维码
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation('me.dm7.barcodescanner:zbar:1.9.8') {
+        exclude group: 'com.android.support'
+    }
+
+    //富文本
+    //    compile 'com.zzhoujay.richtext:richtext:3.0.5'
+
+    //VLayout
+    api('com.alibaba.android:vlayout:1.2.8@aar') {
+        transitive = true
+    }
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+}

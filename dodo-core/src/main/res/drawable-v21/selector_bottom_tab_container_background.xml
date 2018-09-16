@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/bottom_tab_ripple_color">
+    <item>
+        <selector>
+            <item android:drawable="@color/bottom_tab_normal_background_color" android:state_selected="true"/>
+            <item android:drawable="@color/bottom_tab_normal_background_color"/>
+        </selector>
+    </item>
+</ripple>

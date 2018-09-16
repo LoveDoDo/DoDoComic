@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray_50">#80CCCCCC</color>
+
+    <color name="green">#ff00ff00</color>
+    <color name="red">#ffff0000</color>
+    <color name="white">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="dodo_blue">#2ca9e1</color>
+
+    <color name="default_text_color">#f37b23</color>
+    <color name="default_font_color">#333333</color>
+    <color name="font_header_color">#8a8a8a</color>
+    <color name="default_gray_color">#ededed</color>
+    <color name="default_line_color">#d7d7d7</color>
+
+    <!--底部导航栏 Bottom Tab--><!--默认-->
+    <color name="bottom_tab_normal_text_color">#929292</color>
+    <color name="bottom_tab_selected_text_color">#ff8800</color>
+    <color name="bottom_tab_normal_icon_color">#929292</color>
+    <color name="bottom_tab_selected_icon_color">#ff8800</color>
+    <color name="bottom_tab_normal_background_color">#ffffff</color>
+    <color name="bottom_tab_selected_background_color">#f2f2f2</color>
+    <color name="bottom_tab_ripple_color">?attr/colorControlHighlight</color>
+    <color name="bottom_tab_divider_color">@color/gray_50</color>
+
+    <!--app主背景色-->
+    <color name="app_background">#2ca9e1</color>
+
+    <!--qihooVideo主背景色-->
+    <color name="qihoo_color">#1db69a</color>
+
+    <!--bilibili主背景色-->
+    <color name="bilibili_color">#f25d8e</color>
+
+    <!--Fragment默认背景色-->
+    <color name="default_fragment_background">#ececec</color>
+
+</resources>

@@ -1,0 +1,33 @@
+buildscript {
+    
+    repositories {
+        jcenter()
+        mavenCentral()
+        //google访问慢，所以放到最后
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        //noinspection GradleDependency 此行注释可消除ButterKnife不是最新版的警告
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        //BaseRecyclerViewAdapterHelper
+        maven { url "https://jitpack.io" }
+        //Glide
+        maven { url 'https://maven.google.com' }
+        //google访问慢，所以放到最后
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
