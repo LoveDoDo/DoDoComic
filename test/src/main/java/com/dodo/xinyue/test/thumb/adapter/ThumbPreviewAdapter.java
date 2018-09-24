@@ -8,12 +8,13 @@ import android.support.v7.widget.AppCompatImageView;
 
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.DataConverter;
-import com.dodo.xinyue.core.ui.recycler.ItemType;
 import com.dodo.xinyue.core.ui.recycler.ItemTypeBuilder;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulHolder;
 import com.dodo.xinyue.test.R;
+import com.dodo.xinyue.test.thumb.ThumbPreviewDelegate;
+import com.dodo.xinyue.test.thumb.bean.ThumbItemType;
 import com.dodo.xinyue.test.thumb.bean.ThumbPreviewBean;
 
 import java.util.LinkedHashMap;
@@ -31,26 +32,26 @@ public class ThumbPreviewAdapter extends MulAdapter {
         super(data, delegate);
     }
 
-    public static ThumbPreviewAdapter create(List<MulEntity> data, DoDoDelegate delegate) {
+    public static ThumbPreviewAdapter create(List<MulEntity> data, ThumbPreviewDelegate delegate) {
         return new ThumbPreviewAdapter(data, delegate);
     }
 
-    public static ThumbPreviewAdapter create(DataConverter converter, DoDoDelegate delegate) {
+    public static ThumbPreviewAdapter create(DataConverter converter, ThumbPreviewDelegate delegate) {
         return new ThumbPreviewAdapter(converter.convert(), delegate);
     }
 
     @Override
     public LinkedHashMap<Integer, Integer> addItemTypes(ItemTypeBuilder builder) {
         return builder
-                .addItemType(ItemType.IMAGE, R.layout.item_thumb_preview)
-                .addItemType(ItemType.TEXT, R.layout.item_error)
+                .addItemType(ThumbItemType.THUMB_PREVIEW, R.layout.item_thumb_preview)
+                .addItemType(ThumbItemType.LOAD_DATA_ERROR, R.layout.item_thumb_preview_error)
                 .build();
     }
 
     @Override
     public void handle(MulHolder holder, MulEntity entity) {
         switch (holder.getItemViewType()) {
-            case ItemType.IMAGE:
+            case ThumbItemType.THUMB_PREVIEW:
                 setThumbPreview(holder, entity);
                 break;
             default:
@@ -60,11 +61,15 @@ public class ThumbPreviewAdapter extends MulAdapter {
 
     private void setThumbPreview(MulHolder holder, MulEntity entity) {
         final ThumbPreviewBean bean = entity.getBean();
-        final BitmapRegionDecoder decoder = bean.getDecoder();
-        final BitmapFactory.Options options = bean.getOptions();
+        final int imgIndex = bean.getImgIndex();
         final Rect rect = bean.getRect();
+
+        BitmapRegionDecoder decoder = ((ThumbPreviewDelegate) DELEGATE).getBitmapRegionDecoder(imgIndex);
+        BitmapFactory.Options options = ((ThumbPreviewDelegate) DELEGATE).getBitmapOptions();
+
         final Bitmap bitmap = decoder.decodeRegion(rect, options);
         AppCompatImageView imageView = holder.getView(R.id.iv);
         imageView.setImageBitmap(bitmap);
+
     }
 }

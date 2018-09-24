@@ -1,7 +1,5 @@
 package com.dodo.xinyue.test.thumb.bean;
 
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
 
 /**
@@ -12,27 +10,18 @@ import android.graphics.Rect;
  */
 public class ThumbPreviewBean {
 
-    private BitmapRegionDecoder decoder = null;
-    private BitmapFactory.Options options = null;
-    private Rect rect = null;
+    private int imgIndex = 0;//大图索引
+    private Rect rect = null;//小图矩形区域
 
     public ThumbPreviewBean() {
     }
 
-    public BitmapRegionDecoder getDecoder() {
-        return decoder;
+    public int getImgIndex() {
+        return imgIndex;
     }
 
-    public void setDecoder(BitmapRegionDecoder decoder) {
-        this.decoder = decoder;
-    }
-
-    public BitmapFactory.Options getOptions() {
-        return options;
-    }
-
-    public void setOptions(BitmapFactory.Options options) {
-        this.options = options;
+    public void setImgIndex(int imgIndex) {
+        this.imgIndex = imgIndex;
     }
 
     public Rect getRect() {
@@ -43,3 +32,4 @@ public class ThumbPreviewBean {
         this.rect = rect;
     }
 }
+

@@ -12,7 +12,7 @@
         android:persistent="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:theme="@style/AppTheme"
+        android:theme="@style/DoDoAppTheme"
         tools:replace="android:allowBackup,android:supportsRtl"><!--解决清单文件合并冲突-->
         <activity
             android:name=".MainActivity"

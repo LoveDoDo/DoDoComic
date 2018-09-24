@@ -1,6 +1,7 @@
 package com.dodo.xinyue.core.net.callback;
 
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import com.dodo.xinyue.core.app.ConfigKeys;
 import com.dodo.xinyue.core.app.DoDo;
@@ -40,27 +41,8 @@ public final class RequestCallbacks implements Callback<String> {
     }
 
     @Override
-    public void onResponse(Call<String> call, Response<String> response) {
+    public void onResponse(@NonNull Call<String> call, Response<String> response) {
         if (response.isSuccessful()) {
-//            if (call.isExecuted()) {
-//                final String json = response.body();
-//                if (!TextUtils.isEmpty(json)) {
-//                    final JSONObject data = JSON.parseObject(json);
-//                    if (data != null) {
-//                        final boolean flag = data.getBoolean("flag");
-//                        if (flag) {
-//                            if (SUCCESS != null) {
-//                                SUCCESS.onSuccess(response.body());
-//                            }
-//                        } else {
-//                            final String errorMessage = data.getString("errorMessage");
-//                            if (!TextUtils.isEmpty(errorMessage)) {
-//                                ToastUtils.showShort(errorMessage);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             if (call.isExecuted()) {
                 if (SUCCESS != null) {
                     SUCCESS.onSuccess(response.body());
@@ -74,19 +56,18 @@ public final class RequestCallbacks implements Callback<String> {
 
         final long delayed = DoDo.getConfiguration(ConfigKeys.LOADER_DELAYED);
 
+        if (delayed <= 0) {
+            return;
+        }
+
         //隐藏进度条
         if (LOADER_STYLE != null) {
-            HANDLER.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DoDoLoader.stopLoading();
-                }
-            }, delayed);
+            HANDLER.postDelayed(DoDoLoader::stopLoading, delayed);
         }
     }
 
     @Override
-    public void onFailure(Call<String> call, Throwable t) {
+    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
         if (FAILURE != null) {
             FAILURE.onFailure();
         }

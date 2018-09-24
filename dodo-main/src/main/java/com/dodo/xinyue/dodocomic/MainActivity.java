@@ -1,8 +1,16 @@
 package com.dodo.xinyue.dodocomic;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.dodo.xinyue.core.activitys.ProxyActivity;
+import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
-import com.dodo.xinyue.test.thumb.ThumbPreviewDelegate;
+import com.dodo.xinyue.dodocomic.launch.BeforeLaunchDelegate;
+
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * 全局唯一Activity
@@ -13,7 +21,27 @@ import com.dodo.xinyue.test.thumb.ThumbPreviewDelegate;
 public class MainActivity extends ProxyActivity {
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //全局配置
+        DoDo.getConfigurator().withActivity(this);
+        //透明状态栏
+        StatusBarCompat.translucentStatusBar(this, true);
+        //设置delegate默认背景色
+        getSupportDelegate().setDefaultFragmentBackground(R.color.default_fragment_background);
+    }
+
+    @Override
     public DoDoDelegate setRootDelegate() {
-        return new ThumbPreviewDelegate();
+//        final TestBean bean = new TestBean();
+//        bean.setTvQipuId("1088268004");
+//        bean.setVid("db15bf19135042a089dc1adfecc89cef");
+//        return ThumbPreviewDelegate.create(bean);
+        return new BeforeLaunchDelegate();
+    }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
     }
 }

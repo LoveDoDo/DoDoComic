@@ -3,6 +3,8 @@ package com.dodo.xinyue.dodocomic;
 import android.app.Application;
 
 import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.test.interceptor.IQiyiInterceptor;
+import com.dodo.xinyue.test.interceptor.TestInterceptor;
 import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.squareup.leakcanary.LeakCanary;
@@ -31,7 +33,10 @@ public class MainApp extends Application {
 //                .withIcon(new FontSignInModule())//登录页
 //                .withIcon(new FontGoodsDetailModule())//商品详情页
                 .withLoaderDelayed(1000)
+                .withNativeApiHost("http://127.0.0.1/")
                 .withWebApiHost("http://192.168.75.101:5555/DoDoComic/")//以"/"结尾
+                .withInterceptor(new TestInterceptor())
+                .withInterceptor(new IQiyiInterceptor())
 //                .withInterceptor(new DebugInterceptor("intercept", R.raw.test))
 //                .withInterceptor(new QihooInterceptor())
 //                .withInterceptor(new EcInterceptor())

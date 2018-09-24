@@ -1,11 +1,26 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Base application theme. --><!--Theme报红问题:先将全局support包统一设置成27.0.1,然后再改回来27.1.1-->
+    <style name="DoDoAppTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="DoDoAppTheme" parent="DoDoAppTheme.Base">
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:windowIsTranslucent">true</item><!--窗体背景透明 解决打开app时出现的白屏问题--><!--找了几个小时。。-->
+    </style>
+
+    <!--备用-->
+    <style name="NoTitleFullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 </resources>

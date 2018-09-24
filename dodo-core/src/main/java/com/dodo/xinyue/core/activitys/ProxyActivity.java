@@ -1,5 +1,6 @@
 package com.dodo.xinyue.core.activitys;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,6 +49,7 @@ public abstract class ProxyActivity extends AppCompatActivity
      * 设置Activity布局 &加载根delegate
      */
     private void initContainer(@Nullable Bundle savedInstanceState) {
+        @SuppressLint("RestrictedApi")
         final ContentFrameLayout container = new ContentFrameLayout(this);
         container.setId(R.id.delegate_container);
         //装载根Activity视图
@@ -56,7 +58,7 @@ public abstract class ProxyActivity extends AppCompatActivity
         //第一次加载
         if (savedInstanceState == null) {
             //加载根delegate
-            DELEGATE.loadRootFragment(R.id.delegate_container, setRootDelegate());
+            DELEGATE.loadRootFragment(R.id.delegate_container, setRootDelegate(),false,true);
         }
     }
 

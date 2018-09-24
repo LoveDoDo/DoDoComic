@@ -1,0 +1,41 @@
+{
+  "status": 200,
+  "data": {
+    "groupHeader": {
+      "banner": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515585471551&di=5c47b9501e9bbd6ec8cc8a7fbe061e6a&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F011c635849568ca801219c772aa1a0.png",
+      "rule": "组团拉够50人，即可获取免单资格，一个淘宝id，限购一份，不能用小号，不能用相同地址。有兴趣的来抱团。不定时发布免单商品。\n方式：到商品连接正常购买，收到货，联系店主全额返现。给带字好评和晒图。有兴趣的请跟帖，满50人即发布商品连接。"
+    },
+    "groupList": [
+      {
+        "id": 1,
+        "title": "良品铺子靖江猪肉脯特产肉类零食小吃猪肉干肉脯麻辣味食品小包装",
+        "image": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/24768522/TB2c2MGj3vD8KJjSsplXXaIEFXa_!!0-saturn_solar.jpg_250x250.jpg_.webp",
+        "price": "17.90",
+        "oldPrice": "20.90",
+        "currentGroup": 5,
+        "totalGroup": 18,
+        "url": "1"
+      },
+      {
+        "id": 2,
+        "title": "【3盒起购】DANISA/皇冠印尼进口曲奇饼干163g/盒热销零食",
+        "image": "https://g-search1.alicdn.com/img/bao/uploaded/i4/i4/725677994/TB1Ax6uh0fJ8KJjy0FeXXXKEXXa_!!0-item_pic.jpg_250x250.jpg_.webp",
+        "price": "11.90",
+        "oldPrice": "25.89",
+        "currentGroup": 12,
+        "totalGroup": 114,
+        "url": "2"
+      },
+      {
+        "id": 3,
+        "title": "三只松鼠 小贱脆薯100g休闲零食膨化食品薯片番茄味",
+        "image": "https://g-search2.alicdn.com/img/bao/uploaded/i4/i2/725677994/TB19yRejMDD8KJjy0FdXXcjvXXa_!!0-item_pic.jpg_250x250.jpg_.webp",
+        "price": "18.90",
+        "oldPrice": "32.10",
+        "currentGroup": 9,
+        "totalGroup": 256,
+        "url": "3"
+      }
+    ]
+  }
+}
