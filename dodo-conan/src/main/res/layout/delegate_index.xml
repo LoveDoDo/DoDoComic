@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_global_background" />
 
-    <android.support.v7.widget.Toolbar
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <include layout="@layout/layout_transparent_status_bar" />
+
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="50dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
 
-            <TextView
-                android:id="@+id/tvIndex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="主页"
-                android:textColor="@color/white"
-                android:textSize="23sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvIndex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="王新悦真是个小可爱呀"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
-    </android.support.v7.widget.Toolbar>
+            </RelativeLayout>
 
-</RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </LinearLayout>
+
+</FrameLayout>

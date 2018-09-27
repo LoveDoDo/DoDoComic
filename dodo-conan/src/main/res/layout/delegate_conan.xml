@@ -1,28 +1,49 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<include layout="@layout/layout_global_background" />
-
-<android.support.v7.widget.Toolbar
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <include layout="@layout/layout_global_background" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:orientation="vertical">
 
+        <include layout="@layout/layout_transparent_status_bar" />
 
-        <TextView
-            android:text="conan"
-            android:id="@+id/tvConan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="宝贝儿怎么这么好看"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="❤"
+                    android:textColor="@color/red"
+                    android:textSize="18sp" />
 
-</android.support.v7.widget.Toolbar>
+            </LinearLayout>
 
-</RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </LinearLayout>
+
+</FrameLayout>
