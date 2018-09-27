@@ -35,7 +35,7 @@ public class BeforeLaunchDelegate extends DoDoDelegate {
         //延时2秒启动SplashDelegate
         DoDo.getHandler().postDelayed(() -> {
             getSupportDelegate().startWithPop(new SplashDelegate());
-        }, 2000);
+        }, 1314);
     }
 
     /**

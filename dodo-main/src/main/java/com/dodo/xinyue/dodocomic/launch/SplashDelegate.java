@@ -65,7 +65,6 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
         super.onEnterAnimationEnd(savedInstanceState);
 
         getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
-//        getSupportDelegate().getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         YoYo.with(Techniques.FadeInRight)//渐显+从右至左移入
                 .interpolate(new OvershootInterpolator())//超出边界弹回动画

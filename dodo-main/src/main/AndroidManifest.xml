@@ -6,10 +6,9 @@
     <!--
         android:largeHeap="true"//大内存
         android:persistent="true"//常驻内存
-        android:roundIcon="@mipmap/ic_launcher_round"
     -->
     <!--Android8.0强制使用圆形图标,需要进行适配-->
-    <!--手机缓存图标导致应用图标不更新的解决办法：更换手机主题(间接清楚图标缓存)-->
+    <!--手机缓存图标导致应用图标不更新的解决办法：更换手机主题(间接清除图标缓存)-->
     <application
         android:name=".MainApp"
         android:allowBackup="false"
@@ -21,6 +20,7 @@
         tools:replace="android:allowBackup,android:supportsRtl"><!--解决清单文件合并冲突-->
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"><!--adjustResize|stateHidden--><!--adjustPan-->
             <intent-filter>
