@@ -1,4 +1,4 @@
-package com.dodo.xinyue.dodocomic;
+package com.dodo.xinyue.dodocomic.test;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.log.DoDoLogger;
+import com.dodo.xinyue.dodocomic.R;
 
 import butterknife.OnClick;
 

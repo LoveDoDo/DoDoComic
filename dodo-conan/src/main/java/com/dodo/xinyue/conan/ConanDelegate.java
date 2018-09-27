@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 
 import butterknife.BindView;
@@ -38,6 +37,6 @@ public class ConanDelegate extends DoDoDelegate {
 
     @OnClick(R2.id.tvConan)
     void onConanClicked() {
-        ToastUtils.showLong("conan");
+        pop();
     }
 }

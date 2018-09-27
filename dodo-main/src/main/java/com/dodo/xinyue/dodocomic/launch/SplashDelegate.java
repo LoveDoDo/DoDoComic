@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.dodo.xinyue.conan.ConanDelegate;
+import com.dodo.xinyue.conan.IndexDelegate;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.timer.BaseTimerTask;
@@ -46,11 +46,8 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
 
     @OnClick(R.id.tvTimeSkip)
     void onTimeSkipClicked() {
-        if (mTimer != null) {
-            mTimer.cancel();
-            mTimer = null;
-            getSupportDelegate().startWithPop(ConanDelegate.create());
-        }
+        stopTimer();
+        enterHome();
     }
 
     @Override
@@ -66,6 +63,10 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
+
+        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
+//        getSupportDelegate().getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+
         YoYo.with(Techniques.FadeInRight)//渐显+从右至左移入
                 .interpolate(new OvershootInterpolator())//超出边界弹回动画
                 .duration(1000)
@@ -108,11 +109,8 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
                 mCountDownMills--;
                 if (mCountDownMills < 0) {
                     //取消定时器，结束倒计时
-                    if (mTimer != null) {
-                        mTimer.cancel();
-                        mTimer = null;
-                        getSupportDelegate().startWithPop(ConanDelegate.create());
-                    }
+                    stopTimer();
+                    enterHome();
                 }
             }
         });
@@ -136,15 +134,32 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-        fragmentAnimator.setEnter(R.anim.fade_in_splash);
-        fragmentAnimator.setPopExit(R.anim.exit_to_left_splash);
+        fragmentAnimator.setEnter(R.anim.splash_enter);
+        fragmentAnimator.setPopExit(R.anim.splash_pop_exit_2);
         return fragmentAnimator;
 //        return new FragmentAnimator(
-//                R.anim.fade_in_splash,//渐显动画
-//                R.anim.exit_to_left_splash,//从中间向左边退出效果
+//                R.anim.splash_enter,//渐显动画
+//                R.anim.splash_pop_exit,//从中间向左边退出效果
 //                0,
 //                0
 //        );
+    }
+
+    /**
+     * 进入首页
+     */
+    private void enterHome() {
+        getSupportDelegate().startWithPop(IndexDelegate.create());
+    }
+
+    /**
+     * 取消定时器，结束倒计时
+     */
+    private void stopTimer() {
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
     }
 
     /**

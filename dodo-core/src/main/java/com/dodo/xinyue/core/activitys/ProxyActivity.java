@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ContentFrameLayout;
 
 import com.dodo.xinyue.core.R;
+import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.toast.ToastUtil;
 
@@ -69,9 +70,19 @@ public abstract class ProxyActivity extends AppCompatActivity
 
         ToastUtil.destroy();
 
+        //释放Configurator持有的Activity等引用
+        DoDo.getConfigurator().destroy();
+//        DoDoLogger.d("销毁");
+
         //释放资源
         System.gc();//垃圾回收（回收时间不确定）
         System.runFinalization();//对已经失去引用的对象强制调用该对象的finalize方法
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+//        DoDoLogger.d("回收");
     }
 
     @Override

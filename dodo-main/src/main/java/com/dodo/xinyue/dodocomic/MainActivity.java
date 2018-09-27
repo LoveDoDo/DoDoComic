@@ -8,7 +8,6 @@ import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.dodocomic.launch.BeforeLaunchDelegate;
 
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import qiu.niorgai.StatusBarCompat;
 
@@ -42,6 +41,11 @@ public class MainActivity extends ProxyActivity {
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
-        return new DefaultHorizontalAnimator();
+        FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
+        fragmentAnimator.setEnter(R.anim.global_enter);
+        fragmentAnimator.setExit(R.anim.global_exit);
+        fragmentAnimator.setPopEnter(R.anim.global_pop_enter);
+        fragmentAnimator.setPopExit(R.anim.global_pop_exit);
+        return fragmentAnimator;
     }
 }

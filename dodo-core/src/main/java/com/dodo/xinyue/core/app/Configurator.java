@@ -218,4 +218,17 @@ public final class Configurator {
         return (T) value;
     }
 
+    /**
+     * 释放持有的引用，方便虚拟机回收内存
+     */
+    public final void destroy() {
+        DODO_CONFIGS.clear();
+
+        HANDLER.removeCallbacksAndMessages(null);
+
+        ICONS.clear();
+
+        INTERCEPTORS.clear();
+    }
+
 }

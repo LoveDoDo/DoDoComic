@@ -1,1 +1,1 @@
-include ':dodo-main', ':dodo-core', ':dodo-conan', ':dodo-comic', ':test'
+include ':dodo-main', ':dodo-core', ':dodo-conan', ':dodo-comic', ':test', ':dodo-ui'

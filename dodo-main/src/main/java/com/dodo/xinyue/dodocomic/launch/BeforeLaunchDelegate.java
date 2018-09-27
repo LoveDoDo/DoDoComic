@@ -44,10 +44,9 @@ public class BeforeLaunchDelegate extends DoDoDelegate {
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-        fragmentAnimator.setEnter(R.anim.fade_in_splash);
-        fragmentAnimator.setPopExit(0);
+        fragmentAnimator.setEnter(R.anim.before_launch_enter);
+        fragmentAnimator.setPopExit(R.anim.before_launch_pop_exit);
         return fragmentAnimator;
-//        return new DefaultNoAnimator();
     }
 
     /**

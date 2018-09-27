@@ -6,6 +6,7 @@
     <color name="red">#ffff0000</color>
     <color name="white">#ffffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="black" >#000000</color>
 
     <color name="dodo_blue">#2ca9e1</color>
 
