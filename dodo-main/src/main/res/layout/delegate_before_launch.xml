@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="wrap_content"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:src="@drawable/logo_before_launch"
         android:layout_gravity="center_horizontal|bottom"

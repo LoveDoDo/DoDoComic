@@ -5,10 +5,18 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivLeft"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_bg_splash" />
+        android:background="@drawable/clip_splash_backgroung_left"
+        android:scaleType="centerCrop" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivRight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/clip_splash_background_right"
+        android:scaleType="centerCrop" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/ivConan"

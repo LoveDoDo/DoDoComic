@@ -36,6 +36,6 @@
     <color name="bilibili_color">#f25d8e</color>
 
     <!--Fragment默认背景色-->
-    <color name="default_fragment_background">#ffffff</color><!--ececec-->
+    <color name="default_fragment_background">#00ffffff</color><!--ececec-->
 
 </resources>

@@ -1,6 +1,7 @@
 package com.dodo.xinyue.dodocomic.launch;
 
 import android.graphics.Color;
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
@@ -8,6 +9,8 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
@@ -19,6 +22,9 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.timer.BaseTimerTask;
 import com.dodo.xinyue.core.util.timer.ITimerListener;
 import com.dodo.xinyue.dodocomic.R;
+import com.dodo.xinyue.dodocomic.anim.SlideOutLeftSplashBackground;
+import com.dodo.xinyue.dodocomic.anim.SlideOutRightSplashBackground;
+import com.dodo.xinyue.dodocomic.anim.ZoomInSplashConan;
 
 import java.util.Timer;
 
@@ -43,6 +49,10 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
     AppCompatImageView mIvConan = null;
     @BindView(R.id.tvTimeSkip)
     TextView mTvTimeSkip = null;
+    @BindView(R.id.ivLeft)
+    AppCompatImageView mIvLeft = null;
+    @BindView(R.id.ivRight)
+    AppCompatImageView mIvRight = null;
 
     @OnClick(R.id.tvTimeSkip)
     void onTimeSkipClicked() {
@@ -57,6 +67,12 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        //裁剪左半边
+        ClipDrawable leftClip = (ClipDrawable) mIvLeft.getBackground();
+        leftClip.setLevel((int) (10000 * 0.5));//0.5=一半
+        //裁剪右半边
+        ClipDrawable rightClip = (ClipDrawable) mIvRight.getBackground();
+        rightClip.setLevel((int) (10000 * 0.5));//0.5=一半
 
     }
 
@@ -64,11 +80,12 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
 
+        //设置窗口背景为黑色,为了首页的缩放动画
         getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
 
         YoYo.with(Techniques.FadeInRight)//渐显+从右至左移入
                 .interpolate(new OvershootInterpolator())//超出边界弹回动画
-                .duration(1000)
+                .duration(888)
                 .onEnd(animator -> initTimer())
                 .playOn(mIvConan);
     }
@@ -124,7 +141,7 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
      * popEnter: 下一个Fragment出栈时，该Fragment从hide状态变为show状态时的动画
      * popExit：下一个Fragment进栈时，该Fragment从show变为hide状态时的动画
      * <p>
-     *     A -> B(当前Fragment) -> C
+     * A -> B(当前Fragment) -> C
      * enter:    A -> B(进栈) B的进栈动画
      * exit:     A <- B(pop) B的出栈动画
      * popEnter: B <- C(pop) B的伪进栈动画(重回栈顶)
@@ -134,21 +151,34 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
         fragmentAnimator.setEnter(R.anim.splash_enter);
-        fragmentAnimator.setPopExit(R.anim.splash_pop_exit_2);
+        fragmentAnimator.setPopExit(R.anim.splash_pop_exit_4);
         return fragmentAnimator;
-//        return new FragmentAnimator(
-//                R.anim.splash_enter,//渐显动画
-//                R.anim.splash_pop_exit,//从中间向左边退出效果
-//                0,
-//                0
-//        );
     }
 
     /**
      * 进入首页
      */
     private void enterHome() {
-        getSupportDelegate().startWithPop(IndexDelegate.create());
+        YoYo.with(new ZoomInSplashConan())//放大
+                .interpolate(new AnticipateInterpolator())//先回退一小步，然后再加速前进
+                .duration(888)
+                .onEnd(animator -> {
+                    YoYo.with(new SlideOutLeftSplashBackground())//向左滑出
+                            .interpolate(new AccelerateInterpolator())//加速
+                            .duration(1314)
+                            .delay(30)//防止卡顿
+                            .playOn(mIvLeft);
+                    YoYo.with(new SlideOutRightSplashBackground())//向右滑出
+                            .interpolate(new AccelerateInterpolator())//加速
+                            .duration(1314)
+                            .delay(30)//防止卡顿
+                            .playOn(mIvRight);
+                    //打开IndexDelegate
+                    getSupportDelegate().startWithPop(IndexDelegate.create());
+                })
+                .playOn(mIvConan);
+
+
     }
 
     /**
@@ -159,6 +189,7 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
             mTimer.cancel();
             mTimer = null;
         }
+        mTvTimeSkip.setVisibility(View.GONE);
     }
 
     /**

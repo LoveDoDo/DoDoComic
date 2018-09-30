@@ -3,4 +3,3 @@
     <background android:drawable="@color/ic_launcher_background"/>
     <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
 </adaptive-icon>
-<!--编辑图标使用内置编辑器,打开快捷键 Ctrl+Shift+A-->
