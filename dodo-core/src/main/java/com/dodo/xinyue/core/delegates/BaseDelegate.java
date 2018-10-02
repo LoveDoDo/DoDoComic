@@ -38,8 +38,6 @@ public abstract class BaseDelegate extends Fragment
     @SuppressWarnings("SpellCheckingInspection")
     private Unbinder mUnbinder = null;
 
-    private boolean mAllowBack = false;//防止动画未结束就按返回键
-
     public abstract Object setLayout();
 
     public abstract void onBindView(@Nullable Bundle savedInstanceState, View rootView);
@@ -85,12 +83,7 @@ public abstract class BaseDelegate extends Fragment
             //解除视图绑定
             mUnbinder.unbind();
         }
-
-        //检测内存泄漏
-//        final RefWatcher refWatcher = DoDo.getConfiguration(ConfigKeys.REF_WATCHER);
-//        refWatcher.watch(this);
     }
-
 
     public <T extends View> T $(@IdRes int viewId) {
         if (mRootView == null) {
@@ -176,7 +169,6 @@ public abstract class BaseDelegate extends Fragment
 
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
-        mAllowBack = true;//响应返回键
         DELEGATE.onEnterAnimationEnd(savedInstanceState);
     }
 
@@ -217,9 +209,6 @@ public abstract class BaseDelegate extends Fragment
 
     @Override
     public boolean onBackPressedSupport() {
-        if (!mAllowBack) {
-            return true;//屏蔽返回键
-        }
         return DELEGATE.onBackPressedSupport();
     }
 

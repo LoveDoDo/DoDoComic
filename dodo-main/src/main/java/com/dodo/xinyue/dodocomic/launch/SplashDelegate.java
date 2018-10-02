@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.dodo.xinyue.conan.IndexDelegate;
+import com.dodo.xinyue.conan.main.ConanBottomDelegate;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.timer.BaseTimerTask;
@@ -132,21 +132,6 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
         });
     }
 
-    /**
-     * 全部是设置当前Fragment的动画,和之前之后的Fragment无关
-     * <p>
-     * 参数解释：
-     * enter: Fragment的进栈动画
-     * exit: Fragment的出栈动画(pop时的)
-     * popEnter: 下一个Fragment出栈时，该Fragment从hide状态变为show状态时的动画
-     * popExit：下一个Fragment进栈时，该Fragment从show变为hide状态时的动画
-     * <p>
-     * A -> B(当前Fragment) -> C
-     * enter:    A -> B(进栈) B的进栈动画
-     * exit:     A <- B(pop) B的出栈动画
-     * popEnter: B <- C(pop) B的伪进栈动画(重回栈顶)
-     * popExit： B -> C(进栈) B的伪出栈动画(不再是栈顶)
-     */
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
@@ -164,17 +149,17 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
                 .duration(888)
                 .onEnd(animator -> {
                     YoYo.with(new SlideOutLeftSplashBackground())//向左滑出
-                            .interpolate(new AccelerateInterpolator())//加速
+                            .interpolate(new AccelerateInterpolator())//先慢后快
                             .duration(1314)
-                            .delay(30)//防止卡顿
+                            .delay(100)//为了与进栈动画同步 防止卡顿
                             .playOn(mIvLeft);
                     YoYo.with(new SlideOutRightSplashBackground())//向右滑出
-                            .interpolate(new AccelerateInterpolator())//加速
+                            .interpolate(new AccelerateInterpolator())//先慢后快
                             .duration(1314)
-                            .delay(30)//防止卡顿
+                            .delay(100)//为了与进栈动画同步 防止卡顿
                             .playOn(mIvRight);
                     //打开IndexDelegate
-                    getSupportDelegate().startWithPop(IndexDelegate.create());
+                    getSupportDelegate().startWithPop(new ConanBottomDelegate());
                 })
                 .playOn(mIvConan);
 

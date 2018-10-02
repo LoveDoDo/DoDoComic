@@ -1,10 +1,10 @@
 package com.dodo.xinyue.core.delegates.bottom.builder;
 
-import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 
 import com.dodo.xinyue.core.R;
+import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.bottom.bean.BaseBottomTabBean;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
 
@@ -17,14 +17,12 @@ import com.dodo.xinyue.core.util.dimen.DimenUtil;
 public final class BottomTabBeanBuilder {
 
     private BaseBottomTabBean mTabBean = null;
-    private Context mContext = null;
 
-    private BottomTabBeanBuilder(Context context) {
-        this.mContext = context;
+    private BottomTabBeanBuilder() {
     }
 
-    public static BottomTabBeanBuilder builder(Context context) {
-        return new BottomTabBeanBuilder(context);
+    public static BottomTabBeanBuilder builder() {
+        return new BottomTabBeanBuilder();
     }
 
     public final BottomTabBeanBuilder setTabBean(BaseBottomTabBean bean) {
@@ -33,22 +31,22 @@ public final class BottomTabBeanBuilder {
     }
 
     public final BottomTabBeanBuilder setTextSelector(@ColorRes int textSelectorId) {
-        mTabBean.setTextSelector(mContext, textSelectorId);
+        mTabBean.setTextSelector(textSelectorId);
         return this;
     }
 
     public final BottomTabBeanBuilder setIconSelector(@ColorRes int iconSelectorId) {
-        mTabBean.setIconSelector(mContext, iconSelectorId);
+        mTabBean.setIconSelector(iconSelectorId);
         return this;
     }
 
     public final BottomTabBeanBuilder setImageSelector(@DrawableRes int imageSelectorId) {
-        mTabBean.setImageSelector(mContext, imageSelectorId);
+        mTabBean.setImageSelector(imageSelectorId);
         return this;
     }
 
     public final BottomTabBeanBuilder setContainerSelector(@DrawableRes int containerSelectorId) {
-        mTabBean.setContainerSelector(mContext, containerSelectorId);
+        mTabBean.setContainerSelector(containerSelectorId);
         return this;
     }
 
@@ -64,20 +62,20 @@ public final class BottomTabBeanBuilder {
 
     public final BaseBottomTabBean build() {
         if (mTabBean.getContainerSelector() == null) {
-            mTabBean.setContainerSelector(mContext, R.drawable.selector_bottom_tab_container_background);
+            mTabBean.setContainerSelector(R.drawable.selector_bottom_tab_container_background);
         }
         if (mTabBean.getTextSelector() == null) {
-            mTabBean.setTextSelector(mContext, R.color.selector_bottom_tab_text_color);
+            mTabBean.setTextSelector(R.color.selector_bottom_tab_text_color);
         }
         if (mTabBean.getIconSelector() == null) {
-            mTabBean.setIconSelector(mContext, R.color.selector_bottom_tab_icon_color);
+            mTabBean.setIconSelector(R.color.selector_bottom_tab_icon_color);
         }
         if (mTabBean.getTextSize() == 0) {
             //.getResources().getDimension() 返回的是px 需要转换为sp
-            mTabBean.setTextSize(DimenUtil.px2sp(mContext.getResources().getDimension(R.dimen.bottom_tab_text_size)));
+            mTabBean.setTextSize(DimenUtil.px2sp(DoDo.getAppContext().getResources().getDimension(R.dimen.bottom_tab_text_size)));
         }
         if (mTabBean.getIconSize() == 0) {
-            mTabBean.setIconSize(DimenUtil.px2sp(mContext.getResources().getDimension(R.dimen.bottom_tab_icon_size)));
+            mTabBean.setIconSize(DimenUtil.px2sp(DoDo.getAppContext().getResources().getDimension(R.dimen.bottom_tab_icon_size)));
         }
         return mTabBean;
     }

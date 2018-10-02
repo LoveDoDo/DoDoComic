@@ -1,23 +1,28 @@
 package com.dodo.xinyue.core.delegates.bottom;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 
+import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.R2;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
+import com.dodo.xinyue.core.delegates.bottom.anim.BottomBarEnterAnim;
 import com.dodo.xinyue.core.delegates.bottom.bean.BaseBottomTabBean;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsBuilder;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsType;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomItemBuilder;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
-import com.dodo.xinyue.core.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -36,11 +41,6 @@ import me.yokeyword.fragmentation.ISupportFragment;
  */
 public abstract class BaseBottomContainerDelegate extends DoDoDelegate implements View.OnClickListener {
 
-    //双击退出间隔时间
-    protected static final long WAIT_TIME = 2000L;
-    //记录上次点击的时间
-    protected long TOUCH_TIME = 0;
-
     private final ArrayList<BaseBottomTabBean> TAB_BEANS = new ArrayList<>();
     private final ArrayList<BaseBottomItemDelegate> ITEM_DELEGATES = new ArrayList<>();
     private final LinkedHashMap<BaseBottomTabBean, BaseBottomItemDelegate> ITEMS = new LinkedHashMap<>();
@@ -49,11 +49,20 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
     private int mCurrentDelegateIndex = 0;
     private int mTabCount = 0;//Tab数量
 
-
-    @BindView(R2.id.ll_bottom_bar)
+    @BindView(R2.id.llBottomBarContainer)
+    LinearLayoutCompat mBottomBarContainer = null;
+    @BindView(R2.id.llTabContainer)
     LinearLayoutCompat mBottomBar = null;
-    @BindView(R2.id.line_bottom_bar)
+    @BindView(R2.id.vLine)
     View mLine = null;
+    @BindView(R2.id.ivContainerBg)
+    AppCompatImageView mContainerBg = null;//TODO 后续可添加纯色背景
+
+    /**
+     * 设置背景
+     */
+    @DrawableRes
+    public abstract int setBackgroundRes();
 
     /**
      * 批量设置TabBean
@@ -109,17 +118,26 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        //设置背景
+        mContainerBg.setImageResource(setBackgroundRes());
+
         initBottomBar();
         initTabBean();
-        initItemDelegates();
+
     }
 
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
         //如果需要同时加载多个fragment,可以在这里loadMultipleRootFragment
+        YoYo.with(new BottomBarEnterAnim())
+                .interpolate(new OvershootInterpolator())//回弹
+                .duration(666)
+                .onEnd(animator -> {
+                    initItemDelegates();
+                })
+                .playOn(mBottomBarContainer);
     }
-
 
     private void initBottomBar() {
         final BottomBarParamsBuilder builder = BottomBarParamsBuilder.builder();
@@ -127,6 +145,7 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
         if (params == null) {
             return;
         }
+//        boolean isSetBottomBarHeight = false;//如果用户没有设置,需要设置一个默认值
         for (Map.Entry<BottomBarParamsType, Object> item : params.entrySet()) {
             final BottomBarParamsType key = item.getKey();
             final Object value = item.getValue();
@@ -137,6 +156,7 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
                 case BOTTOM_BAR_HEIGHT:
                     final int bottombarHeight = (int) value;
                     setBottombarHeight(bottombarHeight);
+//                    isSetBottomBarHeight = true;
                     break;
                 case BOTTOM_BAR_BACKGROUND_COLOR:
                     final int bottombarBackgroundColor = (int) value;
@@ -174,6 +194,9 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
                     break;
             }
         }
+//        if (!isSetBottomBarHeight) {
+//            setBottombarHeight(50);
+//        }
     }
 
     /**
@@ -193,6 +216,7 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
             final ViewGroup container = (ViewGroup) customView;
 
             //权重适配布局，Tab布局之上，mBottomBar布局之下
+            @SuppressLint("RestrictedApi")
             final ContentFrameLayout rootView = new ContentFrameLayout(getContext());
 
             mBottomBar.addView(rootView);
@@ -242,7 +266,7 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
      */
     private void initItemDelegates() {
         final ISupportFragment[] delegateArray = ITEM_DELEGATES.toArray(new ISupportFragment[mTabCount]);
-        getSupportDelegate().loadMultipleRootFragment(R.id.fl_bottom_container, mCurrentDelegateIndex, delegateArray);
+        getSupportDelegate().loadMultipleRootFragment(R.id.flDelegateContainer, mCurrentDelegateIndex, delegateArray);
     }
 
 
@@ -309,22 +333,6 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
         LinearLayoutCompat.LayoutParams layoutParams = (LinearLayoutCompat.LayoutParams) mLine.getLayoutParams();
         layoutParams.height = DimenUtil.dp2px(height);
         mLine.setLayoutParams(layoutParams);
-    }
-
-    /**
-     * 双击返回键退出应用
-     *
-     * @return
-     */
-    @Override
-    public boolean onBackPressedSupport() {
-        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
-            getProxyActivity().finish();
-        } else {
-            TOUCH_TIME = System.currentTimeMillis();
-            ToastUtil.showLong("再按一次返回键将关闭程序");
-        }
-        return true;//消费掉该事件，不再向后传递
     }
 
     public void switchDelegate(int index) {

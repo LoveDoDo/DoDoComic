@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.ContentFrameLayout
-        android:id="@+id/fl_bottom_container"
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivContainerBg"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#80000000"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/line_bottom_bar"
+        <android.support.v7.widget.ContentFrameLayout
+            android:id="@+id/flDelegateContainer"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/bottom_tab_divider_color"
-            android:visibility="gone"/>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/ll_bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"/>
+        <include layout="@layout/delegate_bottom_tab" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 
-
-
-</LinearLayout>
+</android.support.v7.widget.ContentFrameLayout>

@@ -1,6 +1,5 @@
 package com.dodo.xinyue.core.delegates.bottom.bean;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -8,6 +7,10 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+
+import com.dodo.xinyue.core.app.DoDo;
+
+import java.util.Objects;
 
 /**
  * BottomTabBean基类
@@ -45,32 +48,32 @@ public abstract class BaseBottomTabBean implements IBottomTabBean {
         return mTextSelector;
     }
 
-    public void setTextSelector(Context context, @ColorRes int textSelectorId) {
-        this.mTextSelector = ContextCompat.getColorStateList(context, textSelectorId);
+    public void setTextSelector(@ColorRes int textSelectorId) {
+        this.mTextSelector = ContextCompat.getColorStateList(DoDo.getAppContext(), textSelectorId);
     }
 
     public ColorStateList getIconSelector() {
         return mIconSelector;
     }
 
-    public void setIconSelector(Context context, @ColorRes int iconSelectorId) {
-        this.mIconSelector = ContextCompat.getColorStateList(context, iconSelectorId);
+    public void setIconSelector(@ColorRes int iconSelectorId) {
+        this.mIconSelector = ContextCompat.getColorStateList(DoDo.getAppContext(), iconSelectorId);
     }
 
     public Drawable getImageSelector() {
         return mImageSelector;
     }
 
-    public void setImageSelector(Context context, @DrawableRes int imageSelectorId) {
-        this.mImageSelector = ContextCompat.getDrawable(context, imageSelectorId);
+    public void setImageSelector(@DrawableRes int imageSelectorId) {
+        this.mImageSelector = ContextCompat.getDrawable(DoDo.getAppContext(), imageSelectorId);
     }
 
     public Drawable getContainerSelector() {
         return mContainerSelector;
     }
 
-    public void setContainerSelector(Context context, @DrawableRes int containerSelectorId) {
-        this.mContainerSelector = ContextCompat.getDrawable(context, containerSelectorId);
+    public void setContainerSelector(@DrawableRes int containerSelectorId) {
+        this.mContainerSelector = ContextCompat.getDrawable(DoDo.getAppContext(), containerSelectorId);
     }
 
     private int mNormalTextColor = Color.GRAY;
@@ -108,5 +111,32 @@ public abstract class BaseBottomTabBean implements IBottomTabBean {
 
     public void setSelectedBackgroundColor(@ColorInt int selectedBackgroundColor) {
         this.mSelectedBackgroundColor = selectedBackgroundColor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BaseBottomTabBean that = (BaseBottomTabBean) o;
+        return mTextSize == that.mTextSize &&
+                mIconSize == that.mIconSize &&
+                mNormalTextColor == that.mNormalTextColor &&
+                mSelectedTextColor == that.mSelectedTextColor &&
+                mNormalBackgroundColor == that.mNormalBackgroundColor &&
+                mSelectedBackgroundColor == that.mSelectedBackgroundColor &&
+                Objects.equals(mTextSelector, that.mTextSelector) &&
+                Objects.equals(mIconSelector, that.mIconSelector) &&
+                Objects.equals(mImageSelector, that.mImageSelector) &&
+                Objects.equals(mContainerSelector, that.mContainerSelector);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(mTextSelector, mIconSelector, mImageSelector, mContainerSelector, mTextSize, mIconSize, mNormalTextColor, mSelectedTextColor, mNormalBackgroundColor, mSelectedBackgroundColor);
     }
 }

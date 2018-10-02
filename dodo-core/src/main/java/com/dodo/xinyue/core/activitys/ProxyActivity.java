@@ -9,7 +9,6 @@ import android.support.v7.widget.ContentFrameLayout;
 
 import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
-import com.dodo.xinyue.core.util.toast.ToastUtil;
 
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
@@ -66,8 +65,6 @@ public abstract class ProxyActivity extends AppCompatActivity
     protected void onDestroy() {
         DELEGATE.onDestroy();
         super.onDestroy();
-
-        ToastUtil.destroy();
 
         //释放Configurator持有的Activity等引用(重启会崩溃)
 //        DoDo.getConfigurator().destroy();
