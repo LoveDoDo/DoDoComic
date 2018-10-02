@@ -1,0 +1,10 @@
+<resources>
+    <!--适配8.0及以上-->
+    <style name="DoDoAppTheme" parent="DoDoAppTheme.Base">
+        <!--使用drawable代替color可实现app秒启动-->
+        <item name="android:windowBackground">@drawable/launch_bg</item>
+        <!--窗体背景透明 解决打开app时出现的白屏问题--><!--设为true时首次点击app图标会卡顿--><!--找了几个小时。。-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+    </style>
+
+</resources>

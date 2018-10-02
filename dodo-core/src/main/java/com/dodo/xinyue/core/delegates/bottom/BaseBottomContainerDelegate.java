@@ -52,6 +52,9 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
     private int mCurrentDelegateIndex = 0;
     private int mTabCount = 0;//Tab数量
 
+    private boolean mTabCanClick = false;
+    private boolean mCanQuit = false;
+
     @BindView(R2.id.llBottomBarContainer)
     LinearLayoutCompat mBottomBarContainer = null;
     @BindView(R2.id.llTabContainer)
@@ -138,6 +141,8 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
                 .duration(666)
                 .onEnd(animator -> {
                     initItemDelegates();
+                    mTabCanClick = true;
+                    mCanQuit = true;
                 })
                 .playOn(mBottomBarContainer);
     }
@@ -236,8 +241,7 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
             final ViewGroup container = (ViewGroup) customView;
 
             //权重适配布局，Tab布局之上，mBottomBar布局之下
-            @SuppressLint("RestrictedApi")
-            final ContentFrameLayout rootView = new ContentFrameLayout(getContext());
+            @SuppressLint("RestrictedApi") final ContentFrameLayout rootView = new ContentFrameLayout(getContext());
 
             mBottomBar.addView(rootView);
             rootView.addView(container);
@@ -292,6 +296,9 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
 
     @Override
     public void onClick(View v) {
+        if (!mTabCanClick) {
+            return;
+        }
         final int currentIndex = (int) v.getTag();
         final int oldIndex = mCurrentDelegateIndex;
         if (currentIndex == oldIndex) {
@@ -372,5 +379,13 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
         //显示选中的delegate,隐藏上一个delegate
         getSupportDelegate().showHideFragment(ITEM_DELEGATES.get(currentIndex), ITEM_DELEGATES.get(oldIndex));
         mCurrentDelegateIndex = currentIndex;
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        if (super.onBackPressedSupport()) {
+            return true;//防止动画未结束就按返回键
+        }
+        return !mCanQuit;
     }
 }
