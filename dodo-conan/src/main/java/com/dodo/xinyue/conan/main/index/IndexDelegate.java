@@ -21,7 +21,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     @OnClick(R2.id.tvIndex)
     void onTvIndexClicked() {
-        start(ConanDelegate.create());
+        getParentDelegate().start(ConanDelegate.create());
     }
 
     public static IndexDelegate create() {

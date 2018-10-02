@@ -2,6 +2,7 @@ package com.dodo.xinyue.conan.main;
 
 import android.graphics.Color;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.bottom.ConanTabBean;
 import com.dodo.xinyue.conan.main.index.IndexDelegate;
@@ -28,6 +29,15 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * @date 2018/10/1
  */
 public class ConanBottomDelegate extends BaseBottomDelegate {
+
+    //寻宝模式 双击间隔时间 默认2秒
+    private static final long WAIT_TIME = 2000L;
+    //寻宝模式 记录上次点击的时间
+    private long mLastTouchTime = 0;
+    //寻宝模式 点击次数
+    private int mTouchCount = 1;
+    //寻宝模式 目标次数
+    private int mTargetCount = 8;
 
     @Override
     public int setBackgroundRes() {
@@ -101,9 +111,34 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     }
 
     @Override
+    public boolean onTabSelected(int position, boolean isRepeat) {
+        if (isRepeat) {
+            if (position == 3) {
+                if (System.currentTimeMillis() - mLastTouchTime < WAIT_TIME) {
+                    mLastTouchTime = System.currentTimeMillis();
+                    mTouchCount++;
+                    if (mTouchCount > 3) {
+                        ToastUtils.showShort("再按 " + (mTargetCount - mTouchCount) + " 次开启寻宝模式");
+                    }
+                    if (mTouchCount == mTargetCount) {
+                        ToastUtils.showShort("恭喜你开启寻宝模式");
+                        mTouchCount = 0;
+                    }
+                } else {
+                    mLastTouchTime = System.currentTimeMillis();
+                    mTouchCount = 1;
+                }
+            }
+
+        }
+        return super.onTabSelected(position, isRepeat);
+    }
+
+    @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
         fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
         return fragmentAnimator;
     }
+
 }

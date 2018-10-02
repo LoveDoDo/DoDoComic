@@ -2,7 +2,7 @@
 <resources>
     <!--BottomBar-->
     <color name="main_tab_text_color_normal">#ffffff</color>
-    <color name="main_tab_text_color_selected">#ffffff</color>
+    <color name="main_tab_text_color_selected">#2ca9e1</color>
     <color name="main_tab_icon_color_normal">#ffffff</color>
     <color name="main_tab_icon_color_selected">#2ca9e1</color>
     <color name="main_tab_container_bg">#00000000</color>

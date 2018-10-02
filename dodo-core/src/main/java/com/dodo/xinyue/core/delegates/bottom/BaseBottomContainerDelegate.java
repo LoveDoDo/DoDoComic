@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.daimajia.androidanimations.library.YoYo;
@@ -18,6 +20,7 @@ import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.R2;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.delegates.bottom.anim.BottomBarEnterAnim;
+import com.dodo.xinyue.core.delegates.bottom.anim.BottomBarExitAnim;
 import com.dodo.xinyue.core.delegates.bottom.bean.BaseBottomTabBean;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsBuilder;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsType;
@@ -137,6 +140,23 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
                     initItemDelegates();
                 })
                 .playOn(mBottomBarContainer);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            YoYo.with(new BottomBarExitAnim())
+                    .interpolate(new AccelerateInterpolator())//加速
+                    .duration(100)
+                    .playOn(mBottomBarContainer);
+        } else {
+            YoYo.with(new BottomBarEnterAnim())
+                    .interpolate(new DecelerateInterpolator())//减速
+                    .duration(380)
+                    .delay(50)
+                    .playOn(mBottomBarContainer);
+        }
     }
 
     private void initBottomBar() {
