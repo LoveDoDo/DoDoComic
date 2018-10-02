@@ -83,11 +83,13 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
         //设置窗口背景为黑色,为了首页的缩放动画
         getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
 
-        YoYo.with(Techniques.FadeInRight)//渐显+从右至左移入
-                .interpolate(new OvershootInterpolator())//超出边界弹回动画
-                .duration(888)
-                .onEnd(animator -> initTimer())
-                .playOn(mIvConan);
+        DoDo.getHandler().postDelayed(() ->
+                YoYo.with(Techniques.FadeInRight)//渐显+从右至左移入
+                        .interpolate(new OvershootInterpolator())//超出边界弹回动画
+                        .duration(888)
+                        .onEnd(animator -> initTimer())
+                        .playOn(mIvConan), 300);//TODO 透明度为0的imageView不能在动画里延时,会闪现
+
     }
 
     /**
