@@ -5,7 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
+import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
@@ -14,6 +18,7 @@ import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrowAnim;
 import com.dodo.xinyue.conan.main.index.bean.ArrowBean;
 import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
+import com.dodo.xinyue.core.ui.dialog.options.DialogOptions;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
@@ -32,6 +37,13 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     private static final String TAG = "IndexDelegate";
 
+    private static final DialogOptions DIALOG_OPTIONS =
+            new DialogOptions()
+                    .anim(R.style.DialogBottomAnim)
+                    .topLeftRadius(6)
+                    .topRightRadius(6)
+                    .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+
     /**
      * 箭头相关
      */
@@ -45,6 +57,8 @@ public class IndexDelegate extends BaseBottomItemDelegate {
     IconTextView mSourceArrow = null;//来源
     @BindView(R2.id.tvFormArrow)
     IconTextView mFormArrow = null;//展示形式
+    //动画控制器
+    private ArrayList<YoYo.YoYoString> mAnimController = new ArrayList<>();
 
     /**
      * 分类相关
@@ -72,15 +86,24 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .title("切换语言")
                 .addItems(LANGUAGE_DES, mLanguageIndex)
                 .onSelected(selectedIndex -> {
+                    final int lastIndex = mLanguageIndex;
                     mLanguageIndex = selectedIndex;
-                    mTvLangauge.setText(LANGUAGE_DES[mLanguageIndex]);
+
+                    YoYo.with(Techniques.FadeOut)
+                            .onStart(animator -> mTvLangauge.setText(LANGUAGE_DES[lastIndex]))
+                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                                    .onStart(animator1 -> mTvLangauge.setText(LANGUAGE_DES[mLanguageIndex]))
+                                    .interpolate(new DecelerateInterpolator())
+                                    .duration(300)
+                                    .playOn(mTvLangauge))
+                            .interpolate(new AccelerateInterpolator())
+                            .duration(300)
+                            .playOn(mTvLangauge);
+
                 })
                 .onOpen(() -> switchArrow(0))
                 .onClose(() -> switchArrow(0))
-                .topLeftRadius(6)
-                .topRightRadius(6)
-                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .anim(R.style.DialogBottomAnim)
+                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
     }
@@ -91,15 +114,23 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .title("切换版本")
                 .addItems(TYPE_DES, mTypeIndex)
                 .onSelected(selectedIndex -> {
+                    final int lastIndex = mTypeIndex;
                     mTypeIndex = selectedIndex;
-                    mTvType.setText(TYPE_DES[mTypeIndex]);
+
+                    YoYo.with(Techniques.FadeOut)
+                            .onStart(animator -> mTvType.setText(TYPE_DES[lastIndex]))
+                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                                    .onStart(animator1 -> mTvType.setText(TYPE_DES[mTypeIndex]))
+                                    .interpolate(new DecelerateInterpolator())
+                                    .duration(300)
+                                    .playOn(mTvType))
+                            .interpolate(new AccelerateInterpolator())
+                            .duration(300)
+                            .playOn(mTvType);
                 })
                 .onOpen(() -> switchArrow(1))
                 .onClose(() -> switchArrow(1))
-                .topLeftRadius(6)
-                .topRightRadius(6)
-                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .anim(R.style.DialogBottomAnim)
+                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
     }
@@ -110,15 +141,23 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .title("切换来源")
                 .addItems(SOURCE_DES, mSourceIndex)
                 .onSelected(selectedIndex -> {
+                    final int lastIndex = mSourceIndex;
                     mSourceIndex = selectedIndex;
-                    mTvSource.setText(SOURCE_DES[mSourceIndex]);
+
+                    YoYo.with(Techniques.FadeOut)
+                            .onStart(animator -> mTvSource.setText(SOURCE_DES[lastIndex]))
+                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                                    .onStart(animator1 -> mTvSource.setText(SOURCE_DES[mSourceIndex]))
+                                    .interpolate(new DecelerateInterpolator())
+                                    .duration(300)
+                                    .playOn(mTvSource))
+                            .interpolate(new AccelerateInterpolator())
+                            .duration(300)
+                            .playOn(mTvSource);
                 })
                 .onOpen(() -> switchArrow(2))
                 .onClose(() -> switchArrow(2))
-                .topLeftRadius(6)
-                .topRightRadius(6)
-                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .anim(R.style.DialogBottomAnim)
+                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
     }
@@ -129,15 +168,23 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .title("切换列表")
                 .addItems(FORM_DES, mFormIndex)
                 .onSelected(selectedIndex -> {
+                    final int lastIndex = mFormIndex;
                     mFormIndex = selectedIndex;
-                    mTvForm.setText(FORM_DES[mFormIndex]);
+
+                    YoYo.with(Techniques.FadeOut)
+                            .onStart(animator -> mTvForm.setText(FORM_DES[lastIndex]))
+                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                                    .onStart(animator1 -> mTvForm.setText(FORM_DES[mFormIndex]))
+                                    .interpolate(new DecelerateInterpolator())
+                                    .duration(300)
+                                    .playOn(mTvForm))
+                            .interpolate(new AccelerateInterpolator())
+                            .duration(300)
+                            .playOn(mTvForm);
                 })
                 .onOpen(() -> switchArrow(3))
                 .onClose(() -> switchArrow(3))
-                .topLeftRadius(6)
-                .topRightRadius(6)
-                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .anim(R.style.DialogBottomAnim)
+                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
     }
@@ -159,6 +206,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         for (int i = 0; i < 4; i++) {
             mArrowList.add(new ArrowBean());
+            mAnimController.add(null);
         }
         mTvLangauge.setText(LANGUAGE_DES[mLanguageIndex]);
         mTvType.setText(TYPE_DES[mTypeIndex]);
@@ -213,9 +261,18 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         if (arrow == null) {
             return;
         }
-        YoYo.with(new RotateOpenArrowAnim())
-                .duration(300)
+
+        final YoYo.YoYoString lastAnim = mAnimController.get(index);
+        if (lastAnim != null && lastAnim.isRunning()) {
+            lastAnim.stop();
+        }
+
+        final YoYo.YoYoString anim = YoYo.with(new RotateOpenArrowAnim())
+                .interpolate(new AccelerateDecelerateInterpolator())
+                .duration(600)
                 .playOn(arrow);
+
+        mAnimController.set(index, anim);
     }
 
     private void startArrowCloseAnim(int index) {
@@ -223,9 +280,17 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         if (arrow == null) {
             return;
         }
-        YoYo.with(new RotateCloseArrowAnim())
+
+        final YoYo.YoYoString lastAnim = mAnimController.get(index);
+        if (lastAnim != null && lastAnim.isRunning()) {
+            lastAnim.stop();
+        }
+
+        final YoYo.YoYoString anim = YoYo.with(new RotateCloseArrowAnim())
                 .duration(300)
                 .playOn(arrow);
+
+        mAnimController.set(index, anim);
     }
 
     private IconTextView getArrow(int index) {
@@ -247,5 +312,11 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 break;
         }
         return arrow;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAnimController.clear();
     }
 }
