@@ -12,7 +12,7 @@ import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.main.index.anim.RotateCloseArrow;
 import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrow;
 import com.dodo.xinyue.conan.main.index.bean.ArrowBean;
-import com.dodo.xinyue.conan.main.index.view.dialog.list.DoDoListDialog;
+import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
 import com.joanzapata.iconify.widget.IconTextView;
 
@@ -99,7 +99,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 //                .show();
 
 
-        DoDoListDialog.builder()
+        ConanListDialog.builder()
                 .title("切换语言")
                 .addItems(LANGUAGE_DES, mLanguageIndex)
                 .onSelected(selectedIndex -> {
@@ -122,7 +122,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     @OnClick(R2.id.llType)
     void onTypeClicked() {
-        DoDoListDialog.builder()
+        ConanListDialog.builder()
                 .title("切换版本")
                 .addItems(TYPE_DES, mTypeIndex)
                 .onSelected(selectedIndex -> {
@@ -143,7 +143,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     @OnClick(R2.id.llSource)
     void onSourceClicked() {
-        DoDoListDialog.builder()
+        ConanListDialog.builder()
                 .title("切换来源")
                 .addItems(SOURCE_DES, mSourceIndex)
                 .onSelected(selectedIndex -> {
@@ -163,7 +163,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     @OnClick(R2.id.llForm)
     void onFormClicked() {
-        DoDoListDialog.builder()
+        ConanListDialog.builder()
                 .title("切换列表")
                 .addItems(FORM_DES, mFormIndex)
                 .onSelected(selectedIndex -> {
