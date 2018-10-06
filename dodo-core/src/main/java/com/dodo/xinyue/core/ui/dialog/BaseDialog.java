@@ -67,7 +67,6 @@ public abstract class BaseDialog extends AppCompatDialog {
     private int mDeviceHeight;
     private int mWorkingHeight;
 
-
     public BaseDialog(Context context) {
         this(context, R.style.dialog);
     }

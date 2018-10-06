@@ -56,8 +56,8 @@ public abstract class ProxyActivity extends AppCompatActivity
 
         //第一次加载
         if (savedInstanceState == null) {
-            //加载根delegate
-            DELEGATE.loadRootFragment(R.id.delegate_container, setRootDelegate(),false,true);
+            //加载根delegate TODO 将根delegate加入到回退栈,方便测试（找了好久的bug。。。）
+            DELEGATE.loadRootFragment(R.id.delegate_container, setRootDelegate(),true,true);
         }
     }
 

@@ -137,7 +137,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
+//        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
         return fragmentAnimator;
     }
 

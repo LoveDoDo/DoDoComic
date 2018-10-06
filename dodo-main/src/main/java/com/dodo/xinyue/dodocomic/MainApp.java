@@ -4,10 +4,7 @@ import android.app.Application;
 
 import com.dodo.xinyue.conan.icon.ConanIconFontModule;
 import com.dodo.xinyue.core.app.DoDo;
-import com.dodo.xinyue.test.interceptor.IQiyiInterceptor;
-import com.dodo.xinyue.test.interceptor.TestInterceptor;
 import com.facebook.stetho.Stetho;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * MainApp
@@ -17,7 +14,8 @@ import com.squareup.leakcanary.LeakCanary;
  */
 public class MainApp extends Application {
 
-    /**TODO
+    /**
+     * TODO
      * 插件：adb idea
      * 功能：清除缓存数据 重启adb
      * 快捷键：Ctrl+Alt+Shift+A
@@ -29,36 +27,18 @@ public class MainApp extends Application {
         DoDo.init(this)
 //                .withIcon(new FontAwesomeModule())//自带的图标库，需添加相应依赖
 //                .withIcon(new IoniconsModule())//自带的图标库，需添加相应依赖
-//                .withIcon(new FontComicModule())//自定义图标库
-//                .withIcon(new FontSignInModule())//登录页
-//                .withIcon(new FontGoodsDetailModule())//商品详情页
                 .withIcon(new ConanIconFontModule())
-                .withLoaderDelayed(1000)
+//                .withLoaderDelayed(1000)
                 .withNativeApiHost("http://127.0.0.1/")
                 .withWebApiHost("http://192.168.75.101:5555/DoDoComic/")//以"/"结尾
-                .withInterceptor(new TestInterceptor())
-                .withInterceptor(new IQiyiInterceptor())
+//                .withInterceptor(new TestInterceptor())
+//                .withInterceptor(new IQiyiInterceptor())
 //                .withInterceptor(new DebugInterceptor("intercept", R.raw.test))
-//                .withInterceptor(new QihooInterceptor())
-//                .withInterceptor(new EcInterceptor())
-//                .withInterceptor(new JiGuangInterceptor())
-//                .withInterceptor(new IMInterceptor())
-                .withJavascriptInterface("dodo")//JS
+//                .withJavascriptInterface("dodo")//JS
 //                .withWebEvent("Web调用了原生",new Web2AndroidEvent())
 //                .withWebEvent("share", new ShareEvent())
                 .configure();
 
-        initStetho();
-
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-
-//        DoDo.getConfigurator().withRefWatcher(LeakCanary.install(this));
-
-        // Normal app init code...
 //        Fragmentation.builder()
 //                // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出  默认NONE：隐藏， 仅在Debug环境生效
 //                .stackViewMode(Fragmentation.BUBBLE)
@@ -76,8 +56,23 @@ public class MainApp extends Application {
 //                })
 //                .install();
 
+//        Fragmentation.builder()
+//                // show stack view. Mode: BUBBLE, SHAKE, NONE
+//                .stackViewMode(Fragmentation.BUBBLE)
+//                .debug(BuildConfig.DEBUG)
+//                .install();
 
 //        DatabaseManager.getInstance().init(this);
+
+//        initStetho();
+//
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+
+//        DoDo.getConfigurator().withRefWatcher(LeakCanary.install(this));
 
     }
 
@@ -85,12 +80,11 @@ public class MainApp extends Application {
      * Stetho官网：http://facebook.github.io/stetho/
      * 查看入口：chrome://inspect
      * 注：需要能访问google
-     *
+     * <p>
      * 网页抓包，可视化查看数据库，视图布局等
-     *
+     * <p>
      * 抓包需要添加network拦截器
      * BUILDER.addNetworkInterceptor(new StethoInterceptor())
-     *
      */
     @SuppressWarnings("SpellCheckingInspection")
     private void initStetho() {

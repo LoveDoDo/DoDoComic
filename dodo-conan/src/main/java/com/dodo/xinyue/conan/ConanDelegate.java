@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 
+import butterknife.OnClick;
+
 /**
  * ConanDelegate
  *
@@ -13,6 +15,11 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
  * @date 2018/9/16
  */
 public class ConanDelegate extends DoDoDelegate {
+
+    @OnClick(R2.id.test)
+    void onTestClicked() {
+        start(ConanDelegate.create());
+    }
 
     @Override
     public Object setLayout() {
@@ -22,6 +29,7 @@ public class ConanDelegate extends DoDoDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 //        tvConan.setText("ceshiyixia");
+        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
     }
 
     public static ConanDelegate create() {
@@ -37,8 +45,4 @@ public class ConanDelegate extends DoDoDelegate {
 //    }
 
 
-    @Override
-    public boolean onBackPressedSupport() {
-        return super.onBackPressedSupport();
-    }
 }

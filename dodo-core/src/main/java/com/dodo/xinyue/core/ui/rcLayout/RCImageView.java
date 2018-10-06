@@ -1,31 +1,34 @@
-package com.dodo.xinyue.test.thumb.rcLayout;
+package com.dodo.xinyue.core.ui.rcLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Checkable;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 
-import com.dodo.xinyue.test.thumb.rcLayout.helper.RCAttrs;
-import com.dodo.xinyue.test.thumb.rcLayout.helper.RCHelper;
+import com.dodo.xinyue.core.ui.rcLayout.helper.RCAttrs;
+import com.dodo.xinyue.core.ui.rcLayout.helper.RCHelper;
 
 /**
- * 作用：圆角相对布局
+ * 作用：圆角图片
  * 作者：GcsSloop
  */
-public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAttrs {
+@SuppressLint("AppCompatCustomView")
+public class RCImageView extends ImageView implements Checkable, RCAttrs {
+
     RCHelper mRCHelper;
 
-    public RCRelativeLayout(Context context) {
+    public RCImageView(Context context) {
         this(context, null);
     }
 
-    public RCRelativeLayout(Context context, AttributeSet attrs) {
+    public RCImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RCRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RCImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, attrs);
@@ -35,14 +38,6 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mRCHelper.onSizeChanged(this, w, h);
-    }
-
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        canvas.saveLayer(mRCHelper.mLayer, null);
-        super.dispatchDraw(canvas);
-        mRCHelper.onClipDraw(canvas);
-        canvas.restore();
     }
 
     @Override
@@ -59,21 +54,30 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
     }
 
     @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.saveLayer(mRCHelper.mLayer, null);
+        super.onDraw(canvas);
+        mRCHelper.onClipDraw(canvas);
+        canvas.restore();
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
             refreshDrawableState();
         } else if (action == MotionEvent.ACTION_CANCEL) {
-//            setPressed(false);
+            setPressed(false);
             refreshDrawableState();
         }
-//        if (!mRCHelper.mAreaRegion.contains((int) ev.getX(), (int) ev.getY())) {
-//            setPressed(false);
-//            refreshDrawableState();
-//            return false;
-//        }
+        if (!mRCHelper.mAreaRegion.contains((int) ev.getX(), (int) ev.getY())) {
+            setPressed(false);
+            refreshDrawableState();
+            return false;
+        }
         return super.dispatchTouchEvent(ev);
     }
+
 
     //--- 公开接口 ----------------------------------------------------------------------------------
 

@@ -1,5 +1,6 @@
 package com.dodo.xinyue.core.app;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
@@ -48,6 +49,13 @@ public final class DoDo {
      */
     public static Handler getHandler() {
         return getConfiguration(ConfigKeys.HANDLER);
+    }
+
+    /**
+     * 获取全局唯一Activity
+     */
+    public static Activity getActivity() {
+        return getConfiguration(ConfigKeys.ACTIVITY);
     }
 
 }

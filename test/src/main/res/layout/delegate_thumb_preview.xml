@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:background="@android:color/white">
 
-            <com.dodo.xinyue.test.thumb.rcLayout.RCRelativeLayout
+            <com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout
                 android:id="@+id/rc_layout"
                 android:layout_width="160dp"
                 android:layout_height="90dp"
@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/white" />
 
-            </com.dodo.xinyue.test.thumb.rcLayout.RCRelativeLayout>
+            </com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout>
 
         </RelativeLayout>
 

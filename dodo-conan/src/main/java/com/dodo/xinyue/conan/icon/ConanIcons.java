@@ -11,6 +11,14 @@ import com.joanzapata.iconify.Icon;
 public enum ConanIcons implements Icon {
 
     /**
+     * 对勾
+     */
+    icon_selected('\ue693'),
+    /**
+     * 下拉箭头
+     */
+    icon_arrow('\ue695'),
+    /**
      * 主页
      */
     icon_home('\ue682'),

@@ -1,4 +1,4 @@
-package com.dodo.xinyue.test.thumb.rcLayout.helper;
+package com.dodo.xinyue.core.ui.rcLayout.helper;
 
 public interface RCAttrs {
     void setClipBackground(boolean clipBackground);

@@ -1,34 +1,31 @@
-package com.dodo.xinyue.test.thumb.rcLayout;
+package com.dodo.xinyue.core.ui.rcLayout;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Checkable;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-import com.dodo.xinyue.test.thumb.rcLayout.helper.RCAttrs;
-import com.dodo.xinyue.test.thumb.rcLayout.helper.RCHelper;
+import com.dodo.xinyue.core.ui.rcLayout.helper.RCAttrs;
+import com.dodo.xinyue.core.ui.rcLayout.helper.RCHelper;
 
 /**
- * 作用：圆角图片
+ * 作用：圆角相对布局
  * 作者：GcsSloop
  */
-@SuppressLint("AppCompatCustomView")
-public class RCImageView extends ImageView implements Checkable, RCAttrs {
-
+public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAttrs {
     RCHelper mRCHelper;
 
-    public RCImageView(Context context) {
+    public RCRelativeLayout(Context context) {
         this(context, null);
     }
 
-    public RCImageView(Context context, AttributeSet attrs) {
+    public RCRelativeLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RCImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RCRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, attrs);
@@ -38,6 +35,14 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mRCHelper.onSizeChanged(this, w, h);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        canvas.saveLayer(mRCHelper.mLayer, null);
+        super.dispatchDraw(canvas);
+        mRCHelper.onClipDraw(canvas);
+        canvas.restore();
     }
 
     @Override
@@ -54,30 +59,21 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.saveLayer(mRCHelper.mLayer, null);
-        super.onDraw(canvas);
-        mRCHelper.onClipDraw(canvas);
-        canvas.restore();
-    }
-
-    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
             refreshDrawableState();
         } else if (action == MotionEvent.ACTION_CANCEL) {
-            setPressed(false);
+//            setPressed(false);
             refreshDrawableState();
         }
-        if (!mRCHelper.mAreaRegion.contains((int) ev.getX(), (int) ev.getY())) {
-            setPressed(false);
-            refreshDrawableState();
-            return false;
-        }
+//        if (!mRCHelper.mAreaRegion.contains((int) ev.getX(), (int) ev.getY())) {
+//            setPressed(false);
+//            refreshDrawableState();
+//            return false;
+//        }
         return super.dispatchTouchEvent(ev);
     }
-
 
     //--- 公开接口 ----------------------------------------------------------------------------------
 
@@ -116,16 +112,16 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs {
     }
 
     @Override
-    public void setBottomLeftRadius(int bottomLeftRadius) {
-        mRCHelper.radii[4] = bottomLeftRadius;
-        mRCHelper.radii[5] = bottomLeftRadius;
+    public void setBottomRightRadius(int bottomRightRadius) {
+        mRCHelper.radii[4] = bottomRightRadius;
+        mRCHelper.radii[5] = bottomRightRadius;
         invalidate();
     }
 
     @Override
-    public void setBottomRightRadius(int bottomRightRadius) {
-        mRCHelper.radii[6] = bottomRightRadius;
-        mRCHelper.radii[7] = bottomRightRadius;
+    public void setBottomLeftRadius(int bottomLeftRadius) {
+        mRCHelper.radii[6] = bottomLeftRadius;
+        mRCHelper.radii[7] = bottomLeftRadius;
         invalidate();
     }
 

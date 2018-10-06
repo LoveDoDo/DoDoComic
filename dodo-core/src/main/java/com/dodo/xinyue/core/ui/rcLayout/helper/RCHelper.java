@@ -1,4 +1,4 @@
-package com.dodo.xinyue.test.thumb.rcLayout.helper;
+package com.dodo.xinyue.core.ui.rcLayout.helper;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,7 +16,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Checkable;
 
-import com.dodo.xinyue.test.R;
+import com.dodo.xinyue.core.R;
 
 import java.util.ArrayList;
 

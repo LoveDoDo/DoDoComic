@@ -31,7 +31,7 @@ import com.dodo.xinyue.test.thumb.adapter.ThumbPreviewAdapter;
 import com.dodo.xinyue.test.thumb.bean.TestBean;
 import com.dodo.xinyue.test.thumb.data.ThumbHandlerThread;
 import com.dodo.xinyue.test.thumb.data.ThumbPreviewDataConverter;
-import com.dodo.xinyue.test.thumb.rcLayout.RCRelativeLayout;
+import com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

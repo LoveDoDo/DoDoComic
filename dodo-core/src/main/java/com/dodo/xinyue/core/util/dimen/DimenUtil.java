@@ -1,8 +1,12 @@
 package com.dodo.xinyue.core.util.dimen;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 import com.dodo.xinyue.core.app.DoDo;
 
@@ -13,6 +17,74 @@ import com.dodo.xinyue.core.app.DoDo;
  * @date 2017/8/31
  */
 public final class DimenUtil {
+
+    /**
+     * 获取状态栏高度
+     */
+    public static int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = DoDo.getAppContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = DoDo.getAppContext().getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    /**
+     * 获取导航栏高度
+     */
+    public static int getNavigationBarHeight() {
+        int result = 0;
+        int resourceId = DoDo.getAppContext().getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = DoDo.getAppContext().getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    public static int fun2() {
+        WindowManager wm = (WindowManager)
+                DoDo.getAppContext().getSystemService(Context.WINDOW_SERVICE);;
+        Point point = new Point();
+        wm.getDefaultDisplay().getRealSize(point);
+        return point.y;
+    }
+
+    /**
+     * 判断是否显示了导航栏
+     *
+     */
+    public static boolean isShowNavBar() {
+
+        /**
+         * 获取应用区域高度
+         */
+        Rect outRect1 = new Rect();
+        try {
+            DoDo.getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect1);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+            return false;
+        }
+        int activityHeight = outRect1.height();
+        /**
+         * 获取状态栏高度
+         */
+        int statuBarHeight = getStatusBarHeight();
+        /**
+         * 屏幕物理高度 减去 状态栏高度
+         */
+        int remainHeight = fun2() - statuBarHeight;
+        /**
+         * 剩余高度跟应用区域高度相等 说明导航栏没有显示 否则相反
+         */
+        if (activityHeight == remainHeight) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 
     /**
      * 获取屏幕宽
