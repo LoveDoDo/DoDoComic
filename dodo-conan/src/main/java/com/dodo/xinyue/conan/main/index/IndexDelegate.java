@@ -9,8 +9,8 @@ import android.view.View;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
-import com.dodo.xinyue.conan.main.index.anim.RotateCloseArrow;
-import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrow;
+import com.dodo.xinyue.conan.main.index.anim.RotateCloseArrowAnim;
+import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrowAnim;
 import com.dodo.xinyue.conan.main.index.bean.ArrowBean;
 import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
@@ -68,37 +68,6 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     @OnClick(R2.id.llLanguage)
     void onLanguageClicked() {
-//        ToastUtils.showShort("语言");
-
-//        ConanDialog.builder()
-//                .title("heiheihie")
-//                .anim(R.style.CustomDialogAnim)
-//                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-//                .topLeftRadius(10)
-//                .topRightRadius(20)
-//                .bottomLeftRadius(30)
-//                .bottomRightRadius(40)
-//                .widthScale(0.8f)
-//                .heightScale(0.5f)
-//                .coverStatusBar(true)
-//                .canceledOnTouchOutside(false)
-//                .cancelable(false)
-//                .onOpen(new IOpenDialog() {
-//                    @Override
-//                    public void onOpen() {
-//                        ToastUtils.showShort("open");
-//                    }
-//                })
-//                .onClose(new ICloseDialog() {
-//                    @Override
-//                    public void onClose() {
-//                        ToastUtils.showShort("close");
-//                    }
-//                })
-//                .build()
-//                .show();
-
-
         ConanListDialog.builder()
                 .title("切换语言")
                 .addItems(LANGUAGE_DES, mLanguageIndex)
@@ -110,14 +79,10 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .onClose(() -> switchArrow(0))
                 .topLeftRadius(6)
                 .topRightRadius(6)
-//                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .gravity(Gravity.TOP)
-                .anim(R.style.CustomDialogAnim)
-                .coverStatusBar(true)
+                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
+                .anim(R.style.DialogBottomAnim)
                 .build()
                 .show();
-
-
     }
 
     @OnClick(R2.id.llType)
@@ -133,10 +98,8 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .onClose(() -> switchArrow(1))
                 .topLeftRadius(6)
                 .topRightRadius(6)
-//                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .gravity(Gravity.TOP)
-                .anim(R.style.CustomDialogAnim)
-                .coverStatusBar(false)
+                .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
+                .anim(R.style.DialogBottomAnim)
                 .build()
                 .show();
     }
@@ -155,8 +118,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .topLeftRadius(6)
                 .topRightRadius(6)
                 .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .anim(R.style.CustomDialogAnim)
-                .coverStatusBar(true)
+                .anim(R.style.DialogBottomAnim)
                 .build()
                 .show();
     }
@@ -175,8 +137,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .topLeftRadius(6)
                 .topRightRadius(6)
                 .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)
-                .anim(R.style.CustomDialogAnim)
-                .coverStatusBar(false)
+                .anim(R.style.DialogBottomAnim)
                 .build()
                 .show();
     }
@@ -252,7 +213,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         if (arrow == null) {
             return;
         }
-        YoYo.with(new RotateOpenArrow())
+        YoYo.with(new RotateOpenArrowAnim())
                 .duration(300)
                 .playOn(arrow);
     }
@@ -262,7 +223,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         if (arrow == null) {
             return;
         }
-        YoYo.with(new RotateCloseArrow())
+        YoYo.with(new RotateCloseArrowAnim())
                 .duration(300)
                 .playOn(arrow);
     }

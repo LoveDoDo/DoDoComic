@@ -35,7 +35,7 @@
         android:id="@+id/tvCancel"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/selector_custom_dialog_list_cancel"
+        android:background="@drawable/selector_list_dialog_cancel"
         android:gravity="center"
         android:text="取消"
         android:textColor="@color/white"

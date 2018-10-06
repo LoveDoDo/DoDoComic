@@ -66,7 +66,7 @@ public class ConanListDialog extends BaseDialog {
 
     @Override
     public Object setLayout() {
-        return R.layout.test_dialog_list;
+        return R.layout.layout_list_dialog;
     }
 
     @Override

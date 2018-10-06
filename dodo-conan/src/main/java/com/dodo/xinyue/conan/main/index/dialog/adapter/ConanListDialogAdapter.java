@@ -35,7 +35,7 @@ public class ConanListDialogAdapter extends MulAdapter {
     @Override
     public LinkedHashMap<Integer, Integer> addItemTypes(ItemTypeBuilder builder) {
         return builder
-                .addItemType(ListDialogItemType.ITEM, R.layout.item_dialog_list)
+                .addItemType(ListDialogItemType.ITEM, R.layout.item_list_dialog)
                 .build();
     }
 

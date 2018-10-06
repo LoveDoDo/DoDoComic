@@ -11,7 +11,7 @@ import com.daimajia.androidanimations.library.BaseViewAnimator;
  * @author DoDo
  * @date 2018/10/1
  */
-public class RotateCloseArrow extends BaseViewAnimator {
+public class RotateCloseArrowAnim extends BaseViewAnimator {
     @Override
     protected void prepare(View target) {
         getAnimatorAgent().playTogether(
