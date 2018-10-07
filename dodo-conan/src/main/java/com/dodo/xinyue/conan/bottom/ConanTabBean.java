@@ -16,7 +16,8 @@ public class ConanTabBean extends BottomTabIconTitleBean {
     }
 
     @Override
-    public int getLayoutId() {
+    public Object setTabLayout() {
         return R.layout.item_bottom_tab_conan;
     }
+
 }

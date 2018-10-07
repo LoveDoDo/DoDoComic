@@ -45,6 +45,49 @@
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/selector_long_click_bg"
+                    android:gravity="center"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:text="{icon-money}"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/tvMoney"
+                    android:background="@drawable/selector_long_click_bg"
+                    android:gravity="center"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:text="{icon-history}"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/tvHistory"
+                    android:background="@drawable/selector_long_click_bg"
+                    android:gravity="center"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:text="{icon-search}"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
@@ -74,9 +117,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="国语"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tool:text="国语" />
 
                 <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/tvLanguageArrow"
@@ -109,9 +152,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="剧场版"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tool:text="剧场版" />
 
                 <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/tvTypeArrow"
@@ -144,9 +187,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="爱奇艺"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tool:text="爱奇艺" />
 
                 <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/tvSourceArrow"
@@ -179,9 +222,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="文字列表"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tool:text="文字列表" />
 
                 <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/tvFormArrow"
@@ -200,6 +243,12 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#20ffffff" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qihoo_color"
+            android:visibility="gone"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 

@@ -1,6 +1,7 @@
 package com.dodo.xinyue.core.delegates.bottom.bean;
 
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.dodo.xinyue.core.R;
@@ -38,14 +39,19 @@ public class BottomTabIconTitleBean extends BaseBottomTabBean {
     }
 
     @Override
-    public int getLayoutId() {
+    public Object setTabLayout() {
         return R.layout.bottom_tab_icon_text;
     }
 
     @Override
-    public void initView(ViewGroup container) {
-        mIconTv = (IconTextView) container.getChildAt(0);
-        mTv = (AppCompatTextView) container.getChildAt(1);
+    public Object setBigTabLayout() {
+        return setTabLayout();
+    }
+
+    @Override
+    public void initView(View tabView) {
+        mIconTv = (IconTextView) ((ViewGroup) tabView).getChildAt(0);
+        mTv = (AppCompatTextView) ((ViewGroup) tabView).getChildAt(1);
 
         mIconTv.setText(getIcon());
         mTv.setText(getTitle());

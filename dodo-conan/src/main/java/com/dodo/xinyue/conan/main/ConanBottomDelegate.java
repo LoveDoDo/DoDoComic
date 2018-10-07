@@ -1,6 +1,7 @@
 package com.dodo.xinyue.conan.main;
 
 import android.graphics.Color;
+import android.view.Gravity;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
@@ -14,10 +15,10 @@ import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
 import com.dodo.xinyue.core.delegates.bottom.bean.BaseBottomTabBean;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsBuilder;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsType;
-import com.dodo.xinyue.core.delegates.bottom.builder.BottomItemBuilder;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomTabBeanBuilder;
+import com.dodo.xinyue.core.delegates.bottom.options.BottomTabBeanOptions;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -39,64 +40,99 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     //寻宝模式 目标次数
     private int mTargetCount = 8;
 
+    //TODO 相同大小的iconSize在布局中不一定一样大(找了好久的bug...)
+
+    private static final BottomTabBeanOptions TAB_OPTIONS =
+            new BottomTabBeanOptions()
+                    .setTextSelector(R.color.selector_bottom_bar_text_color)
+                    .setContainerSelector(R.drawable.selector_bottom_bar_bg)
+                    .setIconSelector(R.color.selector_bottom_bar_icon_color)
+                    .setIconSize(30)
+                    .setTextSize(13)
+                    .setTabGravity(Gravity.BOTTOM);
+
+    private static final BottomTabBeanOptions BIT_TAB_OPTIONS =
+            new BottomTabBeanOptions()
+                    .setTextSelector(R.color.selector_bottom_bar_text_color)
+                    .setContainerSelector(R.drawable.selector_bottom_bar_bg)
+                    .setIconSelector(R.color.selector_bottom_bar_icon_color)
+                    .setIconSize(60)
+                    .setTextSize(13)
+                    .setTabGravity(Gravity.BOTTOM);
+
+    @Override
+    public ArrayList<BaseBottomTabBean> setTabBeans() {
+        final ArrayList<BaseBottomTabBean> tabBeans = new ArrayList<>();
+        tabBeans.add(
+                BottomTabBeanBuilder.builder()
+                        .setTabBean(new ConanTabBean("{icon-home}", "首页"))
+                        .setOptions(TAB_OPTIONS)
+                        .build()
+        );
+        tabBeans.add(
+                BottomTabBeanBuilder.builder()
+                        .setTabBean(new ConanTabBean("{icon-movie}", "电影"))
+                        .setOptions(TAB_OPTIONS)
+                        .build()
+        );
+        tabBeans.add(
+                BottomTabBeanBuilder.builder()
+                        .setTabBean(new ConanTabBean("{icon-music}", "音乐"))
+                        .setOptions(TAB_OPTIONS)
+                        .build()
+        );
+        tabBeans.add(
+                BottomTabBeanBuilder.builder()
+                        .setTabBean(new ConanTabBean("{icon-mine}", "我的"))
+                        .setOptions(TAB_OPTIONS)
+                        .build()
+        );
+        return tabBeans;
+    }
+
     @Override
     public int setBackgroundRes() {
         return R.drawable.yueyue;
     }
 
-    @Override
-    public LinkedHashMap<BaseBottomTabBean, BaseBottomItemDelegate> setTabItems(BottomItemBuilder builder) {
-        final LinkedHashMap<BaseBottomTabBean, BaseBottomItemDelegate> items = new LinkedHashMap<>();
-        items.put(
-                BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-home}", "首页"))
-                        .setTextSelector(R.color.selector_bottom_bar_text_color)
-                        .setContainerSelector(R.drawable.selector_bottom_bar_bg)
-                        .setIconSelector(R.color.selector_bottom_bar_icon_color)
-                        .setIconSize(30)
-                        .setTextSize(13)
-                        .build()
-                , new IndexDelegate()
-        );
-        items.put(
-                BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-movie}", "电影"))
-                        .setTextSelector(R.color.selector_bottom_bar_text_color)
-                        .setContainerSelector(R.drawable.selector_bottom_bar_bg)
-                        .setIconSelector(R.color.selector_bottom_bar_icon_color)
-                        .setIconSize(30)
-                        .setTextSize(13)
-                        .build()
-                , new MovieDelegate()
-        );
-        items.put(
-                BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-music}", "音乐"))
-                        .setTextSelector(R.color.selector_bottom_bar_text_color)
-                        .setContainerSelector(R.drawable.selector_bottom_bar_bg)
-                        .setIconSelector(R.color.selector_bottom_bar_icon_color)
-                        .setIconSize(30)
-                        .setTextSize(13)
-                        .build()
-                , new MusicDelegate()
-        );
-        items.put(
-                BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-mine}", "我的"))
-                        .setTextSelector(R.color.selector_bottom_bar_text_color)
-                        .setContainerSelector(R.drawable.selector_bottom_bar_bg)
-                        .setIconSelector(R.color.selector_bottom_bar_icon_color)
-                        .setIconSize(30)
-                        .setTextSize(13)
-                        .build()
-                , new MineDelegate()
-        );
-        return builder.addItems(items).build();
-    }
+//    @Override
+//    public ArrayList<BaseBottomTabBean> setBigTabBeans() {
+//        final ArrayList<BaseBottomTabBean> bitTabBeans = new ArrayList<>();
+//        bitTabBeans.add(
+//                BottomTabBeanBuilder.builder()
+//                        .setTabBean(new ConanTabBean("{icon-home}", "首页"))
+//                        .setOptions(BIT_TAB_OPTIONS)
+//                        .build()
+//        );
+//        bitTabBeans.add(
+//                BottomTabBeanBuilder.builder()
+//                        .setTabBean(new ConanTabBean("{icon-movie}", "电影"))
+//                        .setOptions(BIT_TAB_OPTIONS)
+//                        .build()
+//        );
+//        bitTabBeans.add(
+//                BottomTabBeanBuilder.builder()
+//                        .setTabBean(new ConanTabBean("{icon-music}", "音乐"))
+//                        .setOptions(BIT_TAB_OPTIONS)
+//                        .build()
+//        );
+//        bitTabBeans.add(
+//                BottomTabBeanBuilder.builder()
+//                        .setTabBean(new ConanTabBean("{icon-mine}", "我的"))
+//                        .setOptions(BIT_TAB_OPTIONS)
+//                        .build()
+//        );
+//        return bitTabBeans;
+//    }
 
     @Override
-    public int setFirstPageIndex() {
-        return 0;
+    public ArrayList<BaseBottomItemDelegate> setItemDelegates() {
+        final ArrayList<BaseBottomItemDelegate> delegates = new ArrayList<>();
+        delegates.add(new IndexDelegate());
+        delegates.add(new MovieDelegate());
+        delegates.add(new MusicDelegate());
+        delegates.add(new MineDelegate());
+        return delegates;
     }
 
     @Override
@@ -137,8 +173,9 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-//        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
+        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
         return fragmentAnimator;
     }
+
 
 }

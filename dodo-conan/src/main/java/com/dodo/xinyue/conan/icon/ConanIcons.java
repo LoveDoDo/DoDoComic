@@ -9,7 +9,18 @@ import com.joanzapata.iconify.Icon;
  * @date 2018/10/2
  */
 public enum ConanIcons implements Icon {
-
+    /**
+     * 搜索
+     */
+    icon_search('\ue6a8'),
+    /**
+     * 历史记录
+     */
+    icon_history('\ue605'),
+    /**
+     * 赞助
+     */
+    icon_money('\ue6ea'),
     /**
      * 对勾
      */

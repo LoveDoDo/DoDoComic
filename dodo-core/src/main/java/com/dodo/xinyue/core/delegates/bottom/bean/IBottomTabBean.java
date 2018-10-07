@@ -1,6 +1,6 @@
 package com.dodo.xinyue.core.delegates.bottom.bean;
 
-import android.view.ViewGroup;
+import android.view.View;
 
 /**
  * IBottomTabBean
@@ -10,9 +10,11 @@ import android.view.ViewGroup;
  */
 public interface IBottomTabBean {
 
-    int getLayoutId();
+    Object setTabLayout();
 
-    void initView(ViewGroup container);
+    Object setBigTabLayout();
+
+    void initView(View tabView);
 
 //    void setNormalState(ViewGroup container);
 //

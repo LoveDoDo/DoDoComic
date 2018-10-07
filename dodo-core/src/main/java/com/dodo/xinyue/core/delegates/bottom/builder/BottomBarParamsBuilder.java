@@ -28,6 +28,61 @@ public class BottomBarParamsBuilder {
         return this;
     }
 
+    public final BottomBarParamsBuilder setBottomBarBackgroundColor(@ColorInt int color) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BOTTOM_BAR_BACKGROUND_COLOR, color);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setBottomBarBackgroundRes(@ColorRes int colorRes) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BOTTOM_BAR_BACKGROUND_RES, colorRes);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setBottomBarPaddingLeftAndRight(int padding) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BOTTOM_BAR_PADDING_LEFT_AND_RIGHT, padding);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setTabContainerHeight(@IntRange(from = 0) int height) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.TAB_CONTAINER_HEIGHT, height);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setTabContainerBackgroundColor(@ColorInt int color) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.TAB_CONTAINER_BACKGROUND_COLOR, color);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setTabContainerBackgroundRes(@ColorRes int colorRes) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.TAB_CONTAINER_BACKGROUND_RES, colorRes);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setTabContainerPaddingLeftAndRight(int padding) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.TAB_CONTAINER_PADDING_LEFT_AND_RIGHT, padding);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setBigTabContainerHeight(@IntRange(from = 0) int height) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINER_HEIGHT, height);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setBigTabContainerBackgroundColor(@ColorInt int color) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINE_BACKGROUND_COLOR, color);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setBigTabContainerBackgroundRes(@ColorRes int colorRes) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINE_BACKGROUND_RES, colorRes);
+        return this;
+    }
+
+    public final BottomBarParamsBuilder setBigTabContainerPaddingLeftAndRight(int padding) {
+        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINE_PADDING_LEFT_AND_RIGHT, padding);
+        return this;
+    }
+
     public final BottomBarParamsBuilder setLineHasVisible(boolean hasVisible) {
         BOTTOM_BAR_PARAMS.put(BottomBarParamsType.LINE_HAS_VISIBLE, hasVisible);
         return this;
@@ -45,21 +100,6 @@ public class BottomBarParamsBuilder {
 
     public final BottomBarParamsBuilder setLineBackgroundRes(@ColorRes int colorRes) {
         BOTTOM_BAR_PARAMS.put(BottomBarParamsType.LINE_BACKGROUND_RES, colorRes);
-        return this;
-    }
-
-    public final BottomBarParamsBuilder setBottomBarBackgroundColor(@ColorInt int color) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BOTTOM_BAR_BACKGROUND_COLOR, color);
-        return this;
-    }
-
-    public final BottomBarParamsBuilder setBottomBarBackgroundRes(@ColorRes int colorRes) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BOTTOM_BAR_BACKGROUND_RES, colorRes);
-        return this;
-    }
-
-    public final BottomBarParamsBuilder setBottomBarPaddingLeftAndRight(int padding) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BOTTOM_BAR_PADDING_LEFT_AND_RIGHT, padding);
         return this;
     }
 

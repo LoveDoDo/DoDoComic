@@ -11,15 +11,14 @@ import com.daimajia.androidanimations.library.BaseViewAnimator;
  * @author DoDo
  * @date 2018/10/1
  */
-public class RotateOpenArrowAnim extends BaseViewAnimator {
+public class TextScaleFadeInAnim extends BaseViewAnimator {
     @Override
     protected void prepare(View target) {
         int distance = target.getTop() + target.getHeight();
         getAnimatorAgent().playTogether(
-                ObjectAnimator.ofFloat(target, "alpha", 1f, 0f, 0f, 1f),
-                ObjectAnimator.ofFloat(target, "translationY", 0, distance * 0.5f, distance * 0.5f, 0),
-                ObjectAnimator.ofFloat(target, "rotation", 0, 0, 180, 180)
-//                ObjectAnimator.ofFloat(target, "rotation", 0, 180)
+                ObjectAnimator.ofFloat(target, "alpha", 1, 0, 0),
+                ObjectAnimator.ofFloat(target, "scaleX", 1, 0.3f, 0),
+                ObjectAnimator.ofFloat(target, "scaleY", 1, 0.3f, 0)
         );
     }
 }

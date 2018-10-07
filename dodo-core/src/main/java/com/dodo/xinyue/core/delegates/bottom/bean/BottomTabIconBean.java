@@ -1,5 +1,6 @@
 package com.dodo.xinyue.core.delegates.bottom.bean;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.dodo.xinyue.core.R;
@@ -25,13 +26,18 @@ public class BottomTabIconBean extends BaseBottomTabBean {
     }
 
     @Override
-    public int getLayoutId() {
+    public Object setTabLayout() {
         return R.layout.bottom_tab_icon;
     }
 
     @Override
-    public void initView(ViewGroup container) {
-        mIconTv = (IconTextView) container.getChildAt(0);
+    public Object setBigTabLayout() {
+        return setTabLayout();
+    }
+
+    @Override
+    public void initView(View tabView) {
+        mIconTv = (IconTextView) ((ViewGroup) tabView).getChildAt(0);
 
         mIconTv.setText(getIcon());
         mIconTv.setTextSize(getIconSize());

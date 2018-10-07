@@ -9,20 +9,22 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80000000"
-        android:orientation="vertical">
+        android:background="#80000000">
 
         <android.support.v7.widget.ContentFrameLayout
             android:id="@+id/flDelegateContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent" />
 
-        <include layout="@layout/delegate_bottom_tab" />
+        <include
+            layout="@layout/delegate_bottom_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
 
-    </android.support.v7.widget.LinearLayoutCompat>
+    </RelativeLayout>
 
 </android.support.v7.widget.ContentFrameLayout>

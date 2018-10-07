@@ -9,14 +9,19 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.daimajia.androidanimations.library.Techniques;
+import com.blankj.utilcode.util.ToastUtils;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.main.index.anim.RotateCloseArrowAnim;
 import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrowAnim;
+import com.dodo.xinyue.conan.main.index.anim.TextScaleFadeOutAnim;
+import com.dodo.xinyue.conan.main.index.anim.TextScaleFadeInAnim;
 import com.dodo.xinyue.conan.main.index.bean.ArrowBean;
 import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
+import com.dodo.xinyue.conan.module.history.HistoryDelegate;
+import com.dodo.xinyue.conan.module.money.MoneyDelegate;
+import com.dodo.xinyue.conan.module.search.SearchDelegate;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
 import com.dodo.xinyue.core.ui.dialog.options.DialogOptions;
 import com.joanzapata.iconify.widget.IconTextView;
@@ -26,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * 主页
@@ -43,6 +49,39 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                     .topLeftRadius(6)
                     .topRightRadius(6)
                     .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+
+    @OnClick(R2.id.tvSearch)
+    void onTvSearchClicked() {
+        getParentDelegate().start(new SearchDelegate());
+    }
+
+    @OnClick(R2.id.tvHistory)
+    void onTvHistoryClicked() {
+        getParentDelegate().start(new HistoryDelegate());
+    }
+
+    @OnClick(R2.id.tvMoney)
+    void onTvMoneyClicked() {
+        getParentDelegate().start(new MoneyDelegate());
+    }
+
+    @OnLongClick(R2.id.tvSearch)
+    boolean onTvSearchLongClicked() {
+        ToastUtils.showShort("搜索");
+        return true;
+    }
+
+    @OnLongClick(R2.id.tvHistory)
+    boolean onTvHistoryLongClicked() {
+        ToastUtils.showShort("历史记录");
+        return true;
+    }
+
+    @OnLongClick(R2.id.tvMoney)
+    boolean onTvMoneyLongClicked() {
+        ToastUtils.showShort("赞助");
+        return true;
+    }
 
     /**
      * 箭头相关
@@ -89,9 +128,9 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                     final int lastIndex = mLanguageIndex;
                     mLanguageIndex = selectedIndex;
 
-                    YoYo.with(Techniques.FadeOut)
+                    YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvLangauge.setText(LANGUAGE_DES[lastIndex]))
-                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                            .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                                     .onStart(animator1 -> mTvLangauge.setText(LANGUAGE_DES[mLanguageIndex]))
                                     .interpolate(new DecelerateInterpolator())
                                     .duration(300)
@@ -117,9 +156,9 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                     final int lastIndex = mTypeIndex;
                     mTypeIndex = selectedIndex;
 
-                    YoYo.with(Techniques.FadeOut)
+                    YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvType.setText(TYPE_DES[lastIndex]))
-                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                            .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                                     .onStart(animator1 -> mTvType.setText(TYPE_DES[mTypeIndex]))
                                     .interpolate(new DecelerateInterpolator())
                                     .duration(300)
@@ -144,9 +183,9 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                     final int lastIndex = mSourceIndex;
                     mSourceIndex = selectedIndex;
 
-                    YoYo.with(Techniques.FadeOut)
+                    YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvSource.setText(SOURCE_DES[lastIndex]))
-                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                            .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                                     .onStart(animator1 -> mTvSource.setText(SOURCE_DES[mSourceIndex]))
                                     .interpolate(new DecelerateInterpolator())
                                     .duration(300)
@@ -171,9 +210,9 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                     final int lastIndex = mFormIndex;
                     mFormIndex = selectedIndex;
 
-                    YoYo.with(Techniques.FadeOut)
+                    YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvForm.setText(FORM_DES[lastIndex]))
-                            .onEnd(animator -> YoYo.with(Techniques.FadeIn)
+                            .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                                     .onStart(animator1 -> mTvForm.setText(FORM_DES[mFormIndex]))
                                     .interpolate(new DecelerateInterpolator())
                                     .duration(300)
@@ -212,6 +251,10 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         mTvType.setText(TYPE_DES[mTypeIndex]);
         mTvSource.setText(SOURCE_DES[mSourceIndex]);
         mTvForm.setText(FORM_DES[mFormIndex]);
+
+        //测试用
+        //设置窗口背景为黑色,为了首页的缩放动画
+        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
     }
 
     private void switchArrow(int index) {

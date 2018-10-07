@@ -1,8 +1,10 @@
 package com.dodo.xinyue.core.ui.dialog.list.listener;
 
+import android.graphics.Color;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 import com.dodo.xinyue.core.ui.dialog.callback.OnItemSelectedListener;
 import com.dodo.xinyue.core.ui.dialog.list.bean.ListDialogBean;
@@ -21,14 +23,14 @@ public class ListDialogItemClickListener extends MulItemClickListener {
     private final BaseDialog mDialog;
     private final OnItemSelectedListener mOnItemSelectedListener;
 
-    protected ListDialogItemClickListener(BaseDialog dialog,OnItemSelectedListener listener) {
+    protected ListDialogItemClickListener(BaseDialog dialog, OnItemSelectedListener listener) {
         super(null);
         this.mOnItemSelectedListener = listener;
         this.mDialog = dialog;
     }
 
     public static ListDialogItemClickListener create(BaseDialog dialog, OnItemSelectedListener listener) {
-        return new ListDialogItemClickListener(dialog,listener);
+        return new ListDialogItemClickListener(dialog, listener);
     }
 
     @Override
@@ -42,12 +44,14 @@ public class ListDialogItemClickListener extends MulItemClickListener {
                     cancelDialog();
                     return;
                 }
+                view.setBackgroundColor(Color.parseColor("#20ffffff"));
 
                 if (mOnItemSelectedListener != null) {
                     mOnItemSelectedListener.onSelected(position);
                 }
 
-                cancelDialog();
+                //延时是为了显示点击效果
+                DoDo.getHandler().postDelayed(this::cancelDialog, 10);
 
                 break;
             default:

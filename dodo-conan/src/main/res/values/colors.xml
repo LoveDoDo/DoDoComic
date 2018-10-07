@@ -8,4 +8,6 @@
     <color name="main_tab_container_bg">#00000000</color>
     <color name="main_ripple_color">#20ffffff</color>
 
+    <color name="long_click_color">#20000000</color>
+
 </resources>

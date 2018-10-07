@@ -33,83 +33,83 @@ public class DialogOptions {
     }
 
     public final DialogOptions context(Context context) {
-        OPTIONS.put(OptionFields.CONTEXT, context);
-        return  this;
+        OPTIONS.put(DialogOptionFields.CONTEXT, context);
+        return this;
     }
 
     public final DialogOptions theme(@StyleRes int themeStyleId) {
-        OPTIONS.put(OptionFields.DIALOG_THEME, themeStyleId);
-        return  this;
+        OPTIONS.put(DialogOptionFields.DIALOG_THEME, themeStyleId);
+        return this;
     }
 
     public final DialogOptions anim(@StyleRes int animStyleId) {
-        OPTIONS.put(OptionFields.DIALOG_ANIM, animStyleId);
-        return  this;
+        OPTIONS.put(DialogOptionFields.DIALOG_ANIM, animStyleId);
+        return this;
     }
 
     public final DialogOptions gravity(int gravity) {
-        OPTIONS.put(OptionFields.DIALOG_GRAVITY, gravity);
-        return  this;
+        OPTIONS.put(DialogOptionFields.DIALOG_GRAVITY, gravity);
+        return this;
     }
 
     public final DialogOptions radius(int radius) {
-        OPTIONS.put(OptionFields.DIALOG_RADIUS, new int[]{radius, radius, radius, radius});
-        return  this;
+        OPTIONS.put(DialogOptionFields.DIALOG_RADIUS, new int[]{radius, radius, radius, radius});
+        return this;
     }
 
     public final DialogOptions topLeftRadius(int topLeftRadius) {
-        OPTIONS.put(OptionFields.DIALOG_TOP_LEFT_RADIUS, topLeftRadius);
+        OPTIONS.put(DialogOptionFields.DIALOG_TOP_LEFT_RADIUS, topLeftRadius);
         return this;
     }
 
     public final DialogOptions topRightRadius(int topRightRadius) {
-        OPTIONS.put(OptionFields.DIALOG_TOP_RIGHT_RADIUS, topRightRadius);
-        return  this;
+        OPTIONS.put(DialogOptionFields.DIALOG_TOP_RIGHT_RADIUS, topRightRadius);
+        return this;
     }
 
     public final DialogOptions bottomLeftRadius(int bottomLeftRadius) {
-        OPTIONS.put(OptionFields.DIALOG_BOTTOM_LEFT_RADIUS, bottomLeftRadius);
+        OPTIONS.put(DialogOptionFields.DIALOG_BOTTOM_LEFT_RADIUS, bottomLeftRadius);
         return this;
     }
 
     public final DialogOptions bottomRightRadius(int bottomRightRadius) {
-        OPTIONS.put(OptionFields.DIALOG_BOTTOM_RIGHT_RADIUS, bottomRightRadius);
+        OPTIONS.put(DialogOptionFields.DIALOG_BOTTOM_RIGHT_RADIUS, bottomRightRadius);
         return this;
     }
 
     public final DialogOptions widthScale(@FloatRange(from = 0f, to = 1f) float widthScale) {
-        OPTIONS.put(OptionFields.WIDTH_SCALE, widthScale);
+        OPTIONS.put(DialogOptionFields.WIDTH_SCALE, widthScale);
         return this;
     }
 
     public final DialogOptions heightScale(@FloatRange(from = 0f, to = 1f) float heightScale) {
-        OPTIONS.put(OptionFields.HEIGHT_SCALE, heightScale);
+        OPTIONS.put(DialogOptionFields.HEIGHT_SCALE, heightScale);
         return this;
     }
 
     public final DialogOptions canceledOnTouchOutside(boolean canceledOnTouchOutside) {
-        OPTIONS.put(OptionFields.CANCELED_ON_TOUCH_OUTSIDE, canceledOnTouchOutside);
+        OPTIONS.put(DialogOptionFields.CANCELED_ON_TOUCH_OUTSIDE, canceledOnTouchOutside);
         return this;
     }
 
     public final DialogOptions cancelable(boolean cancelable) {
-        OPTIONS.put(OptionFields.CANCELABLE, cancelable);
+        OPTIONS.put(DialogOptionFields.CANCELABLE, cancelable);
         return this;
     }
 
     public final DialogOptions coverStatusBar(boolean coverStatusBar) {
-        OPTIONS.put(OptionFields.COVER_STATUSBAR, coverStatusBar);
+        OPTIONS.put(DialogOptionFields.COVER_STATUSBAR, coverStatusBar);
         return this;
     }
 
     public final DialogOptions onOpen(IOpenDialog iOpenDialog) {
-        OPTIONS.put(OptionFields.IOPEN_DIALOG, iOpenDialog);
-        return  this;
+        OPTIONS.put(DialogOptionFields.IOPEN_DIALOG, iOpenDialog);
+        return this;
     }
 
     public final DialogOptions onClose(ICloseDialog iCloseDialog) {
-        OPTIONS.put(OptionFields.ICLOSE_DIALOG, iCloseDialog);
-        return  this;
+        OPTIONS.put(DialogOptionFields.ICLOSE_DIALOG, iCloseDialog);
+        return this;
     }
 
 
