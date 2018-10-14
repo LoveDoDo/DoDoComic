@@ -15,8 +15,8 @@ import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.main.index.anim.RotateCloseArrowAnim;
 import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrowAnim;
-import com.dodo.xinyue.conan.main.index.anim.TextScaleFadeOutAnim;
 import com.dodo.xinyue.conan.main.index.anim.TextScaleFadeInAnim;
+import com.dodo.xinyue.conan.main.index.anim.TextScaleFadeOutAnim;
 import com.dodo.xinyue.conan.main.index.bean.ArrowBean;
 import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
 import com.dodo.xinyue.conan.module.history.HistoryDelegate;
@@ -140,8 +140,8 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                             .playOn(mTvLangauge);
 
                 })
-                .onOpen(() -> switchArrow(0))
-                .onClose(() -> switchArrow(0))
+//                .onOpen(() -> switchArrow(0))
+//                .onClose(() -> switchArrow(0))
                 .options(DIALOG_OPTIONS)
                 .build()
                 .show();
@@ -254,7 +254,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
         //测试用
         //设置窗口背景为黑色,为了首页的缩放动画
-        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
+//        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.transparent);
     }
 
     private void switchArrow(int index) {

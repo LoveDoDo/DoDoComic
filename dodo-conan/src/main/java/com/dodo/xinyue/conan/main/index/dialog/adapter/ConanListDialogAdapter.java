@@ -1,5 +1,8 @@
 package com.dodo.xinyue.conan.main.index.dialog.adapter;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
+
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.core.ui.dialog.list.bean.ListDialogBean;
 import com.dodo.xinyue.core.ui.dialog.list.bean.ListDialogItemType;
@@ -56,7 +59,8 @@ public class ConanListDialogAdapter extends MulAdapter {
         final boolean selected = bean.isSelected();
 
         holder.setText(R.id.tvTitle, title)
-                .setGone(R.id.tvSelected, selected);
+                .setGone(R.id.tvSelected, selected)
+                .setTextColor(R.id.tvTitle, selected ? ContextCompat.getColor(mContext, R.color.white_80) : Color.WHITE);
 
     }
 }

@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    tool:background="@color/dodo_blue"
     android:paddingBottom="8dp"
-    android:paddingTop="8dp">
-
-    <com.joanzapata.iconify.widget.IconTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        tool:textSize="@dimen/bottom_tab_icon_size"
-        tool:text="{fa-coffee}" />
+    android:paddingTop="8dp"
+    tool:background="@color/dodo_blue">
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
-        tool:textSize="@dimen/bottom_tab_text_size"
-        tool:text="主页" />
+        android:layout_marginTop="2dp"
+        tool:text="主页"
+        tool:textSize="@dimen/bottom_tab_text_size" />
 
-</android.support.v7.widget.LinearLayoutCompat>
+    <com.eftimoff.androipathview.PathView
+        android:id="@+id/pathView"
+        android:layout_above="@id/tvTitle"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="bottom|center_horizontal"
+        app:pathColor="@color/dodo_blue"
+        app:pathWidth="1dp" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/tvIcon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvTitle"
+        android:gravity="bottom|center_horizontal"
+        android:layout_marginBottom="2dp"
+        tool:text="{fa-coffee}"
+        tool:textSize="@dimen/bottom_tab_icon_size" />
+
+</RelativeLayout>

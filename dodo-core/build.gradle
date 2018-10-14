@@ -196,8 +196,12 @@ dependencies {
         transitive = true
     }
 
+    //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    //svg
+    api 'com.eftimoff:android-pathview:1.0.8@aar'
 
 }

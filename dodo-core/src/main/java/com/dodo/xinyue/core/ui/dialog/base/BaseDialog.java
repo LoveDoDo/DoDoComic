@@ -17,6 +17,7 @@ import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
 import com.dodo.xinyue.core.ui.dialog.callback.ICloseDialog;
 import com.dodo.xinyue.core.ui.dialog.callback.IOpenDialog;
+import com.dodo.xinyue.core.ui.dialog.manager.DialogManager;
 import com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
 
@@ -347,4 +348,19 @@ public abstract class BaseDialog extends AppCompatDialog
         }
     }
 
+    @Override
+    public void show() {
+        if (!DialogManager.getInstance().canShow(this)) {
+            return;
+        }
+        super.show();
+    }
+
+    @Override
+    public void cancel() {
+        if (!DialogManager.getInstance().canCancel()) {
+            return;
+        }
+        super.cancel();
+    }
 }

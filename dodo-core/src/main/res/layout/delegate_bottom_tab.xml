@@ -8,6 +8,7 @@
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <View
@@ -29,7 +30,8 @@
         android:id="@+id/llBigTabContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@color/transparent" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent"
+        android:visibility="gone" />
 
 </RelativeLayout>

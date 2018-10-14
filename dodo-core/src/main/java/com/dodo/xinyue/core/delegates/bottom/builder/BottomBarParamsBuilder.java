@@ -63,26 +63,6 @@ public class BottomBarParamsBuilder {
         return this;
     }
 
-    public final BottomBarParamsBuilder setBigTabContainerHeight(@IntRange(from = 0) int height) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINER_HEIGHT, height);
-        return this;
-    }
-
-    public final BottomBarParamsBuilder setBigTabContainerBackgroundColor(@ColorInt int color) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINE_BACKGROUND_COLOR, color);
-        return this;
-    }
-
-    public final BottomBarParamsBuilder setBigTabContainerBackgroundRes(@ColorRes int colorRes) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINE_BACKGROUND_RES, colorRes);
-        return this;
-    }
-
-    public final BottomBarParamsBuilder setBigTabContainerPaddingLeftAndRight(int padding) {
-        BOTTOM_BAR_PARAMS.put(BottomBarParamsType.BIG_TAB_CONTAINE_PADDING_LEFT_AND_RIGHT, padding);
-        return this;
-    }
-
     public final BottomBarParamsBuilder setLineHasVisible(boolean hasVisible) {
         BOTTOM_BAR_PARAMS.put(BottomBarParamsType.LINE_HAS_VISIBLE, hasVisible);
         return this;

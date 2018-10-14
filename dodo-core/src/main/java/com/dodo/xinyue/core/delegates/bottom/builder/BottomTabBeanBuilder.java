@@ -115,7 +115,7 @@ public final class BottomTabBeanBuilder {
             mTabBean.setIconSize(DimenUtil.px2sp(DoDo.getAppContext().getResources().getDimension(R.dimen.bottom_tab_icon_size)));
         }
         if (mTabBean.getTabGravity() == 0) {
-            mTabBean.setTabGravity(Gravity.CENTER);
+            mTabBean.setTabGravity(Gravity.BOTTOM);
         }
         return mTabBean;
     }

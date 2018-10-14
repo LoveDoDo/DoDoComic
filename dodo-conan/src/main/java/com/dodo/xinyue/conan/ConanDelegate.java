@@ -29,7 +29,7 @@ public class ConanDelegate extends DoDoDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 //        tvConan.setText("ceshiyixia");
-        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
+//        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.transparent);
     }
 
     public static ConanDelegate create() {

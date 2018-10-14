@@ -31,10 +31,6 @@ public class BeforeLaunchDelegate extends DoDoDelegate {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-//        ToastUtils.showShort(g.toString());
-//        getSupportDelegate().
-//        SupportHelper.getPreFragment();
-//        getSupportDelegate().startChild(new ConanBottomDelegate());
         //延时2秒启动SplashDelegate
         DoDo.getHandler().postDelayed(() -> {
             getSupportDelegate().startWithPop(new SplashDelegate());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,22 +9,36 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <RelativeLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80000000">
+        android:background="#80000000"
+        android:orientation="vertical">
 
         <android.support.v7.widget.ContentFrameLayout
             android:id="@+id/flDelegateContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <include
-            layout="@layout/delegate_bottom_tab"
+        <View
+            android:id="@+id/vLine"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            android:layout_height="1dp"
+            android:background="@color/bottom_tab_divider_color"
+            android:visibility="gone" />
 
-    </RelativeLayout>
+        <android.support.v7.widget.ContentFrameLayout
+            android:id="@+id/flBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
-</android.support.v7.widget.ContentFrameLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/llTabContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

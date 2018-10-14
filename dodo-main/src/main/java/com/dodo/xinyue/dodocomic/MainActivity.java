@@ -3,10 +3,10 @@ package com.dodo.xinyue.dodocomic;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.dodo.xinyue.conan.main.ConanBottomDelegate;
 import com.dodo.xinyue.core.activitys.ProxyActivity;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
-import com.dodo.xinyue.dodocomic.launch.BeforeLaunchDelegate;
 
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import qiu.niorgai.StatusBarCompat;
@@ -28,6 +28,7 @@ public class MainActivity extends ProxyActivity {
         StatusBarCompat.translucentStatusBar(this, true);
         //设置delegate默认背景色
         getSupportDelegate().setDefaultFragmentBackground(R.color.default_fragment_background);
+
     }
 
     @Override
@@ -36,7 +37,7 @@ public class MainActivity extends ProxyActivity {
 //        bean.setTvQipuId("1088268004");
 //        bean.setVid("db15bf19135042a089dc1adfecc89cef");
 //        return ThumbPreviewDelegate.create(bean);
-        return new BeforeLaunchDelegate();
+        return new ConanBottomDelegate();
     }
 
     /**
@@ -63,4 +64,5 @@ public class MainActivity extends ProxyActivity {
         fragmentAnimator.setPopExit(R.anim.global_pop_exit);
         return fragmentAnimator;
     }
+
 }

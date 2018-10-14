@@ -1,6 +1,6 @@
 package com.dodo.xinyue.conan.main;
 
-import android.graphics.Color;
+import android.os.Bundle;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -51,39 +51,30 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                     .setTextSize(13)
                     .setTabGravity(Gravity.BOTTOM);
 
-    private static final BottomTabBeanOptions BIT_TAB_OPTIONS =
-            new BottomTabBeanOptions()
-                    .setTextSelector(R.color.selector_bottom_bar_text_color)
-                    .setContainerSelector(R.drawable.selector_bottom_bar_bg)
-                    .setIconSelector(R.color.selector_bottom_bar_icon_color)
-                    .setIconSize(60)
-                    .setTextSize(13)
-                    .setTabGravity(Gravity.BOTTOM);
-
     @Override
     public ArrayList<BaseBottomTabBean> setTabBeans() {
         final ArrayList<BaseBottomTabBean> tabBeans = new ArrayList<>();
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-home}", "首页"))
+                        .setTabBean(new ConanTabBean("{icon-home}", "首页", R.raw.home))
                         .setOptions(TAB_OPTIONS)
                         .build()
         );
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-movie}", "电影"))
+                        .setTabBean(new ConanTabBean("{icon-movie}", "电影", R.raw.movie))
                         .setOptions(TAB_OPTIONS)
                         .build()
         );
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-music}", "音乐"))
+                        .setTabBean(new ConanTabBean("{icon-music}", "音乐", R.raw.music))
                         .setOptions(TAB_OPTIONS)
                         .build()
         );
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-mine}", "我的"))
+                        .setTabBean(new ConanTabBean("{icon-mine}", "我的", R.raw.mine))
                         .setOptions(TAB_OPTIONS)
                         .build()
         );
@@ -94,36 +85,6 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     public int setBackgroundRes() {
         return R.drawable.yueyue;
     }
-
-//    @Override
-//    public ArrayList<BaseBottomTabBean> setBigTabBeans() {
-//        final ArrayList<BaseBottomTabBean> bitTabBeans = new ArrayList<>();
-//        bitTabBeans.add(
-//                BottomTabBeanBuilder.builder()
-//                        .setTabBean(new ConanTabBean("{icon-home}", "首页"))
-//                        .setOptions(BIT_TAB_OPTIONS)
-//                        .build()
-//        );
-//        bitTabBeans.add(
-//                BottomTabBeanBuilder.builder()
-//                        .setTabBean(new ConanTabBean("{icon-movie}", "电影"))
-//                        .setOptions(BIT_TAB_OPTIONS)
-//                        .build()
-//        );
-//        bitTabBeans.add(
-//                BottomTabBeanBuilder.builder()
-//                        .setTabBean(new ConanTabBean("{icon-music}", "音乐"))
-//                        .setOptions(BIT_TAB_OPTIONS)
-//                        .build()
-//        );
-//        bitTabBeans.add(
-//                BottomTabBeanBuilder.builder()
-//                        .setTabBean(new ConanTabBean("{icon-mine}", "我的"))
-//                        .setOptions(BIT_TAB_OPTIONS)
-//                        .build()
-//        );
-//        return bitTabBeans;
-//    }
 
     @Override
     public ArrayList<BaseBottomItemDelegate> setItemDelegates() {
@@ -138,9 +99,11 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     @Override
     public WeakHashMap<BottomBarParamsType, Object> setBottomBar(BottomBarParamsBuilder builder) {
         return builder
-                .setLineHasVisible(false)
-                .setBottomBarBackgroundColor(Color.TRANSPARENT)
-//                .setBottomBarHeight(50)
+//                .setLineHasVisible(true)
+//                .setLineBackgroundColor(Color.GREEN)
+                .setTabContainerHeight(64)
+//                .setTabContainerHeight(180)
+//                .setBigTabContainerBackgroundRes(R.color.bilibili_color)
 //                .setLineBackgroundColor(Color.parseColor("#f2f2f2"))
 //                .setLineBackgroundRes(R.color.main_ripple_color)
                 .build();
@@ -173,9 +136,14 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
+//        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
         return fragmentAnimator;
     }
 
-
+    @Override
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
+        //测试用
+        getProxyActivity().removeWindowBackground();
+    }
 }

@@ -81,7 +81,7 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
         super.onEnterAnimationEnd(savedInstanceState);
 
         //设置窗口背景为黑色,为了首页的缩放动画
-        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.black);
+        getProxyActivity().removeWindowBackground();
 
         DoDo.getHandler().postDelayed(() ->
                 YoYo.with(Techniques.FadeInRight)//渐显+从右至左移入

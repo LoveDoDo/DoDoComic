@@ -120,4 +120,12 @@ public abstract class ProxyActivity extends AppCompatActivity
     public void onBackPressed() {
         DELEGATE.onBackPressed();
     }
+
+    /**
+     * 设置window背景为黑色
+     * 方便转场动画
+     */
+    public void removeWindowBackground() {
+        getWindow().setBackgroundDrawableResource(R.color.black);
+    }
 }

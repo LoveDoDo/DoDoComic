@@ -33,11 +33,6 @@ public class BottomTabImageTextBean extends BaseBottomTabBean {
     }
 
     @Override
-    public Object setBigTabLayout() {
-        return setTabLayout();
-    }
-
-    @Override
     public void initView(View tabView) {
         if (getImageSelector() == null) {
             throw new RuntimeException("BottomTabImageTextBean must zhiding a ImageSelector");
@@ -50,6 +45,16 @@ public class BottomTabImageTextBean extends BaseBottomTabBean {
 
         mText.setTextColor(getTextSelector());
         mImageView.setImageDrawable(getImageSelector());
+    }
+
+    @Override
+    public void onNormalState(View tabView, boolean onCreate) {
+
+    }
+
+    @Override
+    public void onSelectedState(View tabView, boolean onCreate) {
+
     }
 
 }

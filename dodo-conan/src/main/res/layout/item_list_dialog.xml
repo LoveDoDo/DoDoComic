@@ -3,7 +3,7 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:foreground="?selectableItemBackground"
+    android:background="@drawable/selector_list_dialog_item_bg_2"
     android:paddingEnd="18dp"
     android:paddingStart="18dp"
     tool:background="@color/dodo_blue">

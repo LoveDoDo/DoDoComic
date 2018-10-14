@@ -12,12 +12,10 @@ public interface IBottomTabBean {
 
     Object setTabLayout();
 
-    Object setBigTabLayout();
-
     void initView(View tabView);
 
-//    void setNormalState(ViewGroup container);
-//
-//    void setSelectedState(ViewGroup container);
+    void onNormalState(View tabView, boolean onCreate);
+
+    void onSelectedState(View tabView, boolean onCreate);
 
 }

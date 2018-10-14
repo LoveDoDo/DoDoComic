@@ -31,11 +31,6 @@ public class BottomTabIconBean extends BaseBottomTabBean {
     }
 
     @Override
-    public Object setBigTabLayout() {
-        return setTabLayout();
-    }
-
-    @Override
     public void initView(View tabView) {
         mIconTv = (IconTextView) ((ViewGroup) tabView).getChildAt(0);
 
@@ -44,21 +39,15 @@ public class BottomTabIconBean extends BaseBottomTabBean {
 
         mIconTv.setTextColor(getIconSelector());
     }
-//
-//    @Override
-//    public void setNormalState(ViewGroup container) {
-//        final IconTextView icon = (IconTextView) container.getChildAt(0);
-//        icon.setText(getIcon());
-//        icon.setTextColor(getNormalTextColor());
-//        container.setBackgroundColor(getNormalBackgroundColor());
-//    }
-//
-//    @Override
-//    public void setSelectedState(ViewGroup container) {
-//        final IconTextView icon = (IconTextView) container.getChildAt(0);
-//        icon.setText(getIcon());
-//        icon.setTextColor(getSelectedTextColor());
-//        container.setBackgroundColor(getSelectedBackgroundColor());
-//    }
+
+    @Override
+    public void onNormalState(View tabView, boolean onCreate) {
+
+    }
+
+    @Override
+    public void onSelectedState(View tabView, boolean onCreate) {
+
+    }
 
 }

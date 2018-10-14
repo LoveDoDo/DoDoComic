@@ -44,11 +44,6 @@ public class BottomTabIconTitleBean extends BaseBottomTabBean {
     }
 
     @Override
-    public Object setBigTabLayout() {
-        return setTabLayout();
-    }
-
-    @Override
     public void initView(View tabView) {
         mIconTv = (IconTextView) ((ViewGroup) tabView).getChildAt(0);
         mTv = (AppCompatTextView) ((ViewGroup) tabView).getChildAt(1);
@@ -62,26 +57,14 @@ public class BottomTabIconTitleBean extends BaseBottomTabBean {
         mIconTv.setTextColor(getIconSelector());
         mTv.setTextColor(getTextSelector());
     }
-//
-//    @Override
-//    public void setNormalState(ViewGroup container) {
-//        final IconTextView icon = (IconTextView) container.getChildAt(0);
-//        final AppCompatTextView title = (AppCompatTextView) container.getChildAt(1);
-//        icon.setText(getIcon());
-//        title.setText(getTitle());
-//        icon.setTextColor(getNormalTextColor());
-//        title.setTextColor(getNormalTextColor());
-//        container.setBackgroundColor(getNormalBackgroundColor());
-//    }
-//
-//    @Override
-//    public void setSelectedState(ViewGroup container) {
-//        final IconTextView icon = (IconTextView) container.getChildAt(0);
-//        final AppCompatTextView title = (AppCompatTextView) container.getChildAt(1);
-//        icon.setText(getIcon());
-//        title.setText(getTitle());
-//        icon.setTextColor(getSelectedTextColor());
-//        title.setTextColor(getSelectedTextColor());
-//        container.setBackgroundColor(getSelectedBackgroundColor());
-//    }
+
+    @Override
+    public void onNormalState(View tabView, boolean onCreate) {
+
+    }
+
+    @Override
+    public void onSelectedState(View tabView, boolean onCreate) {
+
+    }
 }
