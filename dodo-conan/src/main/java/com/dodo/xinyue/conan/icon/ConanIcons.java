@@ -10,6 +10,34 @@ import com.joanzapata.iconify.Icon;
  */
 public enum ConanIcons implements Icon {
     /**
+     * 进度条
+     */
+    icon_progress('\ue631'),
+    /**
+     * 暂停
+     */
+    icon_pause('\ue961'),
+    /**
+     * 播放
+     */
+    icon_play('\ue642'),
+    /**
+     * 快进
+     */
+    icon_speed_go('\ue609'),
+    /**
+     * 快退
+     */
+    icon_speed_back('\ue73d'),
+    /**
+     * 返回
+     */
+    icon_back('\ue73c'),
+    /**
+     * 电视
+     */
+    icon_tv('\ue64b'),
+    /**
      * 搜索
      */
     icon_search('\ue6a8'),

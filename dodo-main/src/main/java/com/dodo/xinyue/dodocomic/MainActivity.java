@@ -33,10 +33,6 @@ public class MainActivity extends ProxyActivity {
 
     @Override
     public DoDoDelegate setRootDelegate() {
-//        final TestBean bean = new TestBean();
-//        bean.setTvQipuId("1088268004");
-//        bean.setVid("db15bf19135042a089dc1adfecc89cef");
-//        return ThumbPreviewDelegate.create(bean);
         return new ConanBottomDelegate();
     }
 

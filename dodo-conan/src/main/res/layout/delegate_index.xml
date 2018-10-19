@@ -19,20 +19,26 @@
             android:layout_height="48dp">
 
             <RelativeLayout
+                android:background="#01000000"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"><!--为了显示水波纹,需要加一个透明度为1的背景-->
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivLogo"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
+                <com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout
+                    android:id="@+id/rlLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/conan_logo_2"
-                    app:civ_border_overlay="false"
-                    app:civ_border_color="#20ffffff"
-                    app:civ_border_width="2dp" />
+                    app:round_as_circle="true"
+                    app:stroke_color="#20ffffff"
+                    app:stroke_width="2dp">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/vpLogo"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp" />
+
+                </com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tvTitle"
@@ -40,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/ivLogo"
+                    android:layout_toEndOf="@id/rlLogo"
                     android:gravity="center"
                     android:text="柯南迷"
                     android:textColor="@color/white"
@@ -245,11 +251,29 @@
             android:layout_height="1dp"
             android:background="#20ffffff" />
 
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/transparent"
+            app:tl_indicator_color="@color/white"
+            app:tl_indicator_width="18dp"
+            app:tl_indicator_corner_radius="6dp"
+            app:tl_indicator_margin_bottom="0dp"
+            app:tl_tab_padding="18dp"
+            app:tl_textSelectColor="@color/white_80"
+            app:tl_textUnselectColor="@color/white"
+            app:tl_textsize="14sp" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/qihoo_color"
-            android:visibility="gone"/>
+            android:layout_height="1dp"
+            android:background="#10ffffff" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 

@@ -7,12 +7,12 @@
         android:id="@+id/ivContainerBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:foreground="#80000000"/>
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80000000"
         android:orientation="vertical">
 
         <android.support.v7.widget.ContentFrameLayout
@@ -39,6 +39,7 @@
         android:id="@+id/llTabContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:alpha="0"/>
 
 </RelativeLayout>

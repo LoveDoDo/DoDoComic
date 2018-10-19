@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:round_corner="4dp">
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/black_20" />
+
+        </com.dodo.xinyue.core.ui.rcLayout.RCRelativeLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical|start"
+        android:maxLines="1"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        tool:text="云霄飞车杀人事件" />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical|start"
+        android:maxLines="1"
+        android:textColor="@color/white_80"
+        android:textSize="14sp"
+        tool:text="第1集" />
+
+</LinearLayout>

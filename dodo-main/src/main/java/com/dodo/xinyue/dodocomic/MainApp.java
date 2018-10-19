@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.dodo.xinyue.conan.icon.ConanIconFontModule;
 import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.test.interceptor.TestInterceptor;
 import com.facebook.stetho.Stetho;
 
 /**
@@ -28,10 +29,10 @@ public class MainApp extends Application {
 //                .withIcon(new FontAwesomeModule())//自带的图标库，需添加相应依赖
 //                .withIcon(new IoniconsModule())//自带的图标库，需添加相应依赖
                 .withIcon(new ConanIconFontModule())
-//                .withLoaderDelayed(1000)
+                .withLoaderDelayed(1000)
                 .withNativeApiHost("http://127.0.0.1/")
                 .withWebApiHost("http://192.168.75.101:5555/DoDoComic/")//以"/"结尾
-//                .withInterceptor(new TestInterceptor())
+                .withInterceptor(new TestInterceptor())
 //                .withInterceptor(new IQiyiInterceptor())
 //                .withInterceptor(new DebugInterceptor("intercept", R.raw.test))
 //                .withJavascriptInterface("dodo")//JS

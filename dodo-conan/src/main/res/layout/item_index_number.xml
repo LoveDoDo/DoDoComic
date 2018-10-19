@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/number"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_gravity="center"
+    android:background="@drawable/selector_index_number_bg"
+    android:gravity="center"
+    android:text="800"
+    android:textColor="@color/selector_index_number_text_color"
+    android:textSize="14sp"
+    tools:ignore="HardcodedText" />

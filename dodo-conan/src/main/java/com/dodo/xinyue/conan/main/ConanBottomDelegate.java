@@ -99,13 +99,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     @Override
     public WeakHashMap<BottomBarParamsType, Object> setBottomBar(BottomBarParamsBuilder builder) {
         return builder
-//                .setLineHasVisible(true)
-//                .setLineBackgroundColor(Color.GREEN)
                 .setTabContainerHeight(64)
-//                .setTabContainerHeight(180)
-//                .setBigTabContainerBackgroundRes(R.color.bilibili_color)
-//                .setLineBackgroundColor(Color.parseColor("#f2f2f2"))
-//                .setLineBackgroundRes(R.color.main_ripple_color)
                 .build();
     }
 

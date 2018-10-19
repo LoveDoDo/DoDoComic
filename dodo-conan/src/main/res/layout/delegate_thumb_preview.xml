@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="@color/black_60"
+        android:scaleType="centerCrop"
+        android:src="@drawable/yueyue_blur" /><!--直接给ImageView加遮罩-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_transparent_status_bar" />
+
+        <android.support.v7.widget.Toolbar
+            style="@style/ToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <RelativeLayout
+                android:background="#01000000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:background="@drawable/selector_long_click_bg"
+                    android:text="{icon-back}"
+                    android:textColor="@color/selector_icon_bg"
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:ellipsize="middle"
+                    android:gravity="center"
+                    android:textColor="#f2ffffff"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    tool:text="名侦探柯南"
+                    android:singleLine="true" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/shape_thumb_tag_bg"
+                android:gravity="center"
+                android:text="国语"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_thumb_tag_bg"
+                android:gravity="center"
+                android:text="TV版"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rlContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp">
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:alpha="0"
+                    android:gravity="center"
+                    android:text="{icon-tv}"
+                    android:textColor="#2c2c2c"
+                    android:textSize="250sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="206dp"
+                    android:layout_height="127dp"
+                    android:layout_alignTop="@id/tvIcon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6.5dp"
+                    android:alpha="0"
+                    android:background="@color/black_40" />
+
+                <com.eftimoff.androipathview.PathView
+                    android:id="@+id/pathView"
+                    android:layout_width="244dp"
+                    android:layout_height="244dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-46dp"
+                    app:pathColor="@color/dodo_blue"
+                    app:pathWidth="2dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/llPlayContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tool:visibility="visible">
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvSpeedBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_thumb_play"
+                    android:gravity="center"
+                    android:padding="14dp"
+                    android:text="{icon-speed-back}"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvPlayAndPause"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/selector_thumb_play"
+                    android:gravity="center"
+                    android:paddingLeft="4dp"
+                    android:text="{icon-play}"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvSpeedGo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_thumb_play"
+                    android:gravity="center"
+                    android:padding="14dp"
+                    android:text="{icon-speed-go}"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSeerBarContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/llPlayContainer"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="16dp"
+                android:visibility="gone"
+                tool:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tvCurrentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_time_bg"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="2dp"
+                    android:text="--:--:--"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <SeekBar
+                    android:id="@+id/sb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:maxHeight="2dp"
+                    android:minHeight="2dp"
+                    android:progressDrawable="@drawable/shape_progress_bg"
+                    android:splitTrack="false"
+                    android:textSize="12sp"
+                    android:thumb="@drawable/shape_thumb_bg" />
+
+                <TextView
+                    android:id="@+id/tvTotleTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_time_bg"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="2dp"
+                    android:text="--:--:--"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlStatusContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rlContainer"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/llLoadingContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tool:visibility="visible">
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="{icon-progress spin}"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="加载预览图ing..."
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLoadSuccessContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tool:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="加载完成，"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvSkipAnim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="跳过动画"
+                        android:textColor="@color/dodo_blue"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLoadFailureContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tool:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="加载失败，"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvRetry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="点击重试"
+                        android:textColor="#d71345"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.ContentFrameLayout>

@@ -2,17 +2,24 @@ package com.dodo.xinyue.conan.main.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.ToastUtils;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
+import com.dodo.xinyue.conan.constant.ApiURL;
+import com.dodo.xinyue.conan.main.index.adapter.IndexPagerAdapter;
+import com.dodo.xinyue.conan.main.index.adapter.LogoPagerAdapter;
 import com.dodo.xinyue.conan.main.index.anim.RotateCloseArrowAnim;
 import com.dodo.xinyue.conan.main.index.anim.RotateOpenArrowAnim;
 import com.dodo.xinyue.conan.main.index.anim.TextScaleFadeInAnim;
@@ -23,7 +30,9 @@ import com.dodo.xinyue.conan.module.history.HistoryDelegate;
 import com.dodo.xinyue.conan.module.money.MoneyDelegate;
 import com.dodo.xinyue.conan.module.search.SearchDelegate;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
+import com.dodo.xinyue.core.net.RestClient;
 import com.dodo.xinyue.core.ui.dialog.options.DialogOptions;
+import com.flyco.tablayout.SlidingTabLayout;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.util.ArrayList;
@@ -49,6 +58,182 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                     .topLeftRadius(6)
                     .topRightRadius(6)
                     .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+
+    @BindView(R2.id.tabLayout)
+    SlidingTabLayout mTabLayout;
+    @BindView(R2.id.vpContent)
+    ViewPager mViewPagerContent;
+
+    public static IndexDelegate create() {
+        return new IndexDelegate();
+    }
+
+    @Override
+    public Object setLayout() {
+        return R.layout.delegate_index;
+    }
+
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        for (int i = 0; i < 4; i++) {
+            mArrowList.add(new ArrowBean());
+            mAnimController.add(null);
+        }
+        mTvLangauge.setText(LANGUAGE_DES[mLanguageIndex]);
+        mTvType.setText(TYPE_DES[mTypeIndex]);
+        mTvSource.setText(SOURCE_DES[mSourceIndex]);
+        mTvForm.setText(FORM_DES[mFormIndex]);
+
+        int[] imgRes = new int[]{R.drawable.conan_logo_2, R.drawable.huiyuan};
+
+        mViewPagerLogo.setOffscreenPageLimit(imgRes.length);//默认是1 默认最多缓存2的1次方+1=3
+        mViewPagerLogo.setAdapter(new LogoPagerAdapter(imgRes));
+
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+
+        requestData();
+
+    }
+
+    private void requestData() {
+        final String moduleUrl = getUrl();
+        final String requestUrl = moduleUrl.replace("{page}", "1");
+        RestClient.builder()
+                .url(requestUrl)
+                .success(response -> {
+                    final String json = response.substring("var tvInfoJs=".length(), response.length());
+                    final JSONObject data = JSON.parseObject(json).getJSONObject("data");
+                    final int count = data.getIntValue("allNum");
+                    handleData(moduleUrl, count);
+                })
+                .build()
+                .get();
+    }
+
+    private String getUrl() {
+        String url = "";
+        switch (mLanguageIndex) {
+            case 0:
+                //国语
+                switch (mTypeIndex) {
+                    case 0:
+                        //TV版
+                        url = ApiURL.GUO_YU_TV_URL;
+                        break;
+                    case 1:
+                        //剧场版
+                        url = ApiURL.GUO_YU_JU_CHANG_URL;
+                        break;
+                    case 5:
+                        //主线篇
+                        url = ApiURL.GUO_YU_ZHU_XIAN_URL;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 1:
+                //日语
+                switch (mTypeIndex) {
+                    case 0:
+                        //TV版
+                        url = ApiURL.RI_YU_TV_URL;
+                        break;
+                    case 1:
+                        //剧场版
+                        url = ApiURL.RI_YU_JU_CHANG_URL;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+
+        if (TextUtils.isEmpty(url)) {
+            ToastUtils.showShort("url未找到");
+            if (mLanguageIndex == 0) {
+                url = ApiURL.GUO_YU_TV_URL;
+            } else {
+                url = ApiURL.RI_YU_TV_URL;
+            }
+            mTypeIndex = 0;
+//            mSpinnerType.setSelectedIndex(0);
+        }
+
+        return url;
+    }
+
+    private void handleData(String url, int count) {
+
+        final int pageCount = count / 50 + 1;
+        final String[] titles = new String[pageCount];
+        final String[] urls = new String[pageCount];
+        for (int i = 0; i < pageCount; i++) {
+            if (i != pageCount - 1) {
+                titles[i] = Integer.toString(50 * (i) + 1) + "-" + Integer.toString(50 * (i + 1));
+            } else {
+                titles[i] = Integer.toString(50 * (i) + 1) + "-" + Integer.toString(count);
+            }
+
+            urls[i] = url.replace("{page}", Integer.toString(i + 1));
+        }
+
+        switch (mFormIndex) {
+            case 0:
+            case 1:
+                mViewPagerContent.setOffscreenPageLimit(pageCount);
+                break;
+            case 2:
+            case 3:
+                mViewPagerContent.setOffscreenPageLimit(1);
+                break;
+            default:
+                break;
+        }
+
+//        mViewPager.setOffscreenPageLimit(pageCount);//默认是1 默认最多缓存2的1次方+1=3
+        mViewPagerContent.setAdapter(new IndexPagerAdapter(getChildFragmentManager(), titles, urls));
+        mTabLayout.setViewPager(mViewPagerContent);
+        mTabLayout.setCurrentTab(0, true);
+        mTabLayout.notifyDataSetChanged();//清除上一次选中状态
+    }
+
+    public int getLanguage() {
+        return mLanguageIndex;
+    }
+
+    public int getType() {
+        return mTypeIndex;
+    }
+
+    public int getSource() {
+        return mSourceIndex;
+    }
+
+    public int getForm() {
+        return mFormIndex;
+    }
+
+
+    @BindView(R2.id.vpLogo)
+    ViewPager mViewPagerLogo = null;
+    @BindView(R2.id.tvTitle)
+    AppCompatTextView mTvTitle = null;
+
+    @OnClick(R2.id.tvTitle)
+    void onTvTitleClicked() {
+        if (mViewPagerLogo.getCurrentItem() + 1 >= mViewPagerLogo.getChildCount()) {
+            mViewPagerLogo.setCurrentItem(0, true);
+        } else {
+            mViewPagerLogo.setCurrentItem(mViewPagerLogo.getCurrentItem() + 1, true);
+        }
+    }
 
     @OnClick(R2.id.tvSearch)
     void onTvSearchClicked() {
@@ -79,7 +264,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
 
     @OnLongClick(R2.id.tvMoney)
     boolean onTvMoneyLongClicked() {
-        ToastUtils.showShort("赞助");
+        ToastUtils.showShort("恭喜找到第三条线索");
         return true;
     }
 
@@ -97,8 +282,8 @@ public class IndexDelegate extends BaseBottomItemDelegate {
     @BindView(R2.id.tvFormArrow)
     IconTextView mFormArrow = null;//展示形式
     //动画控制器
-    private ArrayList<YoYo.YoYoString> mAnimController = new ArrayList<>();
 
+    private ArrayList<YoYo.YoYoString> mAnimController = new ArrayList<>();
     /**
      * 分类相关
      */
@@ -116,6 +301,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
     AppCompatTextView mTvType = null;//类型
     @BindView(R2.id.tvSource)
     AppCompatTextView mTvSource = null;//来源
+
     @BindView(R2.id.tvForm)
     AppCompatTextView mTvForm = null;//展示形式
 
@@ -127,7 +313,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .onSelected(selectedIndex -> {
                     final int lastIndex = mLanguageIndex;
                     mLanguageIndex = selectedIndex;
-
+                    requestData();
                     YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvLangauge.setText(LANGUAGE_DES[lastIndex]))
                             .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
@@ -140,8 +326,8 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                             .playOn(mTvLangauge);
 
                 })
-//                .onOpen(() -> switchArrow(0))
-//                .onClose(() -> switchArrow(0))
+                .onOpen(() -> switchArrow(0))
+                .onClose(() -> switchArrow(0))
                 .options(DIALOG_OPTIONS)
                 .build()
                 .show();
@@ -155,7 +341,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .onSelected(selectedIndex -> {
                     final int lastIndex = mTypeIndex;
                     mTypeIndex = selectedIndex;
-
+                    requestData();
                     YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvType.setText(TYPE_DES[lastIndex]))
                             .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
@@ -182,7 +368,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .onSelected(selectedIndex -> {
                     final int lastIndex = mSourceIndex;
                     mSourceIndex = selectedIndex;
-
+                    requestData();
                     YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvSource.setText(SOURCE_DES[lastIndex]))
                             .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
@@ -209,7 +395,7 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .onSelected(selectedIndex -> {
                     final int lastIndex = mFormIndex;
                     mFormIndex = selectedIndex;
-
+                    requestData();
                     YoYo.with(new TextScaleFadeInAnim())
                             .onStart(animator -> mTvForm.setText(FORM_DES[lastIndex]))
                             .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
@@ -226,35 +412,6 @@ public class IndexDelegate extends BaseBottomItemDelegate {
                 .options(DIALOG_OPTIONS)
                 .build()
                 .show();
-    }
-
-    private void showDialog() {
-
-    }
-
-    public static IndexDelegate create() {
-        return new IndexDelegate();
-    }
-
-    @Override
-    public Object setLayout() {
-        return R.layout.delegate_index;
-    }
-
-    @Override
-    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        for (int i = 0; i < 4; i++) {
-            mArrowList.add(new ArrowBean());
-            mAnimController.add(null);
-        }
-        mTvLangauge.setText(LANGUAGE_DES[mLanguageIndex]);
-        mTvType.setText(TYPE_DES[mTypeIndex]);
-        mTvSource.setText(SOURCE_DES[mSourceIndex]);
-        mTvForm.setText(FORM_DES[mFormIndex]);
-
-        //测试用
-        //设置窗口背景为黑色,为了首页的缩放动画
-//        getSupportDelegate().getActivity().getWindow().setBackgroundDrawableResource(R.color.transparent);
     }
 
     private void switchArrow(int index) {

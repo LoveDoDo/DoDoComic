@@ -204,4 +204,7 @@ dependencies {
     //svg
     api 'com.eftimoff:android-pathview:1.0.8@aar'
 
+    //高斯模糊
+    api 'jp.wasabeef:glide-transformations:3.3.0'
+
 }

@@ -43,6 +43,8 @@ public class RestClient {
     private final File FILE;
     private final Context CONTEXT;
 
+    private Call<String> mCall = null;
+
     //切换大小写快捷键：Ctrl+Shift+U
     public RestClient(String url,
                       WeakHashMap<String, Object> params,
@@ -83,7 +85,7 @@ public class RestClient {
      */
     private void request(HttpMethod method) {
         final RestService service = RestCreator.getRestService();
-        Call<String> call = null;
+//        Call<String> call = null;
 
         if (REQUEST != null) {
             //请求开始
@@ -97,37 +99,37 @@ public class RestClient {
 
         switch (method) {
             case GET:
-                call = service.get(URL, PARAMS);
+                mCall = service.get(URL, PARAMS);
                 break;
             case POST:
-                call = service.post(URL, PARAMS);
+                mCall = service.post(URL, PARAMS);
                 break;
             case POST_RAW:
-                call = service.postRaw(URL, BODY);
+                mCall = service.postRaw(URL, BODY);
                 break;
             case PUT:
-                call = service.put(URL, PARAMS);
+                mCall = service.put(URL, PARAMS);
                 break;
             case PUT_RAW:
-                call = service.putRaw(URL, BODY);
+                mCall = service.putRaw(URL, BODY);
                 break;
             case DELETE:
-                call = service.delete(URL, PARAMS);
+                mCall = service.delete(URL, PARAMS);
                 break;
             case UPLOAD:
                 final RequestBody requestBody =
                         RequestBody.create(MediaType.parse(MultipartBody.FORM.toString()), FILE);
                 final MultipartBody.Part body =
                         MultipartBody.Part.createFormData("file", FILE.getName(), requestBody);
-                call = service.upload(URL, body);
+                mCall = service.upload(URL, body);
             default:
                 break;
         }
 
-        if (call != null) {
+        if (mCall != null) {
             //正式开始请求
             //异步
-            call.enqueue(getRequestCallback());
+            mCall.enqueue(getRequestCallback());
         }
     }
 
@@ -175,6 +177,12 @@ public class RestClient {
                 FAILURE,
                 ERROR
         ).handleDownload();
+    }
+
+    public final void cancle() {
+        if (mCall != null && !mCall.isCanceled()) {
+            mCall.cancel();
+        }
     }
 
 }
