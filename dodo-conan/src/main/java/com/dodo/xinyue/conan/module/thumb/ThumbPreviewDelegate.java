@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
@@ -139,6 +140,11 @@ public class ThumbPreviewDelegate extends DoDoDelegate implements Handler.Callba
     TextView mTvLanguage = null;
     @BindView(R2.id.tvType)
     TextView mTvType = null;
+
+    @OnClick(R2.id.tvPlay)
+    void onTvPlayClicked() {
+        ToastUtils.showShort("播放");
+    }
 
     @OnClick(R2.id.tvBack)
     void onTvBackClicked() {
@@ -577,7 +583,7 @@ public class ThumbPreviewDelegate extends DoDoDelegate implements Handler.Callba
         }
         mAutoPlay = true;
         mTvAutoPlay.setText("{icon-pause}");
-        mTvAutoPlay.setPadding(0, 0, 0, 0);
+        mTvAutoPlay.setPadding(DimenUtil.dp2px(1), 0, 0, 0);
 
         mTimer = new Timer();
         final BaseTimerTask timerTask = new BaseTimerTask(this);

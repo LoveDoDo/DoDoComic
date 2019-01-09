@@ -10,6 +10,58 @@ import com.joanzapata.iconify.Icon;
  */
 public enum ConanIcons implements Icon {
     /**
+     * 右箭头
+     */
+    icon_arrow_right('\ue612'),
+    /**
+     * 消息
+     */
+    icon_message('\ue62a'),
+    /**
+     * 钥匙
+     */
+    icon_key('\ue683'),
+    /**
+     * 贴吧
+     */
+    icon_tieba('\ue606'),
+    /**
+     * 笑话
+     */
+    icon_joke('\ue6b0'),
+    /**
+     * 推理
+     */
+    icon_tuili('\ue614'),
+    /**
+     * 换肤
+     */
+    icon_skin('\ue603'),
+    /**
+     * 设置
+     */
+    icon_setting('\ue604'),
+    /**
+     * 漫画
+     */
+    icon_manhua('\ue600'),
+    /**
+     * 影音
+     */
+    icon_yingyin('\ue640'),
+    /**
+     * 播放2
+     */
+    icon_play2('\ue65b'),
+    /**
+     * 序号 No.
+     */
+    icon_no('\ue60c'),
+    /**
+     * 预览
+     */
+    icon_preview('\ue684'),
+    /**
      * 进度条
      */
     icon_progress('\ue631'),

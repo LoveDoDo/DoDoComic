@@ -37,6 +37,7 @@ public class WebViewInitializer {
         settings.setJavaScriptEnabled(true);//JS互调必须设置的
         final String ua = settings.getUserAgentString();
         settings.setUserAgentString(ua + "dodo");
+//        settings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
         //隐藏缩放控件
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
@@ -55,7 +56,7 @@ public class WebViewInitializer {
 //
 ////        webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);//禁止硬件加速，解决闪屏问题
 //
-////        settings.setUseWideViewPort(true);//设置webview自适应屏幕大小
+//        settings.setUseWideViewPort(true);//设置webview自适应屏幕大小
 //
 //        settings.setBlockNetworkImage(true);
 

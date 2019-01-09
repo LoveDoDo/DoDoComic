@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="18dp"
+    android:paddingTop="18dp"
+    tool:background="@color/dodo_blue">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/tvIcon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textColor="@color/white_90"
+        android:textSize="28sp"
+        tool:text="{fa-coffee}" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        tool:text="推理" />
+
+</android.support.v7.widget.LinearLayoutCompat>

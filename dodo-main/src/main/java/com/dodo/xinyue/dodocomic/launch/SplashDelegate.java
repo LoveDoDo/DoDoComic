@@ -22,9 +22,9 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.timer.BaseTimerTask;
 import com.dodo.xinyue.core.util.timer.ITimerListener;
 import com.dodo.xinyue.dodocomic.R;
-import com.dodo.xinyue.dodocomic.anim.SlideOutLeftSplashBackground;
-import com.dodo.xinyue.dodocomic.anim.SlideOutRightSplashBackground;
-import com.dodo.xinyue.dodocomic.anim.ZoomInSplashConan;
+import com.dodo.xinyue.dodocomic.launch.anim.SlideOutLeftSplashBackground;
+import com.dodo.xinyue.dodocomic.launch.anim.SlideOutRightSplashBackground;
+import com.dodo.xinyue.dodocomic.launch.anim.ZoomInSplashConan;
 
 import java.util.Timer;
 
@@ -79,7 +79,9 @@ public class SplashDelegate extends DoDoDelegate implements ITimerListener {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-
+//        getSupportDelegate().popTo(A, true, () -> {
+//            start(C)
+//        });
         //设置窗口背景为黑色,为了首页的缩放动画
         getProxyActivity().removeWindowBackground();
 

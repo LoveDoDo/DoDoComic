@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.dodo.xinyue.core.app.DoDo;
 
 /**
@@ -23,16 +25,15 @@ public final class DoDoPreference {
     private static final SharedPreferences PREFERENCES =
             PreferenceManager.getDefaultSharedPreferences(DoDo.getAppContext());
     private static final String APP_PREFERENCES_KEY = "profile";//TODO profile:配置文件
-    public  static final String HISTORY_CITY = "historySearchCity";//历史访问城市记录
 
-    private static SharedPreferences getAppPreference() {
+    public static SharedPreferences getAppPreference() {
         return PREFERENCES;
     }
 
-    public static void setAppProfile(String val) {
+    public static void setAppProfile(String value) {
         getAppPreference()
                 .edit()
-                .putString(APP_PREFERENCES_KEY, val)
+                .putString(APP_PREFERENCES_KEY, value)
                 .apply();
     }
 
@@ -40,10 +41,10 @@ public final class DoDoPreference {
         return getAppPreference().getString(APP_PREFERENCES_KEY, null);
     }
 
-//    public static JSONObject getAppProfileJson() {
-//        final String profile = getAppProfile();
-//        return JSON.parseObject(profile);
-//    }
+    public static JSONObject getAppProfileJson() {
+        final String profile = getAppProfile();
+        return JSON.parseObject(profile);
+    }
 
     public static void removeAppProfile() {
         getAppPreference()
@@ -71,10 +72,17 @@ public final class DoDoPreference {
                 .getBoolean(key, false);
     }
 
-    public static void addCustomAppProfile(String key, String val) {
+    public static void addCustomAppProfile(String key, String value) {
         getAppPreference()
                 .edit()
-                .putString(key, val)
+                .putString(key, value)
+                .apply();
+    }
+
+    public static void addCustomAppProfile(String key,Object value) {
+        getAppPreference()
+                .edit()
+                .putString(key, JSON.toJSONString(value))
                 .apply();
     }
 
@@ -88,5 +96,6 @@ public final class DoDoPreference {
                 .remove(key)
                 .apply();
     }
+
 
 }

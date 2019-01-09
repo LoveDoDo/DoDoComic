@@ -31,6 +31,7 @@ public class DialogPublicParamsBean {
     private boolean mCanceledOnTouchOutside = true;//窗口外点击取消Dialog
     private boolean mCancelable = true;//返回键取消Dialog
     private boolean mCoverStatusBar = true;//覆盖状态栏(全屏)
+    private boolean mBackgroundDimEnabled = true;//背景变暗
     private IOpenDialog mIOpenDialog = null;//回调 打开Dialog
     private ICloseDialog mICloseDialog = null;//回调 关闭Dialog
 
@@ -128,6 +129,14 @@ public class DialogPublicParamsBean {
 
     public void setCoverStatusBar(boolean coverStatusBar) {
         this.mCoverStatusBar = coverStatusBar;
+    }
+
+    public boolean isBackgroundDimEnabled() {
+        return mBackgroundDimEnabled;
+    }
+
+    public void setBackgroundDimEnabled(boolean backgroundDimEnabled) {
+        this.mBackgroundDimEnabled = backgroundDimEnabled;
     }
 
     public IOpenDialog getIOpenDialog() {

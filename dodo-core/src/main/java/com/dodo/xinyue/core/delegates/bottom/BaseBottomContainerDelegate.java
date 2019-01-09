@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.ContentFrameLayout;
@@ -68,6 +69,11 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
     AppCompatImageView mContainerBg = null;//TODO 后续可添加纯色背景
 
     /**
+     * 恢复状态
+     */
+    public abstract void onRestoreStatus(ArrayList<BaseBottomItemDelegate> delegates);
+
+    /**
      * 批量设置TabBean
      */
     public abstract ArrayList<BaseBottomTabBean> setTabBeans();
@@ -116,14 +122,27 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
         return R.layout.delegate_bottom_container;
     }
 
+    public abstract Class<? extends DoDoDelegate> getMayBeExistDelegate();
+
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
 
-        if (!isSetBottomBarHeight) {
-            setBottomBarHeight(DimenUtil.px2dp(mTabContainer.getHeight()));
-        }
+//        if (!isSetBottomBarHeight) {
+//            setBottomBarHeight(DimenUtil.px2dp(mTabContainer.getHeight()));
+//        }
 
+        if (findChildFragment(getMayBeExistDelegate()) != null) {
+            onRestoreStatus(ITEM_DELEGATES);
+            mCurrentDelegateIndex = savedInstanceState.getInt("mCurrentDelegateIndex");
+            setNormalState(0, true);
+            setSelectedState(mCurrentDelegateIndex, true);
+            getProxyActivity().removeWindowBackground();
+            onHiddenChanged(false);
+            mTabCanClick = true;
+            mCanQuit = true;
+            return;
+        }
         //如果需要同时加载多个fragment,可以在这里loadMultipleRootFragment
         YoYo.with(new BottomBarEnterAnim())
                 .interpolate(new OvershootInterpolator())//回弹
@@ -134,6 +153,12 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
                     mCanQuit = true;
                 })
                 .playOn(mTabContainer);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("mCurrentDelegateIndex", mCurrentDelegateIndex);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -148,9 +173,10 @@ public abstract class BaseBottomContainerDelegate extends DoDoDelegate implement
             YoYo.with(new BottomBarEnterAnim())
                     .interpolate(new DecelerateInterpolator())//减速
                     .duration(380)
-                    .delay(50)
+//                    .delay(50)//会有残影
                     .playOn(mTabContainer);
         }
+
     }
 
     @Override

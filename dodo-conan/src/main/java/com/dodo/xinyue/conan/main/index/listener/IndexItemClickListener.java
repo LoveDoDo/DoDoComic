@@ -2,14 +2,16 @@ package com.dodo.xinyue.conan.main.index.listener;
 
 import android.view.View;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.dodo.xinyue.conan.R;
+import com.dodo.xinyue.conan.helper.AppLinkHelper;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.main.index.data.IndexItemType;
-import com.dodo.xinyue.conan.module.thumb.ThumbPreviewDelegate;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulFields;
+import com.dodo.xinyue.core.ui.recycler.MulItemClickListener;
 
 /**
  * ThumbPreviewItemClickListener
@@ -17,12 +19,10 @@ import com.dodo.xinyue.core.ui.recycler.MulFields;
  * @author DoDo
  * @date 2018/10/15
  */
-public class IndexItemClickListener implements BaseQuickAdapter.OnItemClickListener {
+public class IndexItemClickListener extends MulItemClickListener {
 
-    private final DoDoDelegate DELEGATE;
-
-    public IndexItemClickListener(DoDoDelegate delegate) {
-        this.DELEGATE = delegate;
+    private IndexItemClickListener(DoDoDelegate delegate) {
+        super(delegate);
     }
 
     public static IndexItemClickListener create(DoDoDelegate delegate) {
@@ -30,8 +30,7 @@ public class IndexItemClickListener implements BaseQuickAdapter.OnItemClickListe
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        final MulEntity entity = (MulEntity) adapter.getData().get(position);
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position, MulEntity entity, int itemViewType) {
         final IndexBean comicBean = entity.getField(MulFields.BEAN);
 //        ToastUtils.showShort(comicBean.getTitle());
 
@@ -48,9 +47,16 @@ public class IndexItemClickListener implements BaseQuickAdapter.OnItemClickListe
 //                .start(delegate);
 
 //        //临时动画
-        DELEGATE.getParentDelegate().extraTransaction()
-                .setCustomAnimations(R.anim.thumb_preview_enter, R.anim.index_content,R.anim.index_content,R.anim.thumb_preview_exit)
-                .start(ThumbPreviewDelegate.create(comicBean));
+//        DELEGATE.getParentDelegate().extraTransaction()
+//                .setCustomAnimations(R.anim.thumb_preview_enter, R.anim.index_content,R.anim.index_content,R.anim.thumb_preview_exit)
+//                .start(ThumbPreviewDelegate.create(comicBean));
+
+        if (!AppUtils.isAppInstalled("com.qiyi.video")) {
+            ToastUtils.showShort("请先安装爱奇艺Android客户端");
+            return;
+        }
+
+        AppLinkHelper.openIQiYi(comicBean.getTvQipuId(), comicBean.getVid());
 
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:
@@ -76,8 +82,8 @@ public class IndexItemClickListener implements BaseQuickAdapter.OnItemClickListe
             default:
                 break;
         }
-
-
     }
+
+
 
 }

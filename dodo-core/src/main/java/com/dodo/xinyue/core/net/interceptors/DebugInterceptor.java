@@ -1,5 +1,6 @@
 package com.dodo.xinyue.core.net.interceptors;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.RawRes;
 
 import com.dodo.xinyue.core.util.file.FileUtil;
@@ -45,7 +46,7 @@ public class DebugInterceptor extends BaseInterceptor {
     }
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         final String url = chain.request().url().toString();
 //        Log.d("HAHAHA", "hhhhhhh");
         if (url.contains(DEBUG_URL)) {

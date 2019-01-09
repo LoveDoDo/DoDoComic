@@ -20,6 +20,7 @@ import butterknife.Unbinder;
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragmentDelegate;
+import me.yokeyword.fragmentation.SupportHelper;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
@@ -50,6 +51,7 @@ public abstract class BaseDelegate extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DELEGATE.onCreate(savedInstanceState);
+
 //        DELEGATE.setFragmentAnimator(new DefaultHorizontalAnimator());
         //在fragment(delegate)中显示menu，且设置SupportActionBar的话，必须添加此命令
         //如果使用mToolBar.inflateMenu(R.menu...)来填充菜单，则不需要添加此命令
@@ -242,5 +244,19 @@ public abstract class BaseDelegate extends Fragment
 
     public void pop() {
         DELEGATE.pop();
+    }
+
+    /**
+     * 获取栈内的fragment对象
+     */
+    public <T extends ISupportFragment> T findFragment(Class<T> fragmentClass) {
+        return SupportHelper.findFragment(getFragmentManager(), fragmentClass);
+    }
+
+    /**
+     * 获取栈内的fragment对象
+     */
+    public <T extends ISupportFragment> T findChildFragment(Class<T> fragmentClass) {
+        return SupportHelper.findFragment(getChildFragmentManager(), fragmentClass);
     }
 }

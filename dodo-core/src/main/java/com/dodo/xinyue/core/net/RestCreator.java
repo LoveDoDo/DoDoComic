@@ -1,13 +1,18 @@
 package com.dodo.xinyue.core.net;
 
+import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.app.ConfigKeys;
 import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.core.net.interceptors.cache.NetCacheInterceptor;
+import com.dodo.xinyue.core.net.interceptors.cache.OffLineCacheInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -49,7 +54,7 @@ public class RestCreator {
      * 创建OKHttpClient,用于提供给Retrofit
      */
     private static final class OKHttpHolder {
-        private static final int TIME_OUT = 60;
+        private static final int TIME_OUT = 10;
         private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
         private static final ArrayList<Interceptor> INTERCEPTORS = DoDo.getConfiguration(ConfigKeys.INTERCEPTOR);
 
@@ -90,11 +95,20 @@ public class RestCreator {
             //通过Stetho进行网络抓包
             BUILDER.addNetworkInterceptor(new StethoInterceptor());
 
+            //缓存
+            File httpCacheDir = new File(DoDo.getAppContext().getCacheDir(), DoDo.getAppContext().getString(R.string.okhttp_cache_dir));
+            int cacheSize = 30 * 1024 * 1024; // 缓存大小：30 MB
+            Cache cache = new Cache(httpCacheDir, cacheSize);
+            BUILDER.addNetworkInterceptor(new NetCacheInterceptor());
+            BUILDER.addInterceptor(new OffLineCacheInterceptor());
+            BUILDER.cache(cache);
+
             return BUILDER;
         }
 
         private static final OkHttpClient OK_HTTP_CLIENT = addInterceptor()
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)//连接超时
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)//连接超时
                 .build();
     }
 

@@ -14,8 +14,8 @@ import com.dodo.xinyue.conan.main.index.IndexContentDelegate;
  */
 public class IndexPagerAdapter extends FragmentStatePagerAdapter {
 
-    private String[] mTitles = null;
-    private String[] mUrls = null;
+    private String[] mTitles;
+    private String[] mUrls;
 
     public IndexPagerAdapter(FragmentManager fm, String[] titles, String[] urls) {
         super(fm);

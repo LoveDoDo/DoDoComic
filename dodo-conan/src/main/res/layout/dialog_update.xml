@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/dodo_blue">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="26dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            tool:text="柯南迷更新啦~" />
+
+        <com.dodo.xinyue.core.ui.rcLayout.RCImageView
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="26dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/yueyue_icon"
+            app:round_as_circle="true" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:paddingBottom="18dp"
+        android:paddingTop="20dp"
+        android:scrollbarThumbVertical="@drawable/shape_scrollbar_bg"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingEnd="26dp"
+            android:paddingStart="26dp"
+            android:textColor="#cc333333"
+            android:textSize="15sp"
+            tool:text="欢迎升级柯南迷1.1 最新版\n1、xxx\n2、xxx\n3、xxx" />
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvVersionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="26dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="#aaAAAAAA"
+        android:textSize="15sp"
+        tool:text="版本：1.0.1.1102" />
+
+    <TextView
+        android:id="@+id/tvPackageSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="26dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="#aaAAAAAA"
+        android:textSize="15sp"
+        tool:text="大小：17.2MB" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#60cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_list_dialog_cancel"
+            android:gravity="center"
+            android:text="残忍的拒绝"
+            android:textColor="#cc333333"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#60cccccc" />
+
+        <TextView
+            android:id="@+id/tvConfirm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_list_dialog_cancel"
+            android:gravity="center"
+            android:text="愉快的升级"
+            android:textColor="@color/dodo_blue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

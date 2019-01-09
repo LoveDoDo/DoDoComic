@@ -53,7 +53,7 @@ public class DialogOptions {
     }
 
     public final DialogOptions radius(int radius) {
-        OPTIONS.put(DialogOptionFields.DIALOG_RADIUS, new int[]{radius, radius, radius, radius});
+        OPTIONS.put(DialogOptionFields.DIALOG_RADIUS, radius);
         return this;
     }
 
@@ -99,6 +99,11 @@ public class DialogOptions {
 
     public final DialogOptions coverStatusBar(boolean coverStatusBar) {
         OPTIONS.put(DialogOptionFields.COVER_STATUSBAR, coverStatusBar);
+        return this;
+    }
+
+    public final DialogOptions backgroundDimEnabled(boolean backgroundDimEnabled) {
+        OPTIONS.put(DialogOptionFields.BACKGROUND_DIM_ENABLED, backgroundDimEnabled);
         return this;
     }
 

@@ -42,7 +42,7 @@ public abstract class BaseDialog extends AppCompatDialog
     private static final String TAG = "BaseDialog";
     //默认主题
     public static final int DEFAULT_THEME = R.style.dialog;
-    //默认动画
+    //默认动画 duration=220
     public static final int DEFAULT_ANIM = android.R.style.Animation_Dialog;
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -72,7 +72,7 @@ public abstract class BaseDialog extends AppCompatDialog
      */
     private Context mContext;
     private int mDialogTheme;//主题/样式
-    private int mDialogAnim;//动画
+    private int mDialogAnim;//动画  -1 = 无动画
     private int mDialogGravity;//显示位置 多个用 | 分割
     private int[] mDialogRadius;//圆角 单位dp
     private float mWidthScale;//宽度缩放比例 0-1
@@ -80,6 +80,7 @@ public abstract class BaseDialog extends AppCompatDialog
     private boolean mCanceledOnTouchOutside;//窗口外点击取消Dialog
     private boolean mCancelable;//返回键取消Dialog
     private boolean mCoverStatusBar;//覆盖状态栏(全屏)
+    private boolean mBackgroundDimEnabled;//背景变暗
     private IOpenDialog mIOpenDialog;//回调 打开Dialog
     private ICloseDialog mICloseDialog;//回调 关闭Dialog
 
@@ -97,6 +98,7 @@ public abstract class BaseDialog extends AppCompatDialog
         this.mCanceledOnTouchOutside = bean.isCanceledOnTouchOutside();
         this.mCancelable = bean.isCancelable();
         this.mCoverStatusBar = bean.isCoverStatusBar();
+        this.mBackgroundDimEnabled = bean.isBackgroundDimEnabled();
         this.mIOpenDialog = bean.getIOpenDialog();
         this.mICloseDialog = bean.getICloseDialog();
 
@@ -126,8 +128,7 @@ public abstract class BaseDialog extends AppCompatDialog
 
         //绑定视图
         mUnbinder = ButterKnife.bind(this, mCustomView);
-        //添加事件
-        onBindView(mCustomView);
+
 
         //将自定义View添加到包裹容器里
         mWrapContainerView.addView(mCustomView);
@@ -146,6 +147,10 @@ public abstract class BaseDialog extends AppCompatDialog
 
         //适配全面屏 必须放在setContentView()之后
         initWindowAttrs();
+
+        //添加事件
+        onBindView(mCustomView);
+
     }
 
     /**
@@ -263,6 +268,9 @@ public abstract class BaseDialog extends AppCompatDialog
         lp.width = mContainerWidth;
         lp.height = mContainerHeight;
         lp.gravity = Gravity.TOP;//不设置的话,会在屏幕下方空出一些间距
+        if (!mBackgroundDimEnabled) {
+            lp.dimAmount = 0f;
+        }
         dialogWindow.setAttributes(lp);
     }
 
@@ -363,4 +371,5 @@ public abstract class BaseDialog extends AppCompatDialog
         }
         super.cancel();
     }
+
 }

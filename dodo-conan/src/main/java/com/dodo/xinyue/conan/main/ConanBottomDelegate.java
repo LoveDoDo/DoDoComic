@@ -3,13 +3,23 @@ package com.dodo.xinyue.conan.main;
 import android.os.Bundle;
 import android.view.Gravity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.bottom.ConanTabBean;
+import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.main.index.IndexDelegate;
+import com.dodo.xinyue.conan.main.manhua.ManhuaDelegate;
 import com.dodo.xinyue.conan.main.mine.MineDelegate;
-import com.dodo.xinyue.conan.main.movie.MovieDelegate;
-import com.dodo.xinyue.conan.main.music.MusicDelegate;
+import com.dodo.xinyue.conan.main.mine.event.NewMessageEvent;
+import com.dodo.xinyue.conan.main.yingyin.YingyinDelegate;
+import com.dodo.xinyue.conan.view.dialog.message.ConanMessageDialog;
+import com.dodo.xinyue.conan.view.dialog.update.ConanUpdateDialog;
+import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomDelegate;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
 import com.dodo.xinyue.core.delegates.bottom.bean.BaseBottomTabBean;
@@ -18,13 +28,17 @@ import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsType;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomTabBeanBuilder;
 import com.dodo.xinyue.core.delegates.bottom.options.BottomTabBeanOptions;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.WeakHashMap;
 
+import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
- * ConanDelegate
+ * ConanBottomDelegate
  *
  * @author DoDo
  * @date 2018/10/1
@@ -52,6 +66,14 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                     .setTabGravity(Gravity.BOTTOM);
 
     @Override
+    public void onRestoreStatus(ArrayList<BaseBottomItemDelegate> delegates) {
+        delegates.set(0, findChildFragment(IndexDelegate.class));
+        delegates.set(1, findChildFragment(YingyinDelegate.class));
+        delegates.set(2, findChildFragment(ManhuaDelegate.class));
+        delegates.set(3, findChildFragment(MineDelegate.class));
+    }
+
+    @Override
     public ArrayList<BaseBottomTabBean> setTabBeans() {
         final ArrayList<BaseBottomTabBean> tabBeans = new ArrayList<>();
         tabBeans.add(
@@ -62,21 +84,24 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
         );
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-movie}", "电影", R.raw.movie))
+                        .setTabBean(new ConanTabBean("{icon-yingyin}", "影音", R.raw.yingyin))
                         .setOptions(TAB_OPTIONS)
                         .build()
+
         );
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
-                        .setTabBean(new ConanTabBean("{icon-music}", "音乐", R.raw.music))
+                        .setTabBean(new ConanTabBean("{icon-manhua}", "漫画", R.raw.comic))
                         .setOptions(TAB_OPTIONS)
                         .build()
+
         );
         tabBeans.add(
                 BottomTabBeanBuilder.builder()
                         .setTabBean(new ConanTabBean("{icon-mine}", "我的", R.raw.mine))
                         .setOptions(TAB_OPTIONS)
                         .build()
+
         );
         return tabBeans;
     }
@@ -90,8 +115,8 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     public ArrayList<BaseBottomItemDelegate> setItemDelegates() {
         final ArrayList<BaseBottomItemDelegate> delegates = new ArrayList<>();
         delegates.add(new IndexDelegate());
-        delegates.add(new MovieDelegate());
-        delegates.add(new MusicDelegate());
+        delegates.add(new YingyinDelegate());
+        delegates.add(new ManhuaDelegate());
         delegates.add(new MineDelegate());
         return delegates;
     }
@@ -100,44 +125,136 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     public WeakHashMap<BottomBarParamsType, Object> setBottomBar(BottomBarParamsBuilder builder) {
         return builder
                 .setTabContainerHeight(64)
+                .setBottomBarHeight(64)
                 .build();
     }
 
     @Override
     public boolean onTabSelected(int position, boolean isRepeat) {
-        if (isRepeat) {
-            if (position == 3) {
-                if (System.currentTimeMillis() - mLastTouchTime < WAIT_TIME) {
-                    mLastTouchTime = System.currentTimeMillis();
-                    mTouchCount++;
-                    if (mTouchCount > 3) {
-                        ToastUtils.showShort("再按 " + (mTargetCount - mTouchCount) + " 次开启寻宝模式");
-                    }
-                    if (mTouchCount == mTargetCount) {
-                        ToastUtils.showShort("恭喜你开启寻宝模式");
-                        mTouchCount = 0;
-                    }
-                } else {
-                    mLastTouchTime = System.currentTimeMillis();
-                    mTouchCount = 1;
+        if (position == 3) {
+            if (System.currentTimeMillis() - mLastTouchTime < WAIT_TIME) {
+                mLastTouchTime = System.currentTimeMillis();
+                mTouchCount++;
+                if (mTouchCount > 3) {
+                    ToastUtils.showShort("再按 " + (mTargetCount - mTouchCount) + " 次开启寻宝模式");
                 }
+                if (mTouchCount == mTargetCount) {
+                    ToastUtils.showShort("恭喜你开启寻宝模式");
+                    mTouchCount = 0;
+                }
+            } else {
+                mLastTouchTime = System.currentTimeMillis();
+                mTouchCount = 1;
             }
-
         }
+
         return super.onTabSelected(position, isRepeat);
+    }
+
+    @Override
+    public Class<? extends DoDoDelegate> getMayBeExistDelegate() {
+        return IndexDelegate.class;
+    }
+
+    @Override
+    public int setFirstPageIndex() {
+        return 0;
     }
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-//        fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
+        if (!ApiHelper.isQuicklyOpenApp()) {
+            fragmentAnimator.setEnter(R.anim.conan_bottom_enter);
+        } else {
+            fragmentAnimator.setEnter(R.anim.no_anim);
+        }
         return fragmentAnimator;
     }
 
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        //测试用
-        getProxyActivity().removeWindowBackground();
+
+        if (ApiHelper.isQuicklyOpenApp()) {
+            getProxyActivity().removeWindowBackground();
+        }
+    }
+
+    /**
+     * 展示新消息
+     * <p>
+     * sticky = true 粘性消息 先发送消息再订阅，也可以收到消息，收到后需要移除消息，不然每次重新订阅都会收到
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onShowMessageEvent(JiGuangMessage event) {
+        EventBusActivityScope.getDefault(DoDo.getActivity()).removeStickyEvent(event);
+        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(new NewMessageEvent());
+        final int type = event.getType();
+        switch (type) {
+            case JiGuangMessage.TYPE_NOTICE:
+                //公告
+                ConanMessageDialog.builder()
+                        .title(event.getTitle())
+                        .content(event.getContent())
+                        .radius(8)
+                        .widthScale(0.85f)
+                        .build()
+                        .show();
+                break;
+            case JiGuangMessage.TYPE_UPDATE:
+                //更新
+                final String updateInfo = event.getUpdateInfo();
+                final JSONObject bean = JSON.parseObject(updateInfo);
+                final int versionCode = bean.getIntValue("versionCode");
+                if (versionCode <= AppUtils.getAppVersionCode()) {
+                    return;
+                }
+                final String versionName = bean.getString("versionName");
+                final String packageSize = bean.getString("packageSize");
+                final String downloadPath = bean.getString("downloadPath");
+                ConanUpdateDialog.builder()
+                        .title(event.getTitle())
+                        .content(event.getContent())
+                        .versionName(versionName)
+                        .packageSize(packageSize)
+                        .confirm(() -> ToastUtils.showLong("升级\n" + downloadPath))
+                        .bottomLeftRadius(8)
+                        .bottomRightRadius(8)
+                        .widthScale(0.85f)
+                        .build()
+                        .show();
+                break;
+            case JiGuangMessage.TYPE_NONE:
+                //其他
+
+                break;
+            default:
+                break;
+        }
+        final int form = ApiHelper.getMessageForm();
+        switch (form) {
+            case JiGuangMessage.FORM_DIALOG:
+
+                break;
+            case JiGuangMessage.FORM_NOTIFICATION:
+
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBusActivityScope.getDefault(DoDo.getActivity()).register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBusActivityScope.getDefault(DoDo.getActivity()).unregister(this);
     }
 }

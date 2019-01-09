@@ -37,7 +37,6 @@
                     android:gravity="center"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:background="@drawable/selector_long_click_bg"
                     android:text="{icon-back}"
                     android:textColor="@color/selector_icon_bg"
                     android:textSize="32sp" />
@@ -56,6 +55,19 @@
                     android:visibility="visible"
                     tool:text="名侦探柯南"
                     android:singleLine="true" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:text="{icon-play2}"
+                    android:textColor="@color/selector_icon_bg"
+                    android:textSize="26sp" />
 
             </RelativeLayout>
 
@@ -119,8 +131,7 @@
                     android:layout_alignTop="@id/tvIcon"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="6.5dp"
-                    android:alpha="0"
-                    android:background="@color/black_40" />
+                    android:alpha="0" />
 
                 <com.eftimoff.androipathview.PathView
                     android:id="@+id/pathView"

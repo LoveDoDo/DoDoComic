@@ -2,10 +2,17 @@ package com.dodo.xinyue.dodocomic;
 
 import android.app.Application;
 
+import com.dodo.xinyue.conan.constant.ApiConstants;
+import com.dodo.xinyue.dodocomic.database.DatabaseManager;
+import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.icon.ConanIconFontModule;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.test.interceptor.TestInterceptor;
 import com.facebook.stetho.Stetho;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * MainApp
@@ -26,7 +33,7 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
         DoDo.init(this)
-//                .withIcon(new FontAwesomeModule())//自带的图标库，需添加相应依赖
+                .withIcon(new FontAwesomeModule())//自带的图标库，需添加相应依赖
 //                .withIcon(new IoniconsModule())//自带的图标库，需添加相应依赖
                 .withIcon(new ConanIconFontModule())
                 .withLoaderDelayed(1000)
@@ -35,10 +42,30 @@ public class MainApp extends Application {
                 .withInterceptor(new TestInterceptor())
 //                .withInterceptor(new IQiyiInterceptor())
 //                .withInterceptor(new DebugInterceptor("intercept", R.raw.test))
-//                .withJavascriptInterface("dodo")//JS
+                .withJavascriptInterface("dodo")//JS
 //                .withWebEvent("Web调用了原生",new Web2AndroidEvent())
 //                .withWebEvent("share", new ShareEvent())
                 .configure();
+
+        /**
+         * 更新配置
+         */
+        final int configVersion = ApiHelper.getConfigVersion();
+        if (configVersion != ApiConstants.CONFIG_VERSION) {
+            ApiHelper.clearConfig();
+            ApiHelper.setConfigVersion();
+        }
+
+        /**
+         * 极光推送 初始化
+         */
+        JPushInterface.setDebugMode(true);//调试模式 init()之前调用 正式上线时要关闭
+        JPushInterface.init(this);
+
+        /**
+         * 数据库初始化
+         */
+        DatabaseManager.getInstance().init(this);
 
 //        Fragmentation.builder()
 //                // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出  默认NONE：隐藏， 仅在Debug环境生效
@@ -63,9 +90,7 @@ public class MainApp extends Application {
 //                .debug(BuildConfig.DEBUG)
 //                .install();
 
-//        DatabaseManager.getInstance().init(this);
-
-//        initStetho();
+        initStetho();
 //
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.

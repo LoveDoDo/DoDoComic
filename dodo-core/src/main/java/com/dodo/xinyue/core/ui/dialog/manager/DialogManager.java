@@ -24,7 +24,7 @@ public class DialogManager {
         if (mDialog != null) {
             return false;
         }
-        mDialog = dialog;
+        bindDialog(dialog);
         return true;
     }
 
@@ -35,8 +35,16 @@ public class DialogManager {
         if (!mDialog.isShowing()) {
             return false;
         }
-        mDialog = null;
+        unbindDialog();
         return true;
+    }
+
+    private void bindDialog(BaseDialog dialog) {
+        mDialog = dialog;
+    }
+
+    private void unbindDialog() {
+        mDialog = null;
     }
 
 }

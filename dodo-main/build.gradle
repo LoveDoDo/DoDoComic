@@ -9,7 +9,27 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+
+        /*极光推送*/
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        /*极光推送*/
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "e62be49c55d9048cdac93a9f", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+        //GreenDao配置
+        /*需要在DatabaseManager中修改数据库版本号*/
+//        greendao{
+//            //数据库版本号 更改数据库结构时需要增加数值
+//            schemaVersion 4
+//        }
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,6 +40,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
@@ -28,6 +49,9 @@ dependencies {
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    implementation 'cn.jiguang.sdk:jpush:3.1.6'  // 极光推送
+    implementation 'cn.jiguang.sdk:jcore:1.2.5'  // 极光推送
+
     //测试专用
     implementation project(':test')
 
@@ -35,4 +59,5 @@ dependencies {
     implementation project(':dodo-comic')
     //柯南迷
     implementation project(':dodo-conan')
+
 }

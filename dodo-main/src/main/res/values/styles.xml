@@ -3,9 +3,13 @@
     <!-- Base application theme. --><!--Theme报红问题:先将全局support包统一设置成27.0.1,同步,然后再改回来27.1.1-->
     <style name="DoDoAppTheme.Base" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
+        <!--必须使用纯色，不然有些版本会崩-->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--禁用多点触控-->
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
     </style>
 
     <style name="DoDoAppTheme" parent="DoDoAppTheme.Base">

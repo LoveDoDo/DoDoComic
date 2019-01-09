@@ -7,9 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 
-import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.delegates.web.BaseWebDelegate;
-import com.dodo.xinyue.core.delegates.web.WebDelegateImpl;
 
 /**
  * Router
@@ -36,13 +34,15 @@ public class Router {
             return true;
         }
 
-        final DoDoDelegate topDelegate = delegate.getTopDelegate();
+//        final DoDoDelegate topDelegate = delegate.getTopDelegate();
+//
+//        final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
+//        webDelegate.setPageLoadListener(delegate.getPageListener());
+//        topDelegate.start(webDelegate);
 
-        final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
-        webDelegate.setPageLoadListener(delegate.getPageListener());
-        topDelegate.start(webDelegate);
+        return false;
 //        topDelegate.getFragmentManager().executePendingTransactions();
-        return true;//接管WebView的跳转
+//        return true;//接管WebView的跳转
     }
 
     /**

@@ -1,11 +1,17 @@
 package com.dodo.xinyue.conan.main.index.adapter;
 
+import android.support.annotation.IdRes;
 import android.support.v7.widget.GridLayoutManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.main.index.data.IndexItemType;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
+import com.dodo.xinyue.core.ui.image.GlideApp;
 import com.dodo.xinyue.core.ui.recycler.DataConverter;
 import com.dodo.xinyue.core.ui.recycler.ItemTypeBuilder;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
@@ -24,11 +30,24 @@ import java.util.List;
  */
 public class IndexAdapter extends MulAdapter {
 
-    private final DoDoDelegate DELEGATE;
+    private static final RequestOptions DEFAULT_OPTIONS =
+            new RequestOptions()
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-    protected IndexAdapter(List<MulEntity> data, DoDoDelegate delegate) {
-        super(data,null);
-        this.DELEGATE = delegate;
+    @Override
+    protected void loadImage(MulHolder holder, String imageUrl, @IdRes int viewId) {
+        GlideApp.with(mContext)
+                .load(imageUrl)
+                .apply(DEFAULT_OPTIONS)
+                .transition(new DrawableTransitionOptions().crossFade(88))//渐显 只有第一次加载有动画 内存加载无动画
+                .into((ImageView) holder.getView(viewId));
+
+    }
+
+    private IndexAdapter(List<MulEntity> data, DoDoDelegate delegate) {
+        super(data, delegate);
+//        openLoadAnimation(new AlphaInAnimation());
     }
 
     public static IndexAdapter create(List<MulEntity> data, DoDoDelegate delegate) {
@@ -60,19 +79,22 @@ public class IndexAdapter extends MulAdapter {
             case IndexItemType.COMIC_TEXT:
                 holder.setText(R.id.number, number)
                         .setText(R.id.title, title);
+                holder.addOnClickListener(R.id.tvPreview);
                 break;
             case IndexItemType.COMIC_NUMBER:
                 holder.setText(R.id.number, number);
                 break;
             case IndexItemType.COMIC_IMAGE_TEXT:
-                holder.setText(R.id.number, number)
+                holder.setText(R.id.number, "{icon-no}." + number)
                         .setText(R.id.title, title);
                 loadImage(holder, cover, R.id.cover);
+                holder.addOnClickListener(R.id.tvPreview);
                 break;
             case IndexItemType.COMIC_GRID:
                 holder.setText(R.id.number, "第" + number + "集")
                         .setText(R.id.title, title);
                 loadImage(holder, cover, R.id.cover);
+                holder.addOnClickListener(R.id.tvPreview);
                 break;
             default:
                 break;

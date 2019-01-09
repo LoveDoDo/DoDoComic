@@ -72,7 +72,7 @@ public class DoDoLoader {
         }
 
         LOADERS.add(dialog);
-        dialog.setCancelable(false);//设置点击后不可取消
+//        dialog.setCancelable(false);//设置点击后不可取消
         dialog.show();
     }
 

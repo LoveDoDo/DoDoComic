@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_global_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_transparent_status_bar" />
+
+        <android.support.v7.widget.Toolbar
+            style="@style/ToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/tvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="{icon-back}"
+                    android:textColor="@color/selector_icon_bg"
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/tvBack"
+                    android:gravity="center"
+                    android:text="设置"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarThumbVertical="@color/black_40"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#10ffffff" />
+
+                <RelativeLayout
+                    android:id="@+id/rlQuicklyOpenApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="快速打开应用"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.dodo.xinyue.conan.view.SwitchButton
+                        android:id="@+id/sbQuicklyOpenApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        app:kswAnimationDuration="188"
+                        app:kswBackDrawable="@drawable/selector_switch_button_bg"
+                        app:kswThumbColor="@color/white"
+                        app:kswThumbHeight="18dp"
+                        app:kswThumbMargin="3dp"
+                        app:kswThumbRangeRatio="2.1"
+                        app:kswThumbWidth="18dp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#10ffffff" />
+
+                <RelativeLayout
+                    android:id="@+id/rlIndexPreference"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="偏好设置"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="{icon-arrow-right}"
+                        android:textColor="@color/white_90"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:background="#20ffffff" />
+
+                <RelativeLayout
+                    android:id="@+id/rlMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="消息设置"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="{icon-arrow-right}"
+                        android:textColor="@color/white_90"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:background="#20ffffff" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="缓存设置"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="{icon-arrow-right}"
+                        android:textColor="@color/white_90"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#10ffffff" />
+
+                <RelativeLayout
+                    android:id="@+id/rlDiscoverGift"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="寻宝模式"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.dodo.xinyue.conan.view.SwitchButton
+                        android:id="@+id/sbDiscoverGift"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        app:kswAnimationDuration="188"
+                        app:kswBackDrawable="@drawable/selector_switch_button_bg"
+                        app:kswThumbColor="@color/white"
+                        app:kswThumbHeight="18dp"
+                        app:kswThumbMargin="3dp"
+                        app:kswThumbRangeRatio="2.1"
+                        app:kswThumbWidth="18dp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#10ffffff" />
+
+                <RelativeLayout
+                    android:id="@+id/rlClearCache"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="清除缓存"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:id="@+id/tvArrowClearCache"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="{icon-arrow-right}"
+                        android:textColor="@color/white_90"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvCacheSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toStartOf="@id/tvArrowClearCache"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tool:text="251.0M" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:background="#20ffffff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="清空消息记录"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#10ffffff" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="关于柯南迷"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="{icon-arrow-right}"
+                        android:textColor="@color/white_90"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="16dp"
+                    android:background="#20ffffff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="检查更新"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="#10ffffff" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</android.support.v7.widget.ContentFrameLayout>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:foreground="?selectableItemBackground"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:background="@color/dodo_blue">
 
     <TextView
         android:id="@+id/number"
@@ -15,22 +16,31 @@
         android:layout_marginStart="12dp"
         android:background="@drawable/shape_index_text_number_bg"
         android:gravity="center"
-        android:text="800"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="12sp"
-        tools:ignore="HardcodedText" />
+        tools:text="800" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
-        android:text="云霄飞车杀人事件"
-        android:layout_marginStart="12dp"
         android:textColor="@color/white"
         android:textSize="15sp"
-        tools:ignore="HardcodedText" />
+        tools:text="云霄飞车杀人事件" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/tvPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="{icon-preview}"
+        android:textColor="@color/selector_tv_preview"
+        android:textSize="20sp" />
 
 </LinearLayout>

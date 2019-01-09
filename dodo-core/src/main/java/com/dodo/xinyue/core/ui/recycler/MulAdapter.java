@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -70,6 +71,7 @@ public abstract class MulAdapter extends BaseMultiItemQuickAdapter<MulEntity, Mu
         GlideApp.with(mContext)
                 .load(imageUrl)
                 .apply(DEFAULT_OPTIONS)
+                .transition(new DrawableTransitionOptions().crossFade())
                 .into((ImageView) holder.getView(viewId));
 
     }

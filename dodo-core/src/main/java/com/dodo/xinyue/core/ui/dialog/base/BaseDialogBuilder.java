@@ -73,6 +73,9 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
         if (options.isValid(DialogOptionFields.COVER_STATUSBAR)) {
             coverStatusBar(options.getOption(DialogOptionFields.COVER_STATUSBAR));
         }
+        if (options.isValid(DialogOptionFields.BACKGROUND_DIM_ENABLED)) {
+            backgroundDimEnabled(options.getOption(DialogOptionFields.BACKGROUND_DIM_ENABLED));
+        }
         if (options.isValid(DialogOptionFields.IOPEN_DIALOG)) {
             onOpen(options.getOption(DialogOptionFields.IOPEN_DIALOG));
         }
@@ -150,6 +153,11 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
 
     public final T coverStatusBar(boolean coverStatusBar) {
         mDialogPublicParamsBean.setCoverStatusBar(coverStatusBar);
+        return (T) this;
+    }
+
+    public final T backgroundDimEnabled(boolean backgroundDimEnabled) {
+        mDialogPublicParamsBean.setBackgroundDimEnabled(backgroundDimEnabled);
         return (T) this;
     }
 

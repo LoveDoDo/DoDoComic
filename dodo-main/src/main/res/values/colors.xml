@@ -2,10 +2,10 @@
 <resources>
 
     <!--ToolBar背景色--><!--默认 #3F51B5-->
-    <color name="colorPrimary">@color/app_background</color>
+    <color name="colorPrimary">@color/black</color>
     <!--StatusBar状态栏背景色--><!--默认 #303F9F-->
-    <color name="colorPrimaryDark">@color/app_background</color>
+    <color name="colorPrimaryDark">@color/black</color>
     <!--控件主色调--><!--默认 #FF4081-->
-    <color name="colorAccent">@color/dodo_blue</color>
+    <color name="colorAccent">@color/black</color>
 
 </resources>

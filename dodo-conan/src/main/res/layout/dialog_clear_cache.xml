@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.joanzapata.iconify.widget.IconTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvProgress"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="{icon-progress}"
+    android:textColor="@color/dodo_blue"
+    android:textSize="66sp" />

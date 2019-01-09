@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DoDoCore</string>
+    <string name="okhttp_cache_dir">okhttp_cache</string>
 </resources>

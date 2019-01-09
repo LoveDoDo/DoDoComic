@@ -3,11 +3,14 @@ package com.dodo.xinyue.dodocomic;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.main.ConanBottomDelegate;
 import com.dodo.xinyue.core.activitys.ProxyActivity;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
+import com.dodo.xinyue.dodocomic.launch.BeforeLaunchDelegate;
 
+import cn.jpush.android.api.JPushInterface;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import qiu.niorgai.StatusBarCompat;
 
@@ -33,7 +36,18 @@ public class MainActivity extends ProxyActivity {
 
     @Override
     public DoDoDelegate setRootDelegate() {
-        return new ConanBottomDelegate();
+        if (ApiHelper.isQuicklyOpenApp()) {
+            return new ConanBottomDelegate();
+        }
+        return new BeforeLaunchDelegate();
+    }
+
+    /**
+     * 防止内容不足，Activity销毁重建，由于保存的fragment的状态，导致fragment发生重叠问题
+     */
+    @Override
+    public Class<? extends DoDoDelegate> getMayBeExistDelegate() {
+        return ConanBottomDelegate.class;
     }
 
     /**
@@ -61,4 +75,15 @@ public class MainActivity extends ProxyActivity {
         return fragmentAnimator;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
 }

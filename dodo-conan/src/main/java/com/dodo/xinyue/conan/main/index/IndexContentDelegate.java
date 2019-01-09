@@ -3,30 +3,31 @@ package com.dodo.xinyue.conan.main.index;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
+import com.dodo.xinyue.conan.constant.ApiConstants;
 import com.dodo.xinyue.conan.main.index.adapter.IndexAdapter;
 import com.dodo.xinyue.conan.main.index.data.IndexDataConverter;
+import com.dodo.xinyue.conan.main.index.listener.IndexItemChildClickListener;
 import com.dodo.xinyue.conan.main.index.listener.IndexItemClickListener;
-import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.net.RestClient;
-import com.dodo.xinyue.core.net.callback.ISuccess;
 import com.dodo.xinyue.core.ui.image.GlideApp;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
+import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.yqritc.recyclerviewflexibledivider.VerticalDividerItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -36,19 +37,17 @@ import butterknife.BindView;
  * @author DoDo
  * @date 2018/10/15
  */
-public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLayout.OnRefreshListener {
+public class IndexContentDelegate extends DoDoDelegate {
 
     private static final String TAG = "IndexContentDelegate";
     private static final String ARGS_URL = "pager_url";
     private String mUrl = null;
-    private int mForm = 0;
-    private int mLanguage = 0;
-    private int mType = 0;
+    private int mLanguageIndex = 0;
+    private int mTypeIndex = 0;
+    private int mFormIndex = 0;
 
     @BindView(R2.id.recyclerview)
     RecyclerView mRecyclerView;
-    @BindView(R2.id.refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
 
     private MulAdapter mAdapter = null;
     private IndexDataConverter mDataConverter = null;
@@ -69,47 +68,34 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        final String url = getArguments().getString(ARGS_URL);
-        if (!TextUtils.isEmpty(url)) {
-            mUrl = url;
+        final Bundle bundle = getArguments();
+        if (bundle == null) {
+            return;
         }
+        final String url = bundle.getString(ARGS_URL);
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        this.mUrl = url;
         final IndexDelegate delegate = getParentDelegate();
-        mForm = delegate.getForm();
-        mLanguage = delegate.getLanguage();
-        mType = delegate.getType();
-//        DoDoLogger.d(TAG, mForm);
+        this.mLanguageIndex = delegate.getLanguageIndex();
+        this.mTypeIndex = delegate.getTypeIndex();
+        this.mFormIndex = delegate.getFormIndex();
+
+        initRecyclerView();
+        initAdapter();
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        //防止viewpager滚动多次导致重复刷新
-        if (mAdapter == null) {
+//        if (savedInstanceState != null) {
+//            return;
+//        }
+        requestData();
+        //这里适当延时一下，不然切换数字列表会卡
+//        DoDo.getHandler().postDelayed(this::requestData, 300);
 
-            initRefreshLayout();
-            initRecyclerView();
-
-            mRefreshLayout.setRefreshing(true);
-
-            //这里适当延时一下，不然切换数字列表会卡
-            DoDo.getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    requestData();
-                }
-            }, 200);
-
-        }
-
-    }
-
-    private void initRefreshLayout() {
-        mRefreshLayout.setColorSchemeResources(
-                R.color.app_background
-        );
-        mRefreshLayout.setOnRefreshListener(this);
-//        //设置灵敏度
-//        mRefreshLayout.setDistanceToTriggerSync(400);
     }
 
     private void initRecyclerView() {
@@ -117,8 +103,8 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
         mRecyclerView.setLayoutManager(mLayoutManager);
         //优化
         mRecyclerView.setHasFixedSize(true);
-        switch (mForm) {
-            case 0:
+        switch (mFormIndex) {
+            case ApiConstants.FORM_TEXT:
                 //分割线
                 mRecyclerView.addItemDecoration(
                         new HorizontalDividerItemDecoration.Builder(mRecyclerView.getContext())
@@ -127,19 +113,19 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
                                 .build()
                 );
                 break;
-            case 1:
+            case ApiConstants.FORM_NUMBER:
 //                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mRecyclerView.getLayoutParams();
 //                layoutParams.setMargins(DimenUtil.dp2px(8), DimenUtil.dp2px(8), 0, 0);
 //                mRecyclerView.setLayoutParams(layoutParams);
-                mRecyclerView.setPadding(DimenUtil.dp2px(8), DimenUtil.dp2px(8), 0, 0);
+                mRecyclerView.setPadding(DimenUtil.dp2px(8), 0, 0, 0);
                 //分割线
-                mRecyclerView.addItemDecoration(
-                        new HorizontalDividerItemDecoration.Builder(mRecyclerView.getContext())
-                                .color(Color.TRANSPARENT)
-                                .size(DimenUtil.dp2px(8))
-                                .showLastDivider()
-                                .build()
-                );
+//                mRecyclerView.addItemDecoration(
+//                        new HorizontalDividerItemDecoration.Builder(mRecyclerView.getContext())
+//                                .color(Color.TRANSPARENT)
+//                                .size(DimenUtil.dp2px(8))
+//                                .showLastDivider()
+//                                .build()
+//                );
                 mRecyclerView.addItemDecoration(
                         new VerticalDividerItemDecoration.Builder(mRecyclerView.getContext())
                                 .color(Color.TRANSPARENT)
@@ -148,24 +134,26 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
                                 .build()
                 );
                 break;
-            case 2:
+            case ApiConstants.FORM_IMAGE_TEXT:
+                mRecyclerView.setPadding(0, DimenUtil.dp2px(4), 0, 0);
                 //分割线
                 mRecyclerView.addItemDecoration(
                         new HorizontalDividerItemDecoration.Builder(mRecyclerView.getContext())
                                 .color(Color.parseColor("#20ffffff"))
+                                .margin(DimenUtil.getScreenWidth() * 5 / 11, 0)
                                 .build()
                 );
                 break;
-            case 3:
-                mRecyclerView.setPadding(DimenUtil.dp2px(8), DimenUtil.dp2px(8), 0, 0);
+            case ApiConstants.FORM_GRID:
+                mRecyclerView.setPadding(DimenUtil.dp2px(8), 0, 0, 0);
                 //分割线
-                mRecyclerView.addItemDecoration(
-                        new HorizontalDividerItemDecoration.Builder(mRecyclerView.getContext())
-                                .color(Color.TRANSPARENT)
-                                .size(DimenUtil.dp2px(8))
-                                .showLastDivider()
-                                .build()
-                );
+//                mRecyclerView.addItemDecoration(
+//                        new HorizontalDividerItemDecoration.Builder(mRecyclerView.getContext())
+//                                .color(Color.TRANSPARENT)
+//                                .size(DimenUtil.dp2px(8))
+//                                .showLastDivider()
+//                                .build()
+//                );
                 mRecyclerView.addItemDecoration(
                         new VerticalDividerItemDecoration.Builder(mRecyclerView.getContext())
                                 .color(Color.TRANSPARENT)
@@ -210,13 +198,16 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
                             toggle = true;
                         }
                         if (toggle) {
+                            if (getContext() == null) {
+                                return;
+                            }
                             if (tempY > defaultY && !toggle2) {
                                 toggle2 = true;
-                                GlideApp.with(getProxyActivity()).pauseRequestsRecursive();
+                                GlideApp.with(getContext()).pauseRequestsRecursive();
 //                                Log.d("HAHAHA", "暂停加载" + tempY);
                             } else if (tempY < defaultY) {
-                                if (GlideApp.with(getProxyActivity()).isPaused()) {
-                                    GlideApp.with(getProxyActivity()).resumeRequestsRecursive();
+                                if (GlideApp.with(getContext()).isPaused()) {
+                                    GlideApp.with(getContext()).resumeRequestsRecursive();
 //                                    Log.d("HAHAHA", "开启加载" + tempY);
                                 }
                             }
@@ -249,8 +240,11 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
                     case RecyclerView.SCROLL_STATE_IDLE:
                         //完全停止滑动
 //                        Log.d("HAHAHA", "SCROLL_STATE_IDLE");
-                        if (GlideApp.with(getProxyActivity()).isPaused()) {
-                            GlideApp.with(getProxyActivity()).resumeRequestsRecursive();
+                        if (getContext() == null) {
+                            return;
+                        }
+                        if (GlideApp.with(getContext()).isPaused()) {
+                            GlideApp.with(getContext()).resumeRequestsRecursive();
 //                            Log.d("HAHAHA", "停止滑动，并处于暂停状态，重新开启加载");
                         }
                         toggle = false;
@@ -264,92 +258,51 @@ public class IndexContentDelegate extends DoDoDelegate implements SwipeRefreshLa
         });
     }
 
+    private View mLoadingView = null;
+    private View mLoadFailureView = null;
+
+    private void initAdapter() {
+        final IndexDelegate indexDelegate = getParentDelegate();
+        mAdapter = IndexAdapter.create(new ArrayList<>(), indexDelegate);
+        mAdapter.bindToRecyclerView(mRecyclerView);
+        mLoadingView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_loading, mRecyclerView, false);
+        mLoadFailureView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_no_data, mRecyclerView, false);
+        mLoadFailureView.setOnClickListener(v -> requestData());
+        mAdapter.setOnItemClickListener(IndexItemClickListener.create(indexDelegate));
+        mAdapter.setOnItemChildClickListener(IndexItemChildClickListener.create(indexDelegate));
+    }
+
     /**
      * 请求数据
      */
     private void requestData() {
 
+        mAdapter.setEmptyView(mLoadingView);
+
         RestClient.builder()
                 .url(mUrl)
-//                .url("intercept")
-//                .loader(getContext())
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(String response) {
-                        final String json = response.substring("var tvInfoJs=".length(), response.length());
-                        handleData(json);
-                        mRefreshLayout.setRefreshing(false);
-//                        DoDoLogger.d(TAG, response);
-                    }
+                .success(response -> {
+                    final String json = response.substring("var tvInfoJs=".length(), response.length());
+                    handleData(json);
                 })
+                .failure(() -> mAdapter.setEmptyView(mLoadFailureView))
+                .error((code, msg) -> mAdapter.setEmptyView(mLoadFailureView))
                 .build()
                 .get();
     }
 
-    private View noNetView = null;
-    private View noDataView = null;
-
     /**
      * 处理数据
      *
-     * @param json
      */
     private void handleData(String json) {
         mDataConverter = new IndexDataConverter();
-        final IndexDelegate comicDelegate = getParentDelegate();
-        mAdapter = IndexAdapter.create(mDataConverter.setForm(mForm).setLanguage(mLanguage).setType(mType).setJsonData(json), comicDelegate);
-        //空布局
-        //如果加载失败，需要点击空布局进行刷新，所以设置空布局方法就放在刷新操作里
-        //这里只做初始化空布局view的工作
-        noNetView = LayoutInflater.from(getProxyActivity()).inflate(R.layout.view_empty_no_net, (ViewGroup) mRecyclerView.getParent(), false);//这里不写父布局也可以
-        noDataView = LayoutInflater.from(getProxyActivity()).inflate(R.layout.view_empty_no_data, (ViewGroup) mRecyclerView.getParent(), false);//这里不写父布局也可以
-        noDataView.setOnClickListener(v -> refreshData());
-        noNetView.setOnClickListener(v -> refreshData());
-
-//        //内部会调用rv.setAdapter()并保存rv的实例，方便获取到item内部的子控件 getViewByPosition()
-        mAdapter.bindToRecyclerView(mRecyclerView);
-//        mRecyclerView.setAdapter(mAdapter);//设置上拉加载会自动保存rv实例，所以不能用bindToRecyclerView()
-
-        /**
-         * item点击
-         */
-        mAdapter.setOnItemClickListener(IndexItemClickListener.create(comicDelegate));
-        /**
-         * item子控件点击
-         * 需要在adapter中设置需要响应事件的子控件
-         * 子控件如果响应了ChildClickListener，则该子控件就不会再响应item的点击事件
-         */
-//        mAdapter.setOnItemChildClickListener(TuiJianItemChildClickListener.create());
-
-    }
-
-    private boolean mNoNet = true;//无网络
-    private boolean mNoData = true;//无数据
-
-    /**
-     * 下拉刷新
-     */
-    private void refreshData() {
-        mAdapter.setEmptyView(R.layout.view_empty_loading, (ViewGroup) mRecyclerView.getParent());//这里不写父布局也可以。默认使用rv作为父布局
-        DoDo.getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //清空adapter之前的数据
-                mDataConverter.clearData();
-                mAdapter.setNewData(mDataConverter.convert());
-                //重新开启下拉刷新监听
-                ToastUtils.showShort("刷新完成");
-                if (mRefreshLayout.isRefreshing()) {
-                    mRefreshLayout.setRefreshing(false);
-                }
-            }
-        }, 800);
-    }
-
-    @Override
-    public void onRefresh() {
-        mRefreshLayout.setRefreshing(true);
-        refreshData();
+        final List<MulEntity> data = mDataConverter.setFormIndex(mFormIndex).setLanguageIndex(mLanguageIndex).setTypeIndex(mTypeIndex).setJsonData(json).convert();
+        if (data.size() <= 0) {
+            mAdapter.setEmptyView(R.layout.view_empty_no_data, mRecyclerView);
+            return;
+        }
+        mAdapter.setNewData(data);
     }
 
     /**
