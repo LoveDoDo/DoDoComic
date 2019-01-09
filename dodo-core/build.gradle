@@ -207,4 +207,11 @@ dependencies {
     //高斯模糊
     api 'jp.wasabeef:glide-transformations:3.3.0'
 
+    /*
+    * 1、执行命令：adb forward tcp:8080 tcp:8080
+    * 2、浏览器访问：localhost:8080
+    * */
+    //调试数据库和SharedPreference
+    debugApi 'com.amitshekhar.android:debug-db:1.0.4'
+
 }

@@ -2,10 +2,7 @@ package com.dodo.xinyue.conan.main.index.listener;
 
 import android.view.View;
 
-import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.dodo.xinyue.conan.helper.AppLinkHelper;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.main.index.data.IndexItemType;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
@@ -51,12 +48,12 @@ public class IndexItemClickListener extends MulItemClickListener {
 //                .setCustomAnimations(R.anim.thumb_preview_enter, R.anim.index_content,R.anim.index_content,R.anim.thumb_preview_exit)
 //                .start(ThumbPreviewDelegate.create(comicBean));
 
-        if (!AppUtils.isAppInstalled("com.qiyi.video")) {
-            ToastUtils.showShort("请先安装爱奇艺Android客户端");
-            return;
-        }
-
-        AppLinkHelper.openIQiYi(comicBean.getTvQipuId(), comicBean.getVid());
+//        if (!AppUtils.isAppInstalled("com.qiyi.video")) {
+//            ToastUtils.showShort("请先安装爱奇艺Android客户端");
+//            return;
+//        }
+//
+//        AppLinkHelper.openIQiYi(comicBean.getTvQipuId(), comicBean.getVid());
 
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:
