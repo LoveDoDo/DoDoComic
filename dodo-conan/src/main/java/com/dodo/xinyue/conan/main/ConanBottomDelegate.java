@@ -16,6 +16,7 @@ import com.dodo.xinyue.conan.main.manhua.ManhuaDelegate;
 import com.dodo.xinyue.conan.main.mine.MineDelegate;
 import com.dodo.xinyue.conan.main.mine.event.NewMessageEvent;
 import com.dodo.xinyue.conan.main.yingyin.YingyinDelegate;
+import com.dodo.xinyue.conan.view.dialog.download.ConanDownloadDialog;
 import com.dodo.xinyue.conan.view.dialog.message.ConanMessageDialog;
 import com.dodo.xinyue.conan.view.dialog.update.ConanUpdateDialog;
 import com.dodo.xinyue.core.app.DoDo;
@@ -27,6 +28,10 @@ import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsBuilder;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomBarParamsType;
 import com.dodo.xinyue.core.delegates.bottom.builder.BottomTabBeanBuilder;
 import com.dodo.xinyue.core.delegates.bottom.options.BottomTabBeanOptions;
+import com.dodo.xinyue.core.util.CommonUtil;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
+import com.tencent.bugly.beta.download.DownloadTask;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -244,6 +249,48 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                 break;
         }
 
+    }
+
+    /**
+     * Bugly新版本更新消息
+     * <p>
+     * sticky = true 粘性消息 先发送消息再订阅，也可以收到消息，收到后需要移除消息，不然每次重新订阅都会收到
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onReceivedBuglyUpgradeEvent(UpgradeInfo upgradeInfo) {
+        EventBusActivityScope.getDefault(DoDo.getActivity()).removeStickyEvent(upgradeInfo);
+
+        final int versionCode = upgradeInfo.versionCode;
+        final String versionName = upgradeInfo.versionName;
+        final String packageSize = Beta.getStrategyTask().getStatus() == DownloadTask.COMPLETE ? "-1" : CommonUtil.getFormatSize(upgradeInfo.fileSize, 2);
+        final String downloadPath = upgradeInfo.apkUrl;
+        ConanUpdateDialog.builder()
+                .title(AppUtils.getAppName() + "更新啦~")
+                .content("欢迎升级" + AppUtils.getAppName() + versionName + " 最新版\n" + upgradeInfo.newFeature)
+                .versionName(versionName)
+                .packageSize(packageSize)
+                .confirm(() -> startUpdate(packageSize))
+                .bottomLeftRadius(8)
+                .bottomRightRadius(8)
+                .widthScale(0.85f)
+                .build()
+                .show();
+    }
+
+    private void startUpdate(String packageSize) {
+//        FileUtils.deleteFile(Beta.getStrategyTask().getSaveFile());
+        if (Beta.getStrategyTask().getStatus() == DownloadTask.COMPLETE) {
+            Beta.installApk(Beta.getStrategyTask().getSaveFile());
+            return;
+        }
+        ConanDownloadDialog.builder()
+                .packageSize(packageSize)
+                .radius(8)
+                .widthScale(0.85f)
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
+                .build()
+                .show();
     }
 
     @Override

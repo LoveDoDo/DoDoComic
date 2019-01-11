@@ -38,7 +38,7 @@ public class ConanLoadingDialog extends BaseDialog {
 
     @Override
     public Object setLayout() {
-        return R.layout.dialog_clear_cache;
+        return R.layout.dialog_loading;
     }
 
     @Override

@@ -1,17 +1,31 @@
 package com.dodo.xinyue.dodocomic;
 
 import android.app.Application;
+import android.os.Environment;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.constant.ApiConstants;
-import com.dodo.xinyue.dodocomic.database.DatabaseManager;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.icon.ConanIconFontModule;
+import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.core.ui.dialog.manager.DialogManager;
+import com.dodo.xinyue.core.util.CommonUtil;
+import com.dodo.xinyue.core.util.log.DoDoLogger;
+import com.dodo.xinyue.dodocomic.database.DatabaseManager;
 import com.dodo.xinyue.test.interceptor.TestInterceptor;
 import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
+import com.tencent.bugly.beta.upgrade.UpgradeListener;
+import com.tencent.bugly.beta.upgrade.UpgradeStateListener;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.jpush.android.api.JPushInterface;
+import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 
 
 /**
@@ -21,6 +35,8 @@ import cn.jpush.android.api.JPushInterface;
  * @date 2018/9/16
  */
 public class MainApp extends Application {
+
+    private static final String TAG = "MainApp";
 
     /**
      * TODO
@@ -63,6 +79,11 @@ public class MainApp extends Application {
         JPushInterface.init(this);
 
         /**
+         * Bugly 初始化
+         */
+        initBugly();
+
+        /**
          * 数据库初始化
          */
         DatabaseManager.getInstance().init(this);
@@ -100,6 +121,131 @@ public class MainApp extends Application {
 
 //        DoDo.getConfigurator().withRefWatcher(LeakCanary.install(this));
 
+    }
+
+    /**
+     * 初始化Bugly
+     * <p>
+     * TODO 后台修改更新策略，大概需要半个小时才能更新。。
+     */
+    private void initBugly() {
+        /**
+         * 升级检查周期设置
+         * 设置升级检查周期为60s(默认检查周期为0s)，60s内SDK不重复向后台请求策略
+         */
+//        Beta.upgradeCheckPeriod = 1 * 1000;
+
+        /**
+         * 延迟初始化
+         * 设置启动延时为60s（默认延时3s），APP启动60s后初始化SDK，避免影响APP启动速度;
+         */
+        Beta.initDelay = 60 * 1000;
+
+//        Beta.largeIconId = R.mipmap.ic_launcher;//设置通知栏大图标
+//        Beta.smallIconId = R.mipmap.ic_launcher;//设置状态栏小图标
+        Beta.storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);//设置sd卡的Download为更新资源存储目录
+        Beta.showInterruptedStrategy = true;//设置点击过确认的弹窗在App下次启动自动检查更新时会再次显示。
+        Beta.canShowUpgradeActs.add(MainActivity.class);//设置只允许在MainActivity上显示更新弹窗
+        /**
+         * 设置自定义升级对话框UI布局
+         *
+         * 注意：因为要保持接口统一，需要用户在指定控件按照以下方式设置tag，否则会影响您的正常使用：
+         * 特性图片：beta_upgrade_banner，如：android:tag="beta_upgrade_banner"
+         * 标题：beta_title，如：android:tag="beta_title"
+         * 升级信息：beta_upgrade_info 如： android:tag="beta_upgrade_info"
+         * 更新属性：beta_upgrade_feature 如： android:tag="beta_upgrade_feature"
+         * 取消按钮：beta_cancel_button 如：android:tag="beta_cancel_button"
+         * 确定按钮：beta_confirm_button 如：android:tag="beta_confirm_button"
+         */
+//        Beta.upgradeDialogLayoutId = R.layout.dialog_update;
+        /**
+         * 设置是否显示消息通知
+         * 如果你不想在通知栏显示下载进度，你可以将这个接口设置为false，默认值为true。
+         */
+        Beta.enableNotification = false;
+        /**
+         * 设置Wifi下自动下载
+         * 如果你想在Wifi网络下自动下载，可以将这个接口设置为true，默认值为false。
+         */
+        Beta.autoDownloadOnWifi = false;
+        /**
+         * 设置是否显示弹窗中的apk信息
+         * 如果你使用我们默认弹窗是会显示apk信息的，如果你不想显示可以将这个接口设置为false。
+         */
+        Beta.canShowApkInfo = false;
+        /**
+         * 关闭热更新能力
+         * 升级SDK默认是开启热更新能力的，如果你不需要使用热更新，可以将这个接口设置为false。
+         */
+        Beta.enableHotfix = false;
+
+        Beta.upgradeListener = new UpgradeListener() {
+            @Override
+            public void onUpgrade(int ret, UpgradeInfo strategy, boolean isManual, boolean isSilence) {
+                if (strategy == null) {
+                    DoDoLogger.d("没有更新");
+                    if (isManual) {//手动检测更新
+                        ToastUtils.showShort("已经是最新版咯~");
+                        DialogManager.getInstance().cancelLastDialog();
+                    }
+                    return;
+                }
+                DoDoLogger.d("发现新版本");
+                EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(strategy);
+            }
+        };
+        Beta.upgradeStateListener = new UpgradeStateListener() {
+            @Override
+            public void onUpgradeSuccess(boolean isManual) {
+//                DoDoLogger.d("检测更新成功");
+            }
+
+            @Override
+            public void onUpgradeFailed(boolean isManual) {
+                DoDoLogger.d("检测更新失败");
+                DialogManager.getInstance().cancelLastDialog();
+                if (!NetworkUtils.isConnected()) {
+                    ToastUtils.showShort("网络未连接，请联网后重试");
+                } else {
+                    ToastUtils.showShort("检测更新失败，请稍后重试");
+                }
+
+            }
+
+            /**
+             * 只有手动检测更新才会回调
+             */
+            @Override
+            public void onUpgrading(boolean isManual) {
+                DoDoLogger.d("检测更新中");
+                ConanLoadingDialog.builder()
+                        .anim(-1)
+                        .backgroundDimEnabled(false)
+                        .build()
+                        .show();
+            }
+
+            @Override
+            public void onDownloadCompleted(boolean b) {
+                DoDoLogger.d("下载完成");
+            }
+
+            @Override
+            public void onUpgradeNoVersion(boolean isManual) {
+                DoDoLogger.d("没有新版本");
+            }
+        };
+        // 获取当前包名
+        String packageName = this.getPackageName();
+        // 获取当前进程名
+        String processName = CommonUtil.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        // 初始化Bugly
+        Bugly.init(this, "ef116b1fc0", BuildConfig.DEBUG, strategy);
+        // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
+        // CrashReport.initCrashReport(context, strategy);
     }
 
     /**

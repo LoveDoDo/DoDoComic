@@ -11,6 +11,8 @@ buildscript {
         //noinspection GradleDependency 此行注释可消除ButterKnife不是最新版的警告
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        //Bugly
+        classpath 'com.tencent.bugly:symtabfileuploader:2.2.1'
 
     }
 }

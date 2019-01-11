@@ -1,5 +1,7 @@
 package com.dodo.xinyue.conan.view.dialog.update;
 
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -95,6 +97,13 @@ public class ConanUpdateDialog extends BaseDialog {
         mTvTitle.setText(mTitle);
         mTvContent.setText(mContent);
         mTvVersionName.setText("版本：" + mVersionName);
-        mTvPackageSize.setText("大小：" + mPackageSize);
+        if (TextUtils.equals(mPackageSize, "-1")) {
+            //已下载，直接安装
+            mTvPackageSize.setText("已下载");
+            mTvPackageSize.setTextColor(ContextCompat.getColor(getContext(), R.color.dodo_blue));
+        } else {
+            mTvPackageSize.setText("大小：" + mPackageSize);
+        }
+
     }
 }

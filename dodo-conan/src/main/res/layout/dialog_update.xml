@@ -65,7 +65,7 @@
         android:layout_marginBottom="6dp"
         android:layout_marginStart="26dp"
         android:lineSpacingMultiplier="1.2"
-        android:textColor="#aaAAAAAA"
+        android:textColor="#ddAAAAAA"
         android:textSize="15sp"
         tool:text="版本：1.0.1.1102" />
 
@@ -76,7 +76,7 @@
         android:layout_marginBottom="30dp"
         android:layout_marginStart="26dp"
         android:lineSpacingMultiplier="1.2"
-        android:textColor="#aaAAAAAA"
+        android:textColor="#ddAAAAAA"
         android:textSize="15sp"
         tool:text="大小：17.2MB" />
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="联网升级"
+        android:textColor="@color/black_90"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="4dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/black_90"
+        android:textSize="15sp"
+        tool:text="正在下载升级包，已下载 1.5MB\n总共 18.9MB" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/shape_progress_bg"
+        tool:progress="30" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#20ffffff" />
+
+    <LinearLayout
+        android:id="@+id/container_normal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_download_dialog_bg"
+            android:gravity="center"
+            android:text="取消升级"
+            android:textColor="@color/black_90"
+            android:textSize="15sp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/download_dialog_btn">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="#f0f0f0" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvHide"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_download_dialog_bg"
+            android:gravity="center"
+            android:text="隐藏窗口"
+            android:textColor="@color/dodo_blue"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_download_dialog_bg"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/black_90"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+</LinearLayout>

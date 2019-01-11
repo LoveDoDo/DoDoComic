@@ -2,11 +2,15 @@ package com.dodo.xinyue.core.util;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -173,20 +177,20 @@ public final class CommonUtil {
         double megaByte = kiloByte / 1024;
         if (megaByte < 1) {
             BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
-            return result1.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "K";
+            return result1.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
         }
         double gigaByte = megaByte / 1024;
         if (gigaByte < 1) {
             BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
-            return result2.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "M";
+            return result2.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
         }
         double teraBytes = gigaByte / 1024;
         if (teraBytes < 1) {
             BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
-            return result3.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "G";
+            return result3.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
         }
         BigDecimal result4 = new BigDecimal(teraBytes);
-        return result4.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "T";
+        return result4.setScale(dot, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
 
     /**
@@ -202,6 +206,20 @@ public final class CommonUtil {
         }
         BigDecimal result = new BigDecimal(tempSize);
         return result.setScale(1, BigDecimal.ROUND_HALF_UP).toPlainString() + "M";
+    }
+
+    /**
+     * 格式化已下载安装包大小
+     *
+     * 格式化单位 → MB
+     */
+    public static String getFormatDownloadPackageSize(double size) {
+        if (size <= 0) {
+            return "0MB";
+        }
+        double tempSize = size / (1024 * 1024);
+        BigDecimal result = new BigDecimal(tempSize);
+        return result.setScale(1, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
     }
 
     /**
@@ -250,5 +268,34 @@ public final class CommonUtil {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    public static String getProcessName(int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim();
+            }
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return null;
     }
 }

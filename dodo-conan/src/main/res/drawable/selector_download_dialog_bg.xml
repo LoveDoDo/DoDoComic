@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/gray_80">
+    <item>
+        <selector>
+            <item android:drawable="@color/gray_80" android:state_selected="true"/>
+            <item android:drawable="@color/download_dialog_btn"/>
+        </selector>
+    </item>
+</ripple>

@@ -9,6 +9,7 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulFields;
 import com.dodo.xinyue.core.ui.recycler.MulItemClickListener;
+import com.tencent.bugly.beta.Beta;
 
 /**
  * ThumbPreviewItemClickListener
@@ -54,6 +55,8 @@ public class IndexItemClickListener extends MulItemClickListener {
 //        }
 //
 //        AppLinkHelper.openIQiYi(comicBean.getTvQipuId(), comicBean.getVid());
+
+        Beta.checkUpgrade();
 
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:

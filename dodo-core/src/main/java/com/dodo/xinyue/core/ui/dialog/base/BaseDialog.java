@@ -1,5 +1,6 @@
 package com.dodo.xinyue.core.ui.dialog.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -200,6 +201,7 @@ public abstract class BaseDialog extends AppCompatDialog
     /**
      * 初始化底层容器
      */
+    @SuppressLint("ClickableViewAccessibility")
     private void initContainerView() {
         //圆角布局
         mContainerView = new RelativeLayout(mContext);
@@ -211,7 +213,10 @@ public abstract class BaseDialog extends AppCompatDialog
         mContainerView.setSoundEffectsEnabled(false);
         //点击容器取消dialog
         if (mCanceledOnTouchOutside) {
-            mContainerView.setOnClickListener(v -> cancel());
+            mContainerView.setOnTouchListener((v, event) -> {
+                cancel();
+                return true;
+            });
         }
 
         int deviceWidth = DimenUtil.getScreenWidth();
@@ -358,17 +363,20 @@ public abstract class BaseDialog extends AppCompatDialog
 
     @Override
     public void show() {
-        if (!DialogManager.getInstance().canShow(this)) {
-            return;
-        }
+//        if (!DialogManager.getInstance().canShow(this)) {
+//            return;
+//        }
+        DialogManager.getInstance().cancelLastDialog();
+        DialogManager.getInstance().bindDialog(this);
         super.show();
     }
 
     @Override
     public void cancel() {
-        if (!DialogManager.getInstance().canCancel()) {
-            return;
-        }
+//        if (!DialogManager.getInstance().canCancel()) {
+//            return;
+//        }
+        DialogManager.getInstance().unbindDialog();
         super.cancel();
     }
 

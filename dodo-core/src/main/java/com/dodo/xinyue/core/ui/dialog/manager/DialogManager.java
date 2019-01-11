@@ -20,6 +20,7 @@ public class DialogManager {
         return Holder.INSTANCE;
     }
 
+    @Deprecated
     public final boolean canShow(BaseDialog dialog) {
         if (mDialog != null) {
             return false;
@@ -28,6 +29,7 @@ public class DialogManager {
         return true;
     }
 
+    @Deprecated
     public final boolean canCancel() {
         if (mDialog == null) {
             return false;
@@ -39,12 +41,23 @@ public class DialogManager {
         return true;
     }
 
-    private void bindDialog(BaseDialog dialog) {
+    public void bindDialog(BaseDialog dialog) {
         mDialog = dialog;
     }
 
-    private void unbindDialog() {
+    public void unbindDialog() {
         mDialog = null;
+    }
+
+    /**
+     * 隐藏上一个Dialog，保证每个时刻只有一个Dialog显示
+     */
+    public void cancelLastDialog() {
+        if (mDialog != null) {
+            mDialog.cancel();
+            unbindDialog();
+        }
+
     }
 
 }
