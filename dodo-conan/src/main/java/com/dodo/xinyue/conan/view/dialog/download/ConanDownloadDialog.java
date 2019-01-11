@@ -74,7 +74,8 @@ public class ConanDownloadDialog extends BaseDialog {
 
     @Override
     public void onBindView(View rootView) {
-        updateContent(0);
+//        updateContent(0);
+        mTvContent.setText("即将开始下载...\n总共 " + mPackageSize);
         mProgressBar.setMax((int) Beta.getUpgradeInfo().fileSize);//这里不能用Beta.getStrategyTask().getTotalLength(),第一次获取到的是0
         DoDoLogger.d(mProgressBar.getMax());
         Beta.registerDownloadListener(new DownloadListener() {
@@ -101,6 +102,7 @@ public class ConanDownloadDialog extends BaseDialog {
                 mTvContent.setText("下载出错，请稍后重试");
                 mContainerNormal.setVisibility(View.GONE);
                 mTvConfirm.setVisibility(View.VISIBLE);
+                mProgressBar.setProgress((int) task.getSavedLength());
 //                mProgressBar.setVisibility(View.GONE);
             }
         });

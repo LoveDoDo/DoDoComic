@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.constant.ApiConstants;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.icon.ConanIconFontModule;
-import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.ui.dialog.manager.DialogManager;
 import com.dodo.xinyue.core.util.CommonUtil;
@@ -138,8 +137,9 @@ public class MainApp extends Application {
         /**
          * 延迟初始化
          * 设置启动延时为60s（默认延时3s），APP启动60s后初始化SDK，避免影响APP启动速度;
+         * TODO 必须初始化SDK后才能调用Beta.checkUpgrade()检查更新，不然没反应
          */
-        Beta.initDelay = 60 * 1000;
+        Beta.initDelay = 18 * 1000;
 
 //        Beta.largeIconId = R.mipmap.ic_launcher;//设置通知栏大图标
 //        Beta.smallIconId = R.mipmap.ic_launcher;//设置状态栏小图标
@@ -218,11 +218,6 @@ public class MainApp extends Application {
             @Override
             public void onUpgrading(boolean isManual) {
                 DoDoLogger.d("检测更新中");
-                ConanLoadingDialog.builder()
-                        .anim(-1)
-                        .backgroundDimEnabled(false)
-                        .build()
-                        .show();
             }
 
             @Override

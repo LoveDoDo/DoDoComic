@@ -1,10 +1,14 @@
 package com.dodo.xinyue.conan.main.index.listener;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.main.index.data.IndexItemType;
+import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulFields;
@@ -27,6 +31,7 @@ public class IndexItemClickListener extends MulItemClickListener {
         return new IndexItemClickListener(delegate);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position, MulEntity entity, int itemViewType) {
         final IndexBean comicBean = entity.getField(MulFields.BEAN);
@@ -56,7 +61,17 @@ public class IndexItemClickListener extends MulItemClickListener {
 //
 //        AppLinkHelper.openIQiYi(comicBean.getTvQipuId(), comicBean.getVid());
 
-        Beta.checkUpgrade();
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showShort("网络未连接，请联网后重试");
+            return;
+        }
+        Beta.checkUpgrade();//必须初始化SDK后调用才有效
+        ConanLoadingDialog.builder()
+                .timeout(() -> ToastUtils.showShort("检查更新超时，请稍后重试"))
+                .anim(-1)
+                .backgroundDimEnabled(false)
+                .build()
+                .show();
 
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:
