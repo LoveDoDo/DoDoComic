@@ -36,6 +36,7 @@ import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 public class MainApp extends Application {
 
     private static final String TAG = "MainApp";
+    private static final int DELAY_BUGLY_INIT = 18 * 1000;//Bugly初始化延时
 
     /**
      * TODO
@@ -139,7 +140,7 @@ public class MainApp extends Application {
          * 设置启动延时为60s（默认延时3s），APP启动60s后初始化SDK，避免影响APP启动速度;
          * TODO 必须初始化SDK后才能调用Beta.checkUpgrade()检查更新，不然没反应
          */
-        Beta.initDelay = 18 * 1000;
+        Beta.initDelay = DELAY_BUGLY_INIT;
 
 //        Beta.largeIconId = R.mipmap.ic_launcher;//设置通知栏大图标
 //        Beta.smallIconId = R.mipmap.ic_launcher;//设置状态栏小图标
@@ -241,6 +242,12 @@ public class MainApp extends Application {
         Bugly.init(this, "ef116b1fc0", BuildConfig.DEBUG, strategy);
         // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
         // CrashReport.initCrashReport(context, strategy);
+
+        //保证Bugly初始化完成，防止无法检测更新
+        DoDo.getConfigurator().withCustomAttr(ApiConstants.IS_BUGLY_INIT, false);
+        DoDo.getHandler().postDelayed(() -> {
+            DoDo.getConfigurator().withCustomAttr(ApiConstants.IS_BUGLY_INIT, true);
+        }, DELAY_BUGLY_INIT + 3 * 1000);
     }
 
     /**

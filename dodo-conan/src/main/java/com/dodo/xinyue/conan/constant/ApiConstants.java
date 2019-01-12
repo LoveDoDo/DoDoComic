@@ -19,8 +19,8 @@ public class ApiConstants {
     public static final DialogOptions LIST_DIALOG_OPTIONS =
             new DialogOptions()
                     .anim(R.style.DialogBottomAnim)
-//                    .topLeftRadius(6)
-//                    .topRightRadius(6)
+                    .topLeftRadius(6)
+                    .topRightRadius(6)
                     .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
 
     /**
@@ -134,4 +134,9 @@ public class ApiConstants {
      * 消息类型
      */
     public static final String KEY_MESSAGE_TYPE = "message_type";
+
+    /**
+     * Bugly初始化完成标识
+     */
+    public static final String IS_BUGLY_INIT = "IS_BUGLY_INIT";
 }

@@ -51,8 +51,8 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbarThumbVertical="@color/black_40"
-            android:scrollbars="vertical">
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -319,6 +319,7 @@
                     android:background="#10ffffff" />
 
                 <RelativeLayout
+                    android:id="@+id/rlAbout"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:foreground="?selectableItemBackground"
@@ -354,8 +355,10 @@
                     android:background="#20ffffff" />
 
                 <LinearLayout
+                    android:id="@+id/llCheckUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
                     android:orientation="horizontal">
 
                     <TextView
@@ -374,6 +377,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
                     android:background="#10ffffff" />
+
+                <LinearLayout
+                    android:id="@+id/llExitApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:foreground="?selectableItemBackground"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:text="退出App"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

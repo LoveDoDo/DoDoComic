@@ -83,7 +83,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#60cccccc" />
+        android:background="#20ffffff" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,23 +95,31 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/selector_list_dialog_cancel"
+            android:background="@drawable/selector_download_dialog_bg"
             android:gravity="center"
             android:text="残忍的拒绝"
             android:textColor="#cc333333"
             android:textSize="16sp" />
 
-        <View
-            android:layout_width="0.5dp"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#60cccccc" />
+            android:background="@color/download_dialog_btn">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="#f0f0f0" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvConfirm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/selector_list_dialog_cancel"
+            android:background="@drawable/selector_download_dialog_bg"
             android:gravity="center"
             android:text="愉快的升级"
             android:textColor="@color/dodo_blue"

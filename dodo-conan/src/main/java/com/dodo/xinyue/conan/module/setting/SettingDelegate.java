@@ -5,18 +5,24 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
+import com.dodo.xinyue.conan.constant.ApiConstants;
 import com.dodo.xinyue.conan.helper.ApiHelper;
+import com.dodo.xinyue.conan.module.about.AboutDelegate;
 import com.dodo.xinyue.conan.module.setting.cache.ClearCacheDelegate;
 import com.dodo.xinyue.conan.module.setting.message.MessageDelegate;
 import com.dodo.xinyue.conan.module.setting.preference.IndexPreferenceDelegate;
 import com.dodo.xinyue.conan.view.SwitchButton;
+import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.CommonUtil;
+import com.tencent.bugly.beta.Beta;
 
 import java.io.File;
 
@@ -81,6 +87,36 @@ public class SettingDelegate extends DoDoDelegate {
             return;
         }
         getSupportDelegate().startForResult(ClearCacheDelegate.create(mAllCacheSize, mJsonCacheSize, mGlideCacheSize), REQUEST_CODE_CLEAR_CACHE);
+    }
+
+    @OnClick(R2.id.llCheckUpdate)
+    void onCheckUpdateClicked() {
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showShort("网络未连接，请联网后重试");
+            return;
+        }
+        final boolean isBuglyInited = DoDo.getConfiguration(ApiConstants.IS_BUGLY_INIT);
+        if (!isBuglyInited) {
+            ToastUtils.showShort("检测更新失败，过几秒再试吧~");
+            return;
+        }
+        Beta.checkUpgrade();//必须初始化SDK后调用才有效
+        ConanLoadingDialog.builder()
+                .timeout(() -> ToastUtils.showShort("检查更新超时，请稍后重试"))
+                .anim(-1)
+                .backgroundDimEnabled(false)
+                .build()
+                .show();
+    }
+
+    @OnClick(R2.id.llExitApp)
+    void onExitAppClicked() {
+        AppUtils.exitApp();
+    }
+
+    @OnClick(R2.id.rlAbout)
+    void onAboutClicked() {
+        start(AboutDelegate.create());
     }
 
     @Override

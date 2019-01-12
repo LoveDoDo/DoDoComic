@@ -195,6 +195,14 @@ public final class Configurator {
     }
 
     /**
+     * 用户自定义的全局变量
+     */
+    public final Configurator withCustomAttr(Object key, Object value) {
+        DODO_CONFIGS.put(key, value);
+        return this;
+    }
+
+    /**
      * 检查配置是否完成
      */
     private void checkConfiguration() {
