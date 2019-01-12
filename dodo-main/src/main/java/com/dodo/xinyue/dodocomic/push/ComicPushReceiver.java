@@ -81,7 +81,6 @@ public class ComicPushReceiver extends BroadcastReceiver {
         final String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
                 bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);
         final int type = getMessageType(bundle);
-        final String updateInfo = type == JiGuangMessage.TYPE_UPDATE ? getMessageUpdateInfo(bundle) : null;
         final boolean read = false;
         final long timestamp = System.currentTimeMillis();
 
@@ -90,7 +89,6 @@ public class ComicPushReceiver extends BroadcastReceiver {
         message.setTitle(title);
         message.setContent(content);
         message.setType(type);
-        message.setUpdateInfo(updateInfo);
         message.setRead(read);
         message.setTimestamp(timestamp);
         //插入数据库
@@ -112,9 +110,6 @@ public class ComicPushReceiver extends BroadcastReceiver {
                 case JiGuangMessage.TYPE_NOTICE:
                     title = "公告";
                     break;
-                case JiGuangMessage.TYPE_UPDATE:
-                    title = "柯南迷更新啦~";
-                    break;
                 default:
                     title = "新消息";
                     break;
@@ -125,7 +120,7 @@ public class ComicPushReceiver extends BroadcastReceiver {
 
     private int getMessageType(Bundle bundle) {
         final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
-        int type = JiGuangMessage.TYPE_NONE;
+        int type = JiGuangMessage.TYPE_NOTICE;//默认
         final JSONObject data = JSON.parseObject(dataJson);
         if (data != null) {
             type = data.getIntValue("type");
@@ -133,23 +128,19 @@ public class ComicPushReceiver extends BroadcastReceiver {
         return type;
     }
 
-    private String getMessageUpdateInfo(Bundle bundle) {
+    private String getCustomAttr(Bundle bundle) {
         final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
-        String updateInfo = null;
+        String customAttr = null;
         final JSONObject data = JSON.parseObject(dataJson);
         if (data != null) {
-            int versionCode = data.getIntValue("versionCode");
-            String versionName = data.getString("versionName");
-            String packageSize = data.getString("packageSize");
-            String downloadPath = data.getString("downloadPath");
+            int aaa = data.getIntValue("aaa");//aaa替换为具体字段名
+            String bbb = data.getString("bbb");//bbb替换为具体字段名
             final JSONObject json = new JSONObject();
-            json.put("versionCode", versionCode);
-            json.put("versionName", versionName);
-            json.put("packageSize", packageSize);
-            json.put("downloadPath", downloadPath);
-            updateInfo = json.toJSONString();
+            json.put("aaa", aaa);
+            json.put("bbb", bbb);
+            customAttr = json.toJSONString();
         }
-        return updateInfo;
+        return customAttr;
     }
 
     /**

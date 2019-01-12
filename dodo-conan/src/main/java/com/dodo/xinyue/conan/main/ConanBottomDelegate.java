@@ -3,8 +3,6 @@ package com.dodo.xinyue.conan.main;
 import android.os.Bundle;
 import android.view.Gravity;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
@@ -203,29 +201,6 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                         .title(event.getTitle())
                         .content(event.getContent())
                         .radius(8)
-                        .widthScale(0.85f)
-                        .build()
-                        .show();
-                break;
-            case JiGuangMessage.TYPE_UPDATE:
-                //更新
-                final String updateInfo = event.getUpdateInfo();
-                final JSONObject bean = JSON.parseObject(updateInfo);
-                final int versionCode = bean.getIntValue("versionCode");
-                if (versionCode <= AppUtils.getAppVersionCode()) {
-                    return;
-                }
-                final String versionName = bean.getString("versionName");
-                final String packageSize = bean.getString("packageSize");
-                final String downloadPath = bean.getString("downloadPath");
-                ConanUpdateDialog.builder()
-                        .title(event.getTitle())
-                        .content(event.getContent())
-                        .versionName(versionName)
-                        .packageSize(packageSize)
-                        .confirm(() -> ToastUtils.showLong("升级\n" + downloadPath))
-                        .bottomLeftRadius(8)
-                        .bottomRightRadius(8)
                         .widthScale(0.85f)
                         .build()
                         .show();

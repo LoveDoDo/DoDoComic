@@ -105,6 +105,7 @@ public class SettingDelegate extends DoDoDelegate {
                 .timeout(() -> ToastUtils.showShort("检查更新超时，请稍后重试"))
                 .anim(-1)
                 .backgroundDimEnabled(false)
+                .canceledOnTouchOutside(false)
                 .build()
                 .show();
     }

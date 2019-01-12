@@ -15,19 +15,17 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(nameInDb = "jiguang_message")
 public class JiGuangMessage {
 
-    //展示形式：不展示 默认
-    public static final int FORM_NONE = 0;
-    //展示形式：Dialog
-    public static final int FORM_DIALOG = 1;
+    //展示形式：Dialog(默认)
+    public static final int FORM_DIALOG = 0;
     //展示形式：通知
-    public static final int FORM_NOTIFICATION = 2;
+    public static final int FORM_NOTIFICATION = 1;
+    //展示形式：不展示
+    public static final int FORM_NONE = 2;
 
-    //消息类型：其他 默认
-    public static final int TYPE_NONE = 0;
-    //消息类型：更新
-    public static final int TYPE_UPDATE = 1;
-    //消息类型：公告
-    public static final int TYPE_NOTICE = 2;
+    //消息类型：公告(默认)
+    public static final int TYPE_NOTICE = 0;
+    //消息类型：其他
+    public static final int TYPE_NONE = 1;
 
     //主键
     @Id(autoincrement = true)
@@ -40,22 +38,18 @@ public class JiGuangMessage {
     private String content;
     //类型
     private int type;
-    //更新信息
-    private String updateInfo;
     //是否已读
     private boolean read;
     //时间戳
     private long timestamp;
-
-    @Generated(hash = 85702317)
+    @Generated(hash = 1970585458)
     public JiGuangMessage(Long id, String messageID, String title, String content,
-            int type, String updateInfo, boolean read, long timestamp) {
+            int type, boolean read, long timestamp) {
         this.id = id;
         this.messageID = messageID;
         this.title = title;
         this.content = content;
         this.type = type;
-        this.updateInfo = updateInfo;
         this.read = read;
         this.timestamp = timestamp;
     }
@@ -91,12 +85,6 @@ public class JiGuangMessage {
     }
     public void setType(int type) {
         this.type = type;
-    }
-    public String getUpdateInfo() {
-        return this.updateInfo;
-    }
-    public void setUpdateInfo(String updateInfo) {
-        this.updateInfo = updateInfo;
     }
     public boolean getRead() {
         return this.read;
