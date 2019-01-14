@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 
@@ -40,9 +41,19 @@ public class Router {
 //        webDelegate.setPageLoadListener(delegate.getPageListener());
 //        topDelegate.start(webDelegate);
 
-        return false;
+//        return false;
 //        topDelegate.getFragmentManager().executePendingTransactions();
 //        return true;//接管WebView的跳转
+
+        //页内跳转
+        loadPage(delegate.getWebView(), url, null);
+
+        /********* 备份 ********/
+//        final DoDoDelegate topDelegate = delegate.getTopDelegate();
+//        final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
+//        webDelegate.setPageLoadListener(delegate.getPageListener());
+//        topDelegate.start(webDelegate);
+        return true;//接管WebView的跳转
     }
 
     /**
@@ -51,11 +62,15 @@ public class Router {
      * @param webView
      * @param url
      */
-    private void loadWebPage(WebView webView, String url) {
+    private void loadWebPage(WebView webView, String url, String data) {
         if (webView == null) {
             throw new NullPointerException("WebView is null!");
         }
-        webView.loadUrl(url);
+        if (TextUtils.isEmpty(data)) {
+            webView.loadUrl(url);
+            return;
+        }
+        webView.postUrl(url, data.getBytes());
     }
 
     /**
@@ -65,19 +80,19 @@ public class Router {
      * @param url
      */
     private void loadLocalPage(WebView webView, String url) {
-        loadWebPage(webView, "file:///android_asset/" + url);
+        loadWebPage(webView, "file:///android_asset/" + url, null);
     }
 
-    private void loadPage(WebView webView, String url) {
+    private void loadPage(WebView webView, String url, String data) {
         if (URLUtil.isNetworkUrl(url) || URLUtil.isAssetUrl(url)) {
-            loadWebPage(webView, url);
+            loadWebPage(webView, url, data);
         } else {
             loadLocalPage(webView, url);
         }
     }
 
-    public final void loadPage(BaseWebDelegate delegate, String url) {
-        loadPage(delegate.getWebView(), url);
+    public final void loadPage(BaseWebDelegate delegate, String url, String data) {
+        loadPage(delegate.getWebView(), url, data);
     }
 
     private void callPhone(Context context, String url) {

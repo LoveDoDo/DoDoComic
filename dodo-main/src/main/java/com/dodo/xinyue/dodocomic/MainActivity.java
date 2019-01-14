@@ -1,14 +1,22 @@
 package com.dodo.xinyue.dodocomic;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.webkit.ValueCallback;
 
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.main.ConanBottomDelegate;
 import com.dodo.xinyue.core.activitys.ProxyActivity;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
+import com.dodo.xinyue.core.delegates.web.WebConstants;
+import com.dodo.xinyue.core.util.file.FileUtil;
 import com.dodo.xinyue.dodocomic.launch.BeforeLaunchDelegate;
+
+import java.io.File;
 
 import cn.jpush.android.api.JPushInterface;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -85,5 +93,34 @@ public class MainActivity extends ProxyActivity {
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WebConstants.REQUEST_CODE_WEBVIEW_UPLOAD) {
+            ValueCallback<Uri[]> webViewUploadData = DoDo.getConfiguration(WebConstants.WEBVIEW_UPLOAD_DATA);
+            if (webViewUploadData == null) {
+                return;
+            }
+            Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+            if (result == null) {
+                webViewUploadData.onReceiveValue(null);
+                webViewUploadData = null;
+                DoDo.getConfigurator().withCustomAttr(WebConstants.WEBVIEW_UPLOAD_DATA, null);
+                return;
+            }
+            String path = FileUtil.getPath(this, result);
+            if (TextUtils.isEmpty(path)) {
+                webViewUploadData.onReceiveValue(null);
+                webViewUploadData = null;
+                DoDo.getConfigurator().withCustomAttr(WebConstants.WEBVIEW_UPLOAD_DATA, null);
+                return;
+            }
+            Uri uri = Uri.fromFile(new File(path));
+            webViewUploadData.onReceiveValue(new Uri[]{uri});
+            webViewUploadData = null;
+            DoDo.getConfigurator().withCustomAttr(WebConstants.WEBVIEW_UPLOAD_DATA, null);
+        }
     }
 }

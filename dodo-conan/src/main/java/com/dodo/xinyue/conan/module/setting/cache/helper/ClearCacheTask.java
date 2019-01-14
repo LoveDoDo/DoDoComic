@@ -8,7 +8,7 @@ import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.module.setting.cache.callback.IDone;
 import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.core.app.DoDo;
-import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
+import com.dodo.xinyue.core.ui.dialog.manager.DialogManager;
 import com.dodo.xinyue.core.util.CommonUtil;
 
 import java.io.File;
@@ -27,8 +27,6 @@ public class ClearCacheTask extends AsyncTask<String, Void, Void> {
 
     private final IDone DONE;
 
-    private BaseDialog mDialog = null;
-
     public ClearCacheTask(IDone done) {
         this.DONE = done;
     }
@@ -36,13 +34,13 @@ public class ClearCacheTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mDialog = ConanLoadingDialog.builder()
+        ConanLoadingDialog.builder()
                 .anim(-1)//防止旋转动画卡顿
                 .gravity(Gravity.CENTER)
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
-                .build();
-        mDialog.show();
+                .build()
+                .show();
     }
 
     @Override
@@ -69,9 +67,7 @@ public class ClearCacheTask extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        if (mDialog != null) {
-            mDialog.cancel();
-        }
+        DialogManager.getInstance().cancelLastDialog();
         if (DONE != null) {
             DONE.onDone();
         }

@@ -1,14 +1,13 @@
 package com.dodo.xinyue.core.delegates.web.client;
 
 import android.graphics.Bitmap;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.web.BaseWebDelegate;
 import com.dodo.xinyue.core.delegates.web.IPageLoadListener;
 import com.dodo.xinyue.core.delegates.web.route.Router;
@@ -23,7 +22,7 @@ public class WebViewClientImpl extends WebViewClient {
 
     private final BaseWebDelegate DELEGATE;
     private IPageLoadListener mIPageLoadListener = null;
-    private static final Handler HANDLER = DoDo.getHandler();
+    private boolean isLoadError = false;//是否加载失败(如断网,404等错误)
 
     public void setPageLoadListener(IPageLoadListener listener) {
         this.mIPageLoadListener = listener;
@@ -51,9 +50,9 @@ public class WebViewClientImpl extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
         if (url.contains("pl-ali.youku.com/playlist")) {
-            Log.e("webhahaha", url);
+//            Log.e("webhahaha", url);
         } else {
-            Log.e("webeee", url);
+//            Log.e("webeee", url);
         }
 
         if (
@@ -108,6 +107,7 @@ public class WebViewClientImpl extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
+        isLoadError = false;
         if (mIPageLoadListener != null) {
             mIPageLoadListener.onLoadStart();
         }
@@ -117,7 +117,13 @@ public class WebViewClientImpl extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         if (mIPageLoadListener != null) {
-            mIPageLoadListener.onLoadEnd();
+            mIPageLoadListener.onLoadEnd(isLoadError);
         }
+    }
+
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+        super.onReceivedError(view, request, error);
+        isLoadError = true;
     }
 }

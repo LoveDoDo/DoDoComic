@@ -9,6 +9,8 @@ package com.dodo.xinyue.core.delegates.web.route;
 public enum RouteKeys {
 
     //Web页面跳转必须传递的参数
-    URL
+    URL,
+    //POST数据
+    DATA
 
 }

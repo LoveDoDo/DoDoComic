@@ -138,5 +138,11 @@ public class ApiConstants {
     /**
      * Bugly初始化完成标识
      */
-    public static final String IS_BUGLY_INIT = "IS_BUGLY_INIT";
+    public static final String IS_BUGLY_INIT = "is_bugly_init";
+
+    /**
+     * 反馈URL
+     */
+    public static final String FEEDBACK_URL = "https://support.qq.com/product/52238";
+
 }

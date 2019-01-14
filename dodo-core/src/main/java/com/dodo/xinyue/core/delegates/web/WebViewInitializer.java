@@ -25,18 +25,15 @@ public class WebViewInitializer {
         //允许截图
         webView.setDrawingCacheEnabled(true);
         //屏蔽长按事件
-        webView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return true;
-            }
-        });
+        webView.setOnLongClickListener(v -> true);
+        //屏蔽过度拖动时的上下阴影
+        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         //初始化WebSettings
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);//JS互调必须设置的
-        final String ua = settings.getUserAgentString();
-        settings.setUserAgentString(ua + "dodo");
+//        final String ua = settings.getUserAgentString();
+//        settings.setUserAgentString(ua + " dodo");
 //        settings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
         //隐藏缩放控件
         settings.setBuiltInZoomControls(false);

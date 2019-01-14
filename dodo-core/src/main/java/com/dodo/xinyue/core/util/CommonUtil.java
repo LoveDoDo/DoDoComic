@@ -1,11 +1,19 @@
 package com.dodo.xinyue.core.util;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.blankj.utilcode.util.EncryptUtils;
+import com.dodo.xinyue.core.app.DoDo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -210,7 +218,7 @@ public final class CommonUtil {
 
     /**
      * 格式化已下载安装包大小
-     *
+     * <p>
      * 格式化单位 → MB
      */
     public static String getFormatDownloadPackageSize(double size) {
@@ -297,5 +305,30 @@ public final class CommonUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * 获取设备唯一ID
+     */
+    public static String getUniqueId() {
+        String androidID = Settings.Secure.getString(DoDo.getAppContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        String id = androidID + Build.SERIAL;
+        return EncryptUtils.encryptMD5ToString(id);
+    }
+
+    /**
+     * 复制到剪切板
+     */
+    public static boolean copyToClipboard(String text) {
+        //获取剪贴板管理器
+        ClipboardManager cm = (ClipboardManager) DoDo.getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        if (cm == null) {
+            return false;
+        }
+        // 创建普通字符型ClipData
+        ClipData mClipData = ClipData.newPlainText("Label", text);
+        // 将ClipData内容放到系统剪贴板里
+        cm.setPrimaryClip(mClipData);
+        return true;
     }
 }

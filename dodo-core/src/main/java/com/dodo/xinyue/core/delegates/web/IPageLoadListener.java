@@ -10,6 +10,6 @@ public interface IPageLoadListener {
 
     void onLoadStart();
 
-    void onLoadEnd();
+    void onLoadEnd(boolean isLoadError);
 
 }

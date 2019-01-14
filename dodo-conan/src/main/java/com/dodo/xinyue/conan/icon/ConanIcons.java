@@ -10,6 +10,14 @@ import com.joanzapata.iconify.Icon;
  */
 public enum ConanIcons implements Icon {
     /**
+     * 刷新 WebView
+     */
+    icon_refresh_webview('\ue60f'),
+    /**
+     * 复制
+     */
+    icon_copy('\ue636'),
+    /**
      * 右箭头
      */
     icon_arrow_right('\ue612'),

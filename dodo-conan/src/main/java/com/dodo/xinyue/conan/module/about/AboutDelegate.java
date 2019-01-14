@@ -12,6 +12,7 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * AboutDelegate
@@ -27,11 +28,13 @@ public class AboutDelegate extends DoDoDelegate {
 
     @OnClick(R2.id.rlFeedback)
     void onFeedbackClicked() {
-
+        //意见反馈
+        start(FeedbackDelegate.create());
     }
 
     @OnClick(R2.id.rlSaySomething)
     void onSaySomethingClicked() {
+        //作者的话
 
     }
 
@@ -48,4 +51,15 @@ public class AboutDelegate extends DoDoDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mTvVersionName.setText("V" + AppUtils.getAppVersionName());
     }
+
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
+        fragmentAnimator.setEnter(R.anim.global_enter);
+        fragmentAnimator.setExit(R.anim.global_exit);
+        fragmentAnimator.setPopEnter(R.anim.global_no_anim_300);
+        fragmentAnimator.setPopExit(R.anim.global_no_anim_258);
+        return fragmentAnimator;
+    }
+
 }

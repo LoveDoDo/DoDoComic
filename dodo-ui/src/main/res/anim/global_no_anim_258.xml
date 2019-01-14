@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="258">
+
+    <!--必须加一个动画，不然不起作用(黑屏)，原因未知-->
+    <alpha
+        android:fromAlpha="1.0"
+        android:toAlpha="1.0" />
+
+</set>

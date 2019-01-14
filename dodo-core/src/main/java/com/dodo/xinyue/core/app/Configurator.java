@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.Utils;
+import com.dodo.xinyue.core.delegates.web.WebConstants;
 import com.dodo.xinyue.core.delegates.web.event.BaseEvent;
 import com.dodo.xinyue.core.delegates.web.event.EventManager;
 import com.joanzapata.iconify.IconFontDescriptor;
@@ -45,6 +46,8 @@ public final class Configurator {
         //配置开始
         DODO_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
         DODO_CONFIGS.put(ConfigKeys.HANDLER, HANDLER);
+        //WebView上传文件
+        DODO_CONFIGS.put(WebConstants.WEBVIEW_UPLOAD_DATA, null);
     }
 
     /**
@@ -221,7 +224,8 @@ public final class Configurator {
         checkConfiguration();
         final Object value = DODO_CONFIGS.get(key);
         if (value == null) {
-            throw new NullPointerException(key.toString() + " IS NULL");
+//            throw new NullPointerException(key.toString() + " IS NULL");
+            return null;
         }
         return (T) value;
     }

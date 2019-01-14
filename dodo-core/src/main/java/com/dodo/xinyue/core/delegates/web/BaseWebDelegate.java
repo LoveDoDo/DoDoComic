@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.WebView;
 
 import com.dodo.xinyue.core.app.ConfigKeys;
@@ -13,6 +16,7 @@ import com.dodo.xinyue.core.delegates.web.route.RouteKeys;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 
 /**
  * WebDelegate 基类
@@ -27,6 +31,7 @@ public abstract class BaseWebDelegate extends DoDoDelegate implements IWebViewIn
     //WebView在xml文件里初始化会造成内存泄漏，最安全的做法就是在代码里new出来
     private final ReferenceQueue<WebView> WEB_VIEW_QUEUE = new ReferenceQueue<>();
     private String mUrl = null;
+    private String mData = null;//POST数据
     //WebView初始化完成标识
     private boolean mIsWebViewAvailable = false;
     private DoDoDelegate mTopDelegate = null;
@@ -42,8 +47,11 @@ public abstract class BaseWebDelegate extends DoDoDelegate implements IWebViewIn
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
         mUrl = args.getString(RouteKeys.URL.name());
+        mData = args.getString(RouteKeys.DATA.name());
         //初始化
         initWebView();
+//        //设置软键盘开启/关闭状态监听
+//        mOnSoftKeyboardChangeListener = KeyboardUtil.observeSoftKeyboard(this);
     }
 
     @Override
@@ -77,6 +85,23 @@ public abstract class BaseWebDelegate extends DoDoDelegate implements IWebViewIn
         //支持JS和原生进行交互
         final String name = DoDo.getConfiguration(ConfigKeys.JAVASCRIPT_INTERFACE);
         mWebView.addJavascriptInterface(WebInterface.create(this), name);
+        mWebView.setOnKeyListener((v, keyCode, event) -> {
+            //TODO 二者缺一不可 系统会自动处理SoftKeyboard的隐藏
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+//                if (mIsKeyboardVisible) {
+//                    DoDoLogger.d("gsfgsdg", "隐藏");
+//                    //隐藏软键盘
+//                    getSupportDelegate().hideSoftInput();
+//                    return true;
+//                }
+                if (mWebView.canGoBack()) {
+                    //WebView中返回上一页
+                    mWebView.goBack();
+                    return true;
+                }
+            }
+            return false;
+        });
         mIsWebViewAvailable = true;
     }
 
@@ -105,6 +130,10 @@ public abstract class BaseWebDelegate extends DoDoDelegate implements IWebViewIn
         return mUrl;
     }
 
+    public String getData() {
+        return mData;
+    }
+
     public void setPageLoadListener(IPageLoadListener listener) {
         this.mIPageLoadListener = listener;
     }
@@ -113,6 +142,17 @@ public abstract class BaseWebDelegate extends DoDoDelegate implements IWebViewIn
         return mIPageLoadListener;
     }
 
+//    @Override
+//    public void onSoftKeyBoardChange(int softKeyboardHeight, boolean visible) {
+//        mWebView.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mIsKeyboardVisible = visible;
+//                DoDoLogger.d("gsfgsdg", mIsKeyboardVisible);
+//            }
+//        }, 100);
+//
+//    }
 
     /**
      * 绑定WebView生命周期，下同
@@ -143,11 +183,37 @@ public abstract class BaseWebDelegate extends DoDoDelegate implements IWebViewIn
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+//        KeyboardUtil.removeSoftKeyboardObserver(mOnSoftKeyboardChangeListener);
         if (mWebView != null) {
+            // 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再destory()
+            ViewParent parent = mWebView.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent).removeView(mWebView);
+            }
+
+            mWebView.stopLoading();
+            // 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错
+            mWebView.getSettings().setJavaScriptEnabled(false);
+            mWebView.clearHistory();
+            mWebView.loadUrl("about:blank");
             mWebView.removeAllViews();
+//            releaseAllWebViewCallback();
             mWebView.destroy();
             mWebView = null;
+        }
+
+        super.onDestroy();
+    }
+
+    private void releaseAllWebViewCallback() {
+        try {
+            Field sConfigCallback = Class.forName("android.webkit.BrowserFrame").getDeclaredField("sConfigCallback");
+            if (sConfigCallback != null) {
+                sConfigCallback.setAccessible(true);
+                sConfigCallback.set(null, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

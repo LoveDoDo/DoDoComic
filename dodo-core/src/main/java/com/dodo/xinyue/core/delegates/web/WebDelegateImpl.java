@@ -28,6 +28,15 @@ public class WebDelegateImpl extends BaseWebDelegate {
         return delegate;
     }
 
+    public static WebDelegateImpl create(String url, String data) {
+        final Bundle args = new Bundle();
+        args.putString(RouteKeys.URL.name(), url);
+        args.putString(RouteKeys.DATA.name(), data);
+        final WebDelegateImpl delegate = new WebDelegateImpl();
+        delegate.setArguments(args);
+        return delegate;
+    }
+
     @Override
     public Object setLayout() {
         return getWebView();
@@ -35,9 +44,6 @@ public class WebDelegateImpl extends BaseWebDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-
-
-
     }
 
     @Override
@@ -45,7 +51,7 @@ public class WebDelegateImpl extends BaseWebDelegate {
         super.onEnterAnimationEnd(savedInstanceState);
 
         //用原生的方式(delegate切换)模拟Web跳转并进行页面加载
-        Router.getInstance().loadPage(this, getUrl());
+        Router.getInstance().loadPage(this, getUrl(), getData());
     }
 
 
