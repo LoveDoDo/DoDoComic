@@ -1,4 +1,4 @@
-package com.dodo.xinyue.conan.module.about;
+package com.dodo.xinyue.conan.module.setting.about;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +26,11 @@ public class AboutDelegate extends DoDoDelegate {
     @BindView(R2.id.tvVersionName)
     TextView mTvVersionName = null;
 
+    @OnClick(R2.id.tvBack)
+    void onTvBackClicked() {
+        pop();
+    }
+
     @OnClick(R2.id.rlFeedback)
     void onFeedbackClicked() {
         //意见反馈
@@ -35,7 +40,7 @@ public class AboutDelegate extends DoDoDelegate {
     @OnClick(R2.id.rlSaySomething)
     void onSaySomethingClicked() {
         //作者的话
-
+        start(SaySomethingDelegate.create());
     }
 
     public static AboutDelegate create() {

@@ -1,4 +1,4 @@
-package com.dodo.xinyue.conan.module.about;
+package com.dodo.xinyue.conan.module.setting.about;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -22,7 +22,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.constant.ApiConstants;
-import com.dodo.xinyue.conan.module.about.anim.RotationAnimator;
+import com.dodo.xinyue.conan.module.setting.about.anim.RotationAnimator;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.delegates.web.IPageLoadListener;
 import com.dodo.xinyue.core.delegates.web.WebDelegateImpl;
@@ -107,12 +107,13 @@ public class FeedbackDelegate extends DoDoDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+
         mRotationAnim = ObjectAnimator.ofFloat(mTvProgress, "rotation", 0, 360);
         mRotationAnim.setDuration(1314);
         mRotationAnim.setRepeatCount(Animation.INFINITE);//无限循环
         mRotationAnim.setRepeatMode(ValueAnimator.RESTART);//重复动画
         mRotationAnim.setInterpolator(new LinearInterpolator());//覆盖默认的AccelerateDecelerateInterpolator()
-        mRotationAnim.start();
+
 
         Glide.with(getContext())
                 .load(R.drawable.icon_webview_load_error)
@@ -123,7 +124,10 @@ public class FeedbackDelegate extends DoDoDelegate {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        mRlLoading.setVisibility(View.VISIBLE);
+
+        if (mRotationAnim.isRunning()) {
+            mRlLoading.setVisibility(View.VISIBLE);
+        }
 
         String postData = getPostData();
         mWebDelegate = WebDelegateImpl.create(ApiConstants.FEEDBACK_URL, postData);//吐个槽
@@ -131,8 +135,13 @@ public class FeedbackDelegate extends DoDoDelegate {
         mWebDelegate.setPageLoadListener(new IPageLoadListener() {
             @Override
             public void onLoadStart() {
-                mRlLoading.setVisibility(View.VISIBLE);
                 mRlLoadError.setVisibility(View.GONE);
+                if (!mRotationAnim.isStarted()) {
+                    mRotationAnim.start();
+                }
+                if (mRotationAnim.isRunning()) {
+                    mRlLoading.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

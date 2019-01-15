@@ -13,7 +13,7 @@ import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.constant.ApiConstants;
 import com.dodo.xinyue.conan.helper.ApiHelper;
-import com.dodo.xinyue.conan.module.about.AboutDelegate;
+import com.dodo.xinyue.conan.module.setting.about.AboutDelegate;
 import com.dodo.xinyue.conan.module.setting.cache.ClearCacheDelegate;
 import com.dodo.xinyue.conan.module.setting.message.MessageDelegate;
 import com.dodo.xinyue.conan.module.setting.preference.IndexPreferenceDelegate;

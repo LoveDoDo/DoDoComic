@@ -1,4 +1,4 @@
-package com.dodo.xinyue.conan.module.about.anim;
+package com.dodo.xinyue.conan.module.setting.about.anim;
 
 import android.animation.ObjectAnimator;
 import android.view.View;
