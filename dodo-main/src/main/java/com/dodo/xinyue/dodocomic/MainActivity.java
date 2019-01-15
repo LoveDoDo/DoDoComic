@@ -15,6 +15,7 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.delegates.web.WebConstants;
 import com.dodo.xinyue.core.util.file.FileUtil;
 import com.dodo.xinyue.dodocomic.launch.BeforeLaunchDelegate;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 
@@ -86,13 +87,19 @@ public class MainActivity extends ProxyActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //极光推送
         JPushInterface.onPause(this);
+        //友盟统计
+        MobclickAgent.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //极光推送
         JPushInterface.onResume(this);
+        //友盟统计
+        MobclickAgent.onResume(this);
     }
 
     @Override

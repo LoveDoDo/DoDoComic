@@ -279,4 +279,9 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
         super.onStop();
         EventBusActivityScope.getDefault(DoDo.getActivity()).unregister(this);
     }
+
+    @Override
+    public boolean isTrack() {
+        return false;
+    }
 }

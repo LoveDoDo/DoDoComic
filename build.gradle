@@ -3,6 +3,8 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        //友盟统计
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         //google访问慢，所以放到最后
         google()
     }
@@ -21,6 +23,8 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        //友盟统计
+        maven { url 'https://dl.bintray.com/umsdk/release' }
         //BaseRecyclerViewAdapterHelper
         maven { url "https://jitpack.io" }
         //Glide

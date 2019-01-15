@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.EncryptUtils;
 import com.dodo.xinyue.core.app.DoDo;
+import com.umeng.commonsdk.statistics.common.DeviceConfig;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -331,4 +334,32 @@ public final class CommonUtil {
         cm.setPrimaryClip(mClipData);
         return true;
     }
+
+    /**
+     * 判断是否处于Debug环境
+     */
+    public static boolean isDebug() {
+        if (DoDo.getAppContext().getApplicationInfo() != null
+                && (DoDo.getAppContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 获取设备信息
+     * 友盟统计 集成测试
+     */
+    public static String getTestDeviceInfo(Context context){
+        String[] deviceInfo = new String[2];
+        try {
+            if(context != null){
+                deviceInfo[0] = DeviceConfig.getDeviceIdForGeneral(context);
+                deviceInfo[1] = DeviceConfig.getMac(context);
+            }
+        } catch (Exception e){
+        }
+        return JSON.toJSONString(deviceInfo);
+    }
+
 }

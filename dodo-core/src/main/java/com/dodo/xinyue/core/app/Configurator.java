@@ -3,11 +3,13 @@ package com.dodo.xinyue.core.app;
 import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.Utils;
 import com.dodo.xinyue.core.delegates.web.WebConstants;
 import com.dodo.xinyue.core.delegates.web.event.BaseEvent;
 import com.dodo.xinyue.core.delegates.web.event.EventManager;
+import com.dodo.xinyue.core.util.CommonUtil;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -82,6 +84,14 @@ public final class Configurator {
         DODO_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
         //初始化Utils 需要放在配置完成后,不然checkConfiguration()会出错
         Utils.init(DoDo.getAppContext());
+        //因为需要用到Application Context
+        //初始化Logger
+        Logger.addLogAdapter(new AndroidLogAdapter(){
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                return CommonUtil.isDebug();
+            }
+        });
     }
 
     /**
@@ -90,8 +100,6 @@ public final class Configurator {
     private final void initOtherLib() {
         //初始化字体图标库
         initIcons();
-        //初始化Logger
-        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
     /**

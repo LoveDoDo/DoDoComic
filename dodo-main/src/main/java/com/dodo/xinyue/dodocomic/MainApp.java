@@ -22,6 +22,8 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.tencent.bugly.beta.upgrade.UpgradeListener;
 import com.tencent.bugly.beta.upgrade.UpgradeStateListener;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import cn.jpush.android.api.JPushInterface;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
@@ -85,6 +87,11 @@ public class MainApp extends Application {
         initBugly();
 
         /**
+         * 友盟统计 初始化
+         */
+        initUmeng();
+
+        /**
          * 数据库初始化
          */
         DatabaseManager.getInstance().init(this);
@@ -106,12 +113,6 @@ public class MainApp extends Application {
 //                })
 //                .install();
 
-//        Fragmentation.builder()
-//                // show stack view. Mode: BUBBLE, SHAKE, NONE
-//                .stackViewMode(Fragmentation.BUBBLE)
-//                .debug(BuildConfig.DEBUG)
-//                .install();
-
         initStetho();
 //
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -122,6 +123,34 @@ public class MainApp extends Application {
 
 //        DoDo.getConfigurator().withRefWatcher(LeakCanary.install(this));
 
+    }
+
+    /**
+     * 初始化友盟统计
+     */
+    private void initUmeng() {
+        /**
+         * 初始化common库
+         * 参数1:上下文，不能为空
+         * 参数2:【友盟+】 AppKey
+         * 参数3:【友盟+】 Channel
+         * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+         * 参数5:Push推送业务的secret
+         *
+         * 参数1:上下文，必须的参数，不能为空。
+         * 参数2:【友盟+】 AppKey，非必须参数，如果Manifest文件中已配置AppKey，该参数可以传空，则使用Manifest中配置的AppKey，否则该参数必须传入。
+         * 参数3:【友盟+】 Channel，非必须参数，如果Manifest文件中已配置Channel，该参数可以传空，则使用Manifest中配置的Channel，否则该参数必须传入，Channel命名请详见Channel渠道命名规范。
+         * 参数4:设备类型，必须参数，传参数为UMConfigure.DEVICE_TYPE_PHONE则表示手机；传参数为UMConfigure.DEVICE_TYPE_BOX则表示盒子；默认为手机。
+         * 参数5:Push推送业务的secret，需要集成Push功能时必须传入Push的secret，否则传空。
+         */
+        UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, "other", UMConfigure.DEVICE_TYPE_PHONE, null);
+        //选用AUTO页面采集模式
+//        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);//手动统计Activity和Fragment
+        //关闭错误统计 使用Bugly
+        MobclickAgent.setCatchUncaughtExceptions(false);// isEnable: false-关闭错误统计功能；true-打开错误统计功能（默认打开）
+        //打开统计SDK调试模式
+        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
     }
 
     /**
@@ -254,7 +283,7 @@ public class MainApp extends Application {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
-        Bugly.init(this, "ef116b1fc0", BuildConfig.DEBUG, strategy);
+        Bugly.init(this, BuildConfig.BUGLY_APP_ID, BuildConfig.DEBUG, strategy);
         // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
         // CrashReport.initCrashReport(context, strategy);
 

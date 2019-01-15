@@ -1,7 +1,5 @@
 package com.dodo.xinyue.core.delegates.bottom;
 
-import android.os.Bundle;
-
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
@@ -20,8 +18,4 @@ public abstract class BaseBottomItemDelegate extends DoDoDelegate {
         return new DefaultNoAnimator();//设置无动画在出栈的时候会出现空白
     }
 
-    @Override
-    public void onEnterAnimationEnd(Bundle savedInstanceState) {
-        super.onEnterAnimationEnd(savedInstanceState);
-    }
 }

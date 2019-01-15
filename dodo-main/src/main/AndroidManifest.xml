@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dodo.xinyue.dodocomic">
 
+    <!--友盟统计-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <!-- 极光推送 必须权限 -->
     <permission
         android:name="com.dodo.xinyue.dodocomic.permission.JPUSH_MESSAGE"

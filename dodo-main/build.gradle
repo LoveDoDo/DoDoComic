@@ -37,9 +37,18 @@ android {
     }
 
     buildTypes {
-        release {
+        debug{
             minifyEnabled false
+            buildConfigField "String", "BUGLY_APP_ID", "\"ef116b1fc0\""
+            buildConfigField "String", "BUGLY_APP_KEY", "\"63961484-adaa-403b-98e4-d1ab8fa6ea25\""
+            buildConfigField "String", "UMENG_APP_KEY", "\"5c2febbfb465f5ceda000c3e\""
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BUGLY_APP_ID", "\"ef116b1fc0\""
+            buildConfigField "String", "BUGLY_APP_KEY", "\"63961484-adaa-403b-98e4-d1ab8fa6ea25\""
+            buildConfigField "String", "UMENG_APP_KEY", "\"5c2febbfb465f5ceda000c3e\""
         }
     }
     compileOptions {

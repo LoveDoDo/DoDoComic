@@ -312,4 +312,9 @@ public class IndexContentDelegate extends DoDoDelegate {
     public boolean onBackPressedSupport() {
         return false;
     }
+
+    @Override
+    public boolean isTrack() {
+        return false;
+    }
 }

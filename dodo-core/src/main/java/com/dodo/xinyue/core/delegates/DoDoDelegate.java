@@ -2,6 +2,9 @@ package com.dodo.xinyue.core.delegates;
 
 import android.os.Bundle;
 
+import com.dodo.xinyue.core.util.log.DoDoLogger;
+import com.umeng.analytics.MobclickAgent;
+
 /**
  * 需要被其他delegate继承
  *
@@ -29,6 +32,32 @@ public abstract class DoDoDelegate extends PermissionCheckerDelegate {
             return true;//屏蔽返回键
         }
         return super.onBackPressedSupport();
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        DoDoLogger.d("UMLog", getClass().getSimpleName() + " - " + "resume");
+        if (isTrack()) {
+            MobclickAgent.onPageStart(getClass().getSimpleName()); //统计页面("MainScreen"为页面名称，可自定义)
+        }
+    }
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        DoDoLogger.d("UMLog", getClass().getSimpleName() + " - " + "pause");
+        if (isTrack()) {
+            MobclickAgent.onPageEnd(getClass().getSimpleName()); //统计页面("MainScreen"为页面名称，可自定义)
+        }
+    }
+
+    /**
+     * 是否统计当前页面
+     * BottomDelegate需要重写该方法并返回false
+     */
+    public boolean isTrack() {
+        return true;
     }
 
     @Override
