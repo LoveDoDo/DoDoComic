@@ -11,27 +11,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="18dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
         tool:text="标题" />
 
-    <TextView
-        android:id="@+id/tvContent"
+    <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="18dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.2"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        tool:text="内容" />
+        android:overScrollMode="never"
+        android:paddingBottom="18dp"
+        android:scrollbarThumbVertical="@drawable/shape_scrollbar_bg"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingEnd="22dp"
+            android:paddingStart="22dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tool:text="内容" />
+
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
