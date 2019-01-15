@@ -203,4 +203,15 @@ public class ApiHelper {
                 .apply();
     }
 
+    public static long getLastCheckUpdateTimestamp() {
+        return DoDoPreference.getAppPreference().getLong(ApiConstants.LAST_CHECK_UPDATE_TIMESTAMP, 0L);
+    }
+
+    public static void setCurrentCheckUpdateTimestamp() {
+        DoDoPreference.getAppPreference()
+                .edit()
+                .putLong(ApiConstants.LAST_CHECK_UPDATE_TIMESTAMP, System.currentTimeMillis())
+                .apply();
+    }
+
 }

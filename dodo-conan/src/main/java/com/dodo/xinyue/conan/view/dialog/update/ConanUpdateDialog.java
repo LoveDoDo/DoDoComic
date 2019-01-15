@@ -86,9 +86,9 @@ public class ConanUpdateDialog extends BaseDialog {
             @Override
             public void onGlobalLayout() {
                 mTvContent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                if (mTvContent.getHeight() > DimenUtil.dp2px(130)) {
+                if (mTvContent.getHeight() > DimenUtil.dp2px(188)) {
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mScrollView.getLayoutParams();
-                    layoutParams.height = DimenUtil.dp2px(130);
+                    layoutParams.height = DimenUtil.dp2px(188);
                     mScrollView.setLayoutParams(layoutParams);
                 }
             }

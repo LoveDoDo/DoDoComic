@@ -37,6 +37,7 @@ public class MainApp extends Application {
 
     private static final String TAG = "MainApp";
     private static final int DELAY_BUGLY_INIT = 18 * 1000;//Bugly初始化延时
+    private static final long CHECK_UPDATE_CYCLE = 7 * 24 * 60 * 60 * 1000;//检查更新弹窗策略 7天内不弹窗
 
     /**
      * TODO
@@ -185,14 +186,28 @@ public class MainApp extends Application {
             public void onUpgrade(int ret, UpgradeInfo strategy, boolean isManual, boolean isSilence) {
                 if (strategy == null) {
                     DoDoLogger.d("没有更新");
-                    if (isManual) {//手动检测更新
+                    if (isManual) {
+                        //手动检测更新
                         ToastUtils.showShort("已经是最新版咯~");
                         DialogManager.getInstance().cancelLastDialog();
                     }
                     return;
                 }
                 DoDoLogger.d("发现新版本");
-                EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(strategy);
+                if (isManual) {
+                    //手动检测更新
+                    ApiHelper.setCurrentCheckUpdateTimestamp();
+                    EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(strategy);
+                    return;
+                }
+                long lastCheckUpdateTimestamp = ApiHelper.getLastCheckUpdateTimestamp();
+                if (System.currentTimeMillis() - lastCheckUpdateTimestamp > CHECK_UPDATE_CYCLE) {
+                    ApiHelper.setCurrentCheckUpdateTimestamp();
+                    EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(strategy);
+                } else {
+                    DoDoLogger.d("发现新版本 - 不弹窗(策略)");
+                }
+
             }
         };
         Beta.upgradeStateListener = new UpgradeStateListener() {

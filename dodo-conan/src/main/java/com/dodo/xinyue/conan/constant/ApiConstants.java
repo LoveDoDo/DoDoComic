@@ -145,4 +145,9 @@ public class ApiConstants {
      */
     public static final String FEEDBACK_URL = "https://support.qq.com/product/52238";
 
+    /**
+     * 上次检查更新的时间戳
+     */
+    public static final String LAST_CHECK_UPDATE_TIMESTAMP = "last_check_update_timestamp";
+
 }
