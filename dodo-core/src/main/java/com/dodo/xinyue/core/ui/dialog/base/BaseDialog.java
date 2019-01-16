@@ -378,6 +378,14 @@ public abstract class BaseDialog extends AppCompatDialog
 //        }
         DialogManager.getInstance().unbindDialog();
         super.cancel();
+        DialogManager.getInstance().checkPending();
+    }
+
+    /**
+     * 延时显示
+     */
+    public void pendingShow() {
+        DialogManager.getInstance().pendingShow(this);
     }
 
 }

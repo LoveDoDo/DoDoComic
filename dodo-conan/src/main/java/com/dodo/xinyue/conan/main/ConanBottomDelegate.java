@@ -211,9 +211,9 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                         .radius(8)
                         .widthScale(0.85f)
                         .build()
-                        .show();
+                        .pendingShow();
 
-                //TODO 待完成：1、ConanMessageDialog点击操作 复制 跳转WebView 2、UpdateDialog弹出时如果有公告Dialog显示，则存为PengdingDialog pendingShow setPendingDialog 公告Dialog消失要检查pendingDialog是否为空，不为空就显示出来
+                //TODO 待完成：2、UpdateDialog弹出时如果有公告Dialog显示，则存为PengdingDialog pendingShow setPendingDialog 公告Dialog消失要检查pendingDialog是否为空，不为空就显示出来
                 //TODO 可以给BaseDialog添加一个属性，isCancelLastDialog
 
                 break;
@@ -260,8 +260,9 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                 .bottomLeftRadius(8)
                 .bottomRightRadius(8)
                 .widthScale(0.85f)
+                .canceledOnTouchOutside(false)
                 .build()
-                .show();
+                .pendingShow();
     }
 
     private void startUpdate(String packageSize) {
@@ -277,7 +278,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
                 .build()
-                .show();
+                .pendingShow();
     }
 
     @Override

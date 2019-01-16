@@ -1,6 +1,9 @@
 package com.dodo.xinyue.core.ui.dialog.manager;
 
+import com.dodo.xinyue.core.ui.dialog.ILoadingDialog;
 import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
+
+import java.util.ArrayList;
 
 /**
  * DialogManager
@@ -11,6 +14,7 @@ import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 public class DialogManager {
 
     private BaseDialog mDialog = null;
+    private final ArrayList<BaseDialog> PENDING_DIALOGS = new ArrayList<>();//缓存Dialog,延时显示
 
     private static final class Holder {
         private static final DialogManager INSTANCE = new DialogManager();
@@ -57,7 +61,34 @@ public class DialogManager {
             mDialog.cancel();
             unbindDialog();
         }
+    }
 
+    /**
+     * 延时显示
+     */
+    public void pendingShow(BaseDialog dialog) {
+        if (mDialog == null) {
+            //当前没有Dialog正在显示
+            dialog.show();
+            return;
+        }
+        if (mDialog instanceof ILoadingDialog) {
+            mDialog.cancel();
+            dialog.show();
+            return;
+        }
+        PENDING_DIALOGS.add(dialog);
+    }
+
+    /**
+     * 检查是否有缓存Dialog,如果有则显示
+     */
+    public void checkPending() {
+        if (PENDING_DIALOGS.size() == 0) {
+            return;
+        }
+        PENDING_DIALOGS.get(0).show();
+        PENDING_DIALOGS.remove(0);
     }
 
 }

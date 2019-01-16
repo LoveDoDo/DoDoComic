@@ -10,6 +10,7 @@ import android.view.animation.LinearInterpolator;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.view.dialog.callback.ITimeout;
+import com.dodo.xinyue.core.ui.dialog.ILoadingDialog;
 import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
 import com.dodo.xinyue.core.util.timer.BaseTimerTask;
@@ -26,7 +27,7 @@ import butterknife.BindView;
  * @author DoDo
  * @date 2018/10/28
  */
-public class ConanLoadingDialog extends BaseDialog implements ITimerListener {
+public class ConanLoadingDialog extends BaseDialog implements ITimerListener, ILoadingDialog {
 
     private static final int TIME_OUT = 3;//超时时间
 
