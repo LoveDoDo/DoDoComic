@@ -213,8 +213,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                         .build()
                         .pendingShow();
 
-                //TODO 待完成：2、UpdateDialog弹出时如果有公告Dialog显示，则存为PengdingDialog pendingShow setPendingDialog 公告Dialog消失要检查pendingDialog是否为空，不为空就显示出来
-                //TODO 可以给BaseDialog添加一个属性，isCancelLastDialog
+
 
                 break;
             case JiGuangMessage.TYPE_NONE:

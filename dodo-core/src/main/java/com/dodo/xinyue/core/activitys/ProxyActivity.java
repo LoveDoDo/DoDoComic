@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ContentFrameLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 
@@ -85,7 +86,8 @@ public abstract class ProxyActivity extends AppCompatActivity
 
         //释放Configurator持有的Activity等引用(重启会崩溃)
 //        DoDo.getConfigurator().destroy();
-//        DoDoLogger.d("销毁");
+
+        ToastUtils.cancel();
 
         //释放资源
         System.gc();//垃圾回收（回收时间不确定）

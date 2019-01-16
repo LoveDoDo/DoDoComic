@@ -2,7 +2,6 @@ package com.dodo.xinyue.core.delegates;
 
 import android.os.Bundle;
 
-import com.dodo.xinyue.core.util.log.DoDoLogger;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -37,7 +36,7 @@ public abstract class DoDoDelegate extends PermissionCheckerDelegate {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        DoDoLogger.d("UMLog", getClass().getSimpleName() + " - " + "resume");
+//        DoDoLogger.d("UMLog", getClass().getSimpleName() + " - " + "resume");
         if (isTrack()) {
             MobclickAgent.onPageStart(getClass().getSimpleName()); //统计页面("MainScreen"为页面名称，可自定义)
         }
@@ -46,7 +45,7 @@ public abstract class DoDoDelegate extends PermissionCheckerDelegate {
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
-        DoDoLogger.d("UMLog", getClass().getSimpleName() + " - " + "pause");
+//        DoDoLogger.d("UMLog", getClass().getSimpleName() + " - " + "pause");
         if (isTrack()) {
             MobclickAgent.onPageEnd(getClass().getSimpleName()); //统计页面("MainScreen"为页面名称，可自定义)
         }

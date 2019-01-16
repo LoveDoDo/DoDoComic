@@ -1,7 +1,9 @@
 package com.dodo.xinyue.dodocomic;
 
 import android.app.Application;
+import android.graphics.Color;
 import android.os.Environment;
+import android.view.Gravity;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -82,6 +84,11 @@ public class MainApp extends Application {
         JPushInterface.init(this);
 
         /**
+         * 数据库初始化
+         */
+        DatabaseManager.getInstance().init(this);
+
+        /**
          * Bugly 初始化
          */
         initBugly();
@@ -92,9 +99,9 @@ public class MainApp extends Application {
         initUmeng();
 
         /**
-         * 数据库初始化
+         * 自定义Toast
          */
-        DatabaseManager.getInstance().init(this);
+        initToast();
 
 //        Fragmentation.builder()
 //                // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出  默认NONE：隐藏， 仅在Debug环境生效
@@ -123,6 +130,16 @@ public class MainApp extends Application {
 
 //        DoDo.getConfigurator().withRefWatcher(LeakCanary.install(this));
 
+    }
+
+    /**
+     * 自定义Toast
+     */
+    private void initToast() {
+        ToastUtils.setMsgColor(Color.WHITE);
+        ToastUtils.setMsgTextSize(14);//传sp即可
+        ToastUtils.setBgResource(R.drawable.shape_toast);
+        ToastUtils.setGravity(Gravity.BOTTOM,0,218);
     }
 
     /**

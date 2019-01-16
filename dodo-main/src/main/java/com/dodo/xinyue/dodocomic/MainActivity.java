@@ -52,7 +52,7 @@ public class MainActivity extends ProxyActivity {
     }
 
     /**
-     * 防止内容不足，Activity销毁重建，由于保存的fragment的状态，导致fragment发生重叠问题
+     * 防止内存不足，Activity销毁重建，由于保存的fragment的状态，导致fragment发生重叠问题
      */
     @Override
     public Class<? extends DoDoDelegate> getMayBeExistDelegate() {
@@ -105,6 +105,7 @@ public class MainActivity extends ProxyActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //WebView上传文件
         if (requestCode == WebConstants.REQUEST_CODE_WEBVIEW_UPLOAD) {
             ValueCallback<Uri[]> webViewUploadData = DoDo.getConfiguration(WebConstants.WEBVIEW_UPLOAD_DATA);
             if (webViewUploadData == null) {
