@@ -6,10 +6,10 @@
 
     <corners android:radius="1000dp" />
 
-    <padding
-        android:right="-2dp"
-        android:left="-2dp"
-        android:top="-4dp"
-        android:bottom="-4dp" />
+    <!--<padding-->
+        <!--android:right="-2dp"-->
+        <!--android:left="-2dp"-->
+        <!--android:top="-4dp"-->
+        <!--android:bottom="-4dp" />-->
 
 </shape>
