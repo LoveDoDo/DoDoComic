@@ -6,7 +6,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * 极光推送的消息dao
- *
+ * <p>
  * DAO(Data Access Object) 数据访问对象
  *
  * @author DoDo
@@ -15,41 +15,67 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(nameInDb = "jiguang_message")
 public class JiGuangMessage {
 
-    //展示形式：Dialog(默认)
+    /**
+     * 展示形式：Dialog(默认)
+     */
     public static final int FORM_DIALOG = 0;
-    //展示形式：通知
+    /**
+     * 展示形式：通知
+     */
     public static final int FORM_NOTIFICATION = 1;
-    //展示形式：不展示
+    /**
+     * 展示形式：不展示
+     */
     public static final int FORM_NONE = 2;
 
-    //消息类型：公告(默认)
+    /**
+     * 消息类型：公告(默认)
+     */
     public static final int TYPE_NOTICE = 0;
-    //消息类型：其他
+    /**
+     * 消息类型：其他
+     */
     public static final int TYPE_NONE = 1;
+
+    /**
+     * 点击操作：无操作(默认)
+     */
+    public static final int ACTION_NONE = 0;
+    /**
+     * 点击操作：复制
+     */
+    public static final int ACTION_COPY = 1;
 
     //主键
     @Id(autoincrement = true)
     private Long id;
     //消息ID
     private String messageID;
+    //类型
+    private int type;
     //消息标题
     private String title;
     //消息内容
     private String content;
-    //类型
-    private int type;
+    //其他数据(样式等) json格式
+    private String extraData;
+    //点击操作
+    private int action;
     //是否已读
     private boolean read;
     //时间戳
     private long timestamp;
-    @Generated(hash = 1970585458)
-    public JiGuangMessage(Long id, String messageID, String title, String content,
-            int type, boolean read, long timestamp) {
+    @Generated(hash = 713390108)
+    public JiGuangMessage(Long id, String messageID, int type, String title,
+            String content, String extraData, int action, boolean read,
+            long timestamp) {
         this.id = id;
         this.messageID = messageID;
+        this.type = type;
         this.title = title;
         this.content = content;
-        this.type = type;
+        this.extraData = extraData;
+        this.action = action;
         this.read = read;
         this.timestamp = timestamp;
     }
@@ -68,6 +94,12 @@ public class JiGuangMessage {
     public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
+    public int getType() {
+        return this.type;
+    }
+    public void setType(int type) {
+        this.type = type;
+    }
     public String getTitle() {
         return this.title;
     }
@@ -80,11 +112,17 @@ public class JiGuangMessage {
     public void setContent(String content) {
         this.content = content;
     }
-    public int getType() {
-        return this.type;
+    public String getExtraData() {
+        return this.extraData;
     }
-    public void setType(int type) {
-        this.type = type;
+    public void setExtraData(String extraData) {
+        this.extraData = extraData;
+    }
+    public int getAction() {
+        return this.action;
+    }
+    public void setAction(int action) {
+        this.action = action;
     }
     public boolean getRead() {
         return this.read;
@@ -98,5 +136,6 @@ public class JiGuangMessage {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
 
 }

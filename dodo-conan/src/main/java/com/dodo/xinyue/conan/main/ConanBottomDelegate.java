@@ -3,6 +3,8 @@ package com.dodo.xinyue.conan.main;
 import android.os.Bundle;
 import android.view.Gravity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
@@ -193,6 +195,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     public void onShowMessageEvent(JiGuangMessage event) {
         EventBusActivityScope.getDefault(DoDo.getActivity()).removeStickyEvent(event);
         EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(new NewMessageEvent());
+        final JSONObject extraData = JSON.parseObject(event.getExtraData());
         final int type = event.getType();
         switch (type) {
             case JiGuangMessage.TYPE_NOTICE:
@@ -200,10 +203,19 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                 ConanMessageDialog.builder()
                         .title(event.getTitle())
                         .content(event.getContent())
+                        .isStart(extraData.getBooleanValue("start"))//默认值必须是false
+                        .isHtml(extraData.getBooleanValue("html"))
+                        .action(event.getAction())
+                        .copyContent(extraData.getString("copy_content"))
+                        .copyTips(extraData.getString("copy_tips"))
                         .radius(8)
                         .widthScale(0.85f)
                         .build()
                         .show();
+
+                //TODO 待完成：1、ConanMessageDialog点击操作 复制 跳转WebView 2、UpdateDialog弹出时如果有公告Dialog显示，则存为PengdingDialog pendingShow setPendingDialog 公告Dialog消失要检查pendingDialog是否为空，不为空就显示出来
+                //TODO 可以给BaseDialog添加一个属性，isCancelLastDialog
+
                 break;
             case JiGuangMessage.TYPE_NONE:
                 //其他

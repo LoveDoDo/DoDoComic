@@ -77,18 +77,24 @@ public class ComicPushReceiver extends BroadcastReceiver {
      */
     private void handleMessage(Bundle bundle, String action) {
         final String messageID = bundle.getString(JPushInterface.EXTRA_MSG_ID);
-        final String title = getMessageTitle(bundle);
         final String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
                 bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);
-        final int type = getMessageType(bundle);
+        final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
+        final JSONObject data = JSON.parseObject(dataJson);
+        final int type = getMessageType(data);
+        final String title = getMessageTitle(data);
+        final String extraData = getExtraData(data);
+        final int clickAction = getMessageAction(data);
         final boolean read = false;
         final long timestamp = System.currentTimeMillis();
 
         final JiGuangMessage message = new JiGuangMessage();
         message.setMessageID(messageID);
+        message.setType(type);
         message.setTitle(title);
         message.setContent(content);
-        message.setType(type);
+        message.setExtraData(extraData);
+        message.setAction(clickAction);
         message.setRead(read);
         message.setTimestamp(timestamp);
         //插入数据库
@@ -97,15 +103,21 @@ public class ComicPushReceiver extends BroadcastReceiver {
         EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
     }
 
-    private String getMessageTitle(Bundle bundle) {
-        final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
+    private int getMessageType(JSONObject data) {
+        int type = JiGuangMessage.TYPE_NOTICE;//默认
+        if (data != null) {
+            type = data.getIntValue("type");
+        }
+        return type;
+    }
+
+    private String getMessageTitle(JSONObject data) {
         String title = null;
-        final JSONObject data = JSON.parseObject(dataJson);
         if (data != null) {
             title = data.getString("title");
         }
         if (TextUtils.isEmpty(title)) {
-            final int type = getMessageType(bundle);
+            final int type = getMessageType(data);
             switch (type) {
                 case JiGuangMessage.TYPE_NOTICE:
                     title = "公告";
@@ -118,16 +130,19 @@ public class ComicPushReceiver extends BroadcastReceiver {
         return title;
     }
 
-    private int getMessageType(Bundle bundle) {
-        final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
-        int type = JiGuangMessage.TYPE_NOTICE;//默认
-        final JSONObject data = JSON.parseObject(dataJson);
-        if (data != null) {
-            type = data.getIntValue("type");
-        }
-        return type;
+    private String getExtraData(JSONObject data) {
+        return data != null ? JSON.toJSONString(data) : JSON.toJSONString(new JSONObject());
     }
 
+    private int getMessageAction(JSONObject data){
+        int action = JiGuangMessage.ACTION_NONE;//默认
+        if (data != null) {
+            action = data.getIntValue("action");
+        }
+        return action;
+    }
+
+    @Deprecated
     private String getCustomAttr(Bundle bundle) {
         final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
         String customAttr = null;

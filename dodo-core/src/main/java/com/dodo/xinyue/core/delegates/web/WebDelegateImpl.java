@@ -76,4 +76,9 @@ public class WebDelegateImpl extends BaseWebDelegate {
     public WebChromeClient initWebChromeClient() {
         return new WebChromeClientImpl();
     }
+
+    @Override
+    public boolean isTrack() {
+        return false;
+    }
 }

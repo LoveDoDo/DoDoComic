@@ -47,7 +47,7 @@
         android:background="#20ffffff" />
 
     <TextView
-        android:id="@+id/tvCancel"
+        android:id="@+id/tvConfirm"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/selector_list_dialog_cancel"
