@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.AppUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
-import com.dodo.xinyue.core.delegates.DoDoDelegate;
+import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,15 +21,10 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * @author DoDo
  * @date 2019/1/12
  */
-public class AboutDelegate extends DoDoDelegate {
+public class AboutDelegate extends BaseModuleDelegate {
 
     @BindView(R2.id.tvVersionName)
     TextView mTvVersionName = null;
-
-    @OnClick(R2.id.tvBack)
-    void onTvBackClicked() {
-        pop();
-    }
 
     @OnClick(R2.id.rlFeedback)
     void onFeedbackClicked() {
@@ -48,12 +43,18 @@ public class AboutDelegate extends DoDoDelegate {
     }
 
     @Override
-    public Object setLayout() {
+    public Object setChildLayout() {
         return R.layout.delegate_about;
     }
 
     @Override
+    public String setTitle() {
+        return "关于" + AppUtils.getAppName();
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        super.onBindView(savedInstanceState, rootView);
         mTvVersionName.setText("V" + AppUtils.getAppVersionName());
     }
 

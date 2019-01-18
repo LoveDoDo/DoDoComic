@@ -13,6 +13,7 @@ import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.constant.ApiConstants;
 import com.dodo.xinyue.conan.helper.ApiHelper;
+import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.setting.about.AboutDelegate;
 import com.dodo.xinyue.conan.module.setting.cache.ClearCacheDelegate;
 import com.dodo.xinyue.conan.module.setting.message.MessageDelegate;
@@ -20,7 +21,6 @@ import com.dodo.xinyue.conan.module.setting.preference.IndexPreferenceDelegate;
 import com.dodo.xinyue.conan.view.SwitchButton;
 import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.core.app.DoDo;
-import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.util.CommonUtil;
 import com.tencent.bugly.beta.Beta;
 
@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * @author DoDo
  * @date 2018/10/27
  */
-public class SettingDelegate extends DoDoDelegate {
+public class SettingDelegate extends BaseModuleDelegate {
 
     private static final String ARGS_ALL_CACHE_SIZE = "args_all_cache_size";
     private static final String ARGS_JSON_CACHE_SIZE = "args_json_cache_size";
@@ -49,16 +49,13 @@ public class SettingDelegate extends DoDoDelegate {
 
     @BindView(R2.id.tvCacheSize)
     TextView mTvCacheSize = null;
+    @BindView(R2.id.tvAbout)
+    TextView mTvAbout = null;
 
     @BindView(R2.id.sbQuicklyOpenApp)
     SwitchButton mSbQuicklyOpenApp = null;
     @BindView(R2.id.sbDiscoverGift)
     SwitchButton mSbDiscoverGift = null;
-
-    @OnClick(R2.id.tvBack)
-    void onTvBackClicked() {
-        pop();
-    }
 
     @OnClick(R2.id.rlQuicklyOpenApp)
     void onQuicklyOpenAppClicked() {
@@ -120,13 +117,22 @@ public class SettingDelegate extends DoDoDelegate {
         start(AboutDelegate.create());
     }
 
+
     @Override
-    public Object setLayout() {
+    public Object setChildLayout() {
         return R.layout.delegate_setting;
     }
 
     @Override
+    public String setTitle() {
+        return "设置";
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        super.onBindView(savedInstanceState, rootView);
+        mTvAbout.setText("关于" + AppUtils.getAppName());
+
         mGlideCacheSize = getGlideCacheSize();
         mJsonCacheSize = getJsonCacheSize();
         mAllCacheSize = mGlideCacheSize + mJsonCacheSize;
@@ -155,7 +161,7 @@ public class SettingDelegate extends DoDoDelegate {
 
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        if (resultCode != 1) {
+        if (resultCode != RESULT_OK) {
             return;
         }
         switch (requestCode) {

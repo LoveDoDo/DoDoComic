@@ -10,7 +10,7 @@ import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.constant.ApiConstants;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
-import com.dodo.xinyue.core.delegates.DoDoDelegate;
+import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * @author DoDo
  * @date 2018/10/30
  */
-public class IndexPreferenceDelegate extends DoDoDelegate {
+public class IndexPreferenceDelegate extends BaseModuleDelegate {
 
     private int mLanguageIndex = 0;
     private int mTypeIndex = 0;
@@ -43,11 +43,6 @@ public class IndexPreferenceDelegate extends DoDoDelegate {
     TextView mTvSource = null;
     @BindView(R2.id.tvForm)
     TextView mTvForm = null;
-
-    @OnClick(R2.id.tvBack)
-    void onTvBackClicked() {
-        pop();
-    }
 
     @OnClick(R2.id.rlLanguage)
     void onLanguageClicked() {
@@ -134,12 +129,18 @@ public class IndexPreferenceDelegate extends DoDoDelegate {
     }
 
     @Override
-    public Object setLayout() {
+    public Object setChildLayout() {
         return R.layout.delegate_index_preference;
     }
 
     @Override
+    public String setTitle() {
+        return "偏好设置";
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        super.onBindView(savedInstanceState, rootView);
         mLanguageIndexList = ApiHelper.getIndexPreferenceConfig(ApiConstants.KEY_LANGUAGE);
         mTypeIndexList = ApiHelper.getIndexPreferenceConfig(ApiConstants.KEY_TYPE);
         mSourceIndexList = ApiHelper.getIndexPreferenceConfig(ApiConstants.KEY_SOURCE);

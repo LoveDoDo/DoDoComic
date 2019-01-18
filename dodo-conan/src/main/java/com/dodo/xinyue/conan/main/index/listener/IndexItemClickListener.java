@@ -55,6 +55,9 @@ public class IndexItemClickListener extends MulItemClickListener {
 //
 //        AppLinkHelper.openIQiYi(comicBean.getTvQipuId(), comicBean.getVid());
 
+//        ArrayList<Integer> list = new ArrayList<>();
+//        list.get(0);
+
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:
 //                final TextView tvNumber = (TextView) adapter.getViewByPosition(position, R.id.number);

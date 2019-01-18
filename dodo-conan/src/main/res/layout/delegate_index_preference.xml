@@ -1,256 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tool:background="@color/black_80">
 
-    <include layout="@layout/layout_global_background" />
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="#10ffffff"
+        android:gravity="center_vertical"
+        android:paddingBottom="6dp"
+        android:paddingStart="12dp"
+        android:paddingTop="6dp"
+        android:text="进入首页默认显示"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
-        <include layout="@layout/layout_transparent_status_bar" />
-
-        <android.support.v7.widget.Toolbar
-            style="@style/ToolbarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="48dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.joanzapata.iconify.widget.IconTextView
-                    android:id="@+id/tvBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:text="{icon-back}"
-                    android:textColor="@color/selector_icon_bg"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/tvBack"
-                    android:gravity="center"
-                    android:text="偏好设置"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:id="@+id/rlLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#10ffffff"
-            android:gravity="center_vertical"
-            android:paddingBottom="6dp"
-            android:paddingStart="12dp"
-            android:paddingTop="6dp"
-            android:text="进入首页默认显示"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:text="语言"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rlLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical">
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/tvArrowLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="{icon-arrow-right}"
+            android:textColor="@color/white_90"
+            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="语言"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/tvArrowLanguage"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            tool:text="国语" />
 
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/tvArrowLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="{icon-arrow-right}"
-                android:textColor="@color/white_90"
-                android:textSize="20sp" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@id/tvArrowLanguage"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                tool:text="国语" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="16dp"
+        android:background="#20ffffff" />
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlType"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:background="#20ffffff" />
+            android:gravity="center"
+            android:text="版本"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rlType"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical">
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/tvArrowType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="{icon-arrow-right}"
+            android:textColor="@color/white_90"
+            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="版本"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/tvArrowType"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            tool:text="TV版" />
 
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/tvArrowType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="{icon-arrow-right}"
-                android:textColor="@color/white_90"
-                android:textSize="20sp" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@id/tvArrowType"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                tool:text="TV版" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="16dp"
+        android:background="#20ffffff" />
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlSource"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:background="#20ffffff" />
+            android:gravity="center"
+            android:text="数据来源"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rlSource"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical">
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/tvArrowSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="{icon-arrow-right}"
+            android:textColor="@color/white_90"
+            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="数据来源"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/tvArrowSource"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            tool:text="爱奇艺" />
 
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/tvArrowSource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="{icon-arrow-right}"
-                android:textColor="@color/white_90"
-                android:textSize="20sp" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvSource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@id/tvArrowSource"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                tool:text="爱奇艺" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="16dp"
+        android:background="#20ffffff" />
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlForm"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+        <TextView
+            android:id="@+id/tvtemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:background="#20ffffff" />
+            android:gravity="center"
+            android:text="展示方式"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rlForm"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:foreground="?selectableItemBackground"
-            android:gravity="center_vertical">
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/tvArrowForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="{icon-arrow-right}"
+            android:textColor="@color/white_90"
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tvtemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="展示方式"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/tvArrowForm"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            tool:text="文字列表" />
 
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/tvArrowForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="{icon-arrow-right}"
-                android:textColor="@color/white_90"
-                android:textSize="20sp" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_toStartOf="@id/tvArrowForm"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                tool:text="文字列表" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#10ffffff" />
 
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="#10ffffff" />
-
-    </LinearLayout>
-
-</android.support.v7.widget.ContentFrameLayout>
+</LinearLayout>

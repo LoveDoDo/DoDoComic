@@ -8,9 +8,9 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
+import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.setting.cache.helper.ClearCacheTask;
 import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
-import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.dialog.options.DialogOptions;
 import com.dodo.xinyue.core.util.CommonUtil;
 
@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * @author DoDo
  * @date 2018/10/28
  */
-public class ClearCacheDelegate extends DoDoDelegate {
+public class ClearCacheDelegate extends BaseModuleDelegate {
 
     private static final String ARGS_ALL_CACHE_SIZE = "args_all_cache_size";
     private static final String ARGS_JSON_CACHE_SIZE = "args_json_cache_size";
@@ -35,7 +35,6 @@ public class ClearCacheDelegate extends DoDoDelegate {
                     .widthScale(0.85f);
 
     private long mAllCacheSize = 0;
-
     private long mJsonCacheSize = 0;
     private long mGlideCacheSize = 0;
 
@@ -45,16 +44,6 @@ public class ClearCacheDelegate extends DoDoDelegate {
     TextView mTvFileCacheSize = null;
     @BindView(R2.id.tvImageCacheSize)
     TextView mTvImageCacheSize = null;
-
-    @OnClick(R2.id.tvBack)
-    void onTvBackClicked() {
-        final Bundle args = new Bundle();
-        args.putLong(ARGS_ALL_CACHE_SIZE, mAllCacheSize);
-        args.putLong(ARGS_JSON_CACHE_SIZE, mJsonCacheSize);
-        args.putLong(ARGS_GLIDE_CACHE_SIZE, mGlideCacheSize);
-        setFragmentResult(1, args);
-        pop();
-    }
 
     @OnClick(R2.id.rlClearCache)
     void onClearCacheClicked() {
@@ -141,12 +130,18 @@ public class ClearCacheDelegate extends DoDoDelegate {
     }
 
     @Override
-    public Object setLayout() {
+    public Object setChildLayout() {
         return R.layout.delegate_clear_cache;
     }
 
     @Override
+    public String setTitle() {
+        return "清除占用空间";
+    }
+
+    @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        super.onBindView(savedInstanceState, rootView);
         final Bundle args = getArguments();
         if (args == null) {
             return;
@@ -171,12 +166,13 @@ public class ClearCacheDelegate extends DoDoDelegate {
     }
 
     @Override
-    public boolean onBackPressedSupport() {
+    public void onDestroy() {
         final Bundle args = new Bundle();
         args.putLong(ARGS_ALL_CACHE_SIZE, mAllCacheSize);
         args.putLong(ARGS_JSON_CACHE_SIZE, mJsonCacheSize);
         args.putLong(ARGS_GLIDE_CACHE_SIZE, mGlideCacheSize);
-        setFragmentResult(1, args);
-        return super.onBackPressedSupport();
+        setFragmentResult(RESULT_OK, args);
+        super.onDestroy();
     }
+
 }

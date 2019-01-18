@@ -84,7 +84,6 @@ public class ComicPushReceiver extends BroadcastReceiver {
         final int type = getMessageType(data);
         final String title = getMessageTitle(data);
         final String extraData = getExtraData(data);
-        final int clickAction = getMessageAction(data);
         final boolean read = false;
         final long timestamp = System.currentTimeMillis();
 
@@ -94,7 +93,6 @@ public class ComicPushReceiver extends BroadcastReceiver {
         message.setTitle(title);
         message.setContent(content);
         message.setExtraData(extraData);
-        message.setAction(clickAction);
         message.setRead(read);
         message.setTimestamp(timestamp);
         //插入数据库
@@ -132,14 +130,6 @@ public class ComicPushReceiver extends BroadcastReceiver {
 
     private String getExtraData(JSONObject data) {
         return data != null ? JSON.toJSONString(data) : JSON.toJSONString(new JSONObject());
-    }
-
-    private int getMessageAction(JSONObject data){
-        int action = JiGuangMessage.ACTION_NONE;//默认
-        if (data != null) {
-            action = data.getIntValue("action");
-        }
-        return action;
     }
 
     @Deprecated

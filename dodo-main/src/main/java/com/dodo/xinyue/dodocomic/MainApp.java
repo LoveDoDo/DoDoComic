@@ -120,7 +120,7 @@ public class MainApp extends Application {
 //                })
 //                .install();
 
-        initStetho();
+//        initStetho();
 //
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.

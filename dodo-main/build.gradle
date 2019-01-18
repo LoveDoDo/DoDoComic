@@ -5,7 +5,12 @@ apply plugin: 'bugly'
 bugly {
     appId = 'ef116b1fc0' // 注册时分配的App ID
     appKey = '63961484-adaa-403b-98e4-d1ab8fa6ea25' // 注册时分配的App Key
+//    debug = true //开启插件调试模式之后，将打印更详细日志，并在Debug编译打包的时候自动执行符号表文件上传任务。
 }
+
+//def releaseTime() {
+//    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+//}
 
 android {
     compileSdkVersion 27
@@ -14,7 +19,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.0.0112"
+        versionName "1.0.0.0112_beta"//测试版：1.0.0.0112_beta
 
         /*极光推送*/
         ndk {
@@ -37,20 +42,37 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             minifyEnabled false
             buildConfigField "String", "BUGLY_APP_ID", "\"ef116b1fc0\""
             buildConfigField "String", "BUGLY_APP_KEY", "\"63961484-adaa-403b-98e4-d1ab8fa6ea25\""
             buildConfigField "String", "UMENG_APP_KEY", "\"5c2febbfb465f5ceda000c3e\""
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
+//            minifyEnabled true // 混淆
+//            zipAlignEnabled true // zip align(对齐，排列)优化。
+//            shrinkResources true // 去掉没有用的资源文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BUGLY_APP_ID", "\"ef116b1fc0\""
             buildConfigField "String", "BUGLY_APP_KEY", "\"63961484-adaa-403b-98e4-d1ab8fa6ea25\""
             buildConfigField "String", "UMENG_APP_KEY", "\"5c2febbfb465f5ceda000c3e\""
         }
     }
+
+    // 更改输出release版的名称
+    // app_v[版本号]_[编译日期]_[release/debug].apk，例如：app_v1.0.0_2017-01-09_release.apk
+//    applicationVariants.all { variant ->
+//        if (variant.buildType.name.equals('release')) {
+//            variant.outputs.all { output ->
+//                def buildName = "Downloader"
+//                def type = variant.buildType.name
+//                def releaseApkName = buildName + '_' + type + "_" + versionName + '_release.apk'
+//                outputFileName = releaseApkName
+//            }
+//        }
+//    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

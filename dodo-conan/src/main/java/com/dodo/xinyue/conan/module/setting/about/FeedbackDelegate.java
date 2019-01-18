@@ -31,7 +31,6 @@ import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * FeedbackDelegate
@@ -90,7 +89,7 @@ public class FeedbackDelegate extends DoDoDelegate {
     @OnClick(R2.id.tvCopy)
     void onTvCopyClicked() {
         if (CommonUtil.copyToClipboard(ApiConstants.FEEDBACK_URL)) {
-            ToastUtils.showShort("复制链接成功，请在微信中打开");
+            ToastUtils.showLong("复制链接成功，请在微信中打开");
         } else {
             ToastUtils.showShort("复制链接失败");
         }
@@ -113,7 +112,6 @@ public class FeedbackDelegate extends DoDoDelegate {
         mRotationAnim.setRepeatCount(Animation.INFINITE);//无限循环
         mRotationAnim.setRepeatMode(ValueAnimator.RESTART);//重复动画
         mRotationAnim.setInterpolator(new LinearInterpolator());//覆盖默认的AccelerateDecelerateInterpolator()
-
 
         Glide.with(getContext())
                 .load(R.drawable.icon_webview_load_error)
@@ -181,14 +179,6 @@ public class FeedbackDelegate extends DoDoDelegate {
         isReload = true;
         mWebDelegate.getWebView().postUrl(ApiConstants.FEEDBACK_URL, getPostData().getBytes());
         clearHistory();
-    }
-
-    @Override
-    public FragmentAnimator onCreateFragmentAnimator() {
-        FragmentAnimator fragmentAnimator = super.onCreateFragmentAnimator();
-        fragmentAnimator.setEnter(R.anim.global_enter);
-        fragmentAnimator.setExit(R.anim.global_exit);
-        return fragmentAnimator;
     }
 
     @Override

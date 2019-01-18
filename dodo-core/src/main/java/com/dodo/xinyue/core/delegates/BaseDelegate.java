@@ -43,6 +43,10 @@ public abstract class BaseDelegate extends Fragment
 
     public abstract void onBindView(@Nullable Bundle savedInstanceState, View rootView);
 
+    public void onPreBindView(@NonNull LayoutInflater inflater, View rootView) {
+        //add custom view
+    }
+
     public final ProxyActivity getProxyActivity() {
         return (ProxyActivity) _mActivity;
     }
@@ -70,6 +74,8 @@ public abstract class BaseDelegate extends Fragment
             throw new ClassCastException("type of setLayout() must be int or View!");
         }
         mRootView = rootView;
+        //适用于动态添加View
+        onPreBindView(inflater,rootView);
         //绑定视图
         mUnbinder = ButterKnife.bind(this, rootView);
         //添加事件

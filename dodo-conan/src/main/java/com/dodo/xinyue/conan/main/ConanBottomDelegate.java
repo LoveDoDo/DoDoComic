@@ -205,7 +205,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
                         .content(event.getContent())
                         .isStart(extraData.getBooleanValue("start"))//默认值必须是false
                         .isHtml(extraData.getBooleanValue("html"))
-                        .action(event.getAction())
+                        .action(extraData.getIntValue("action"))
                         .copyContent(extraData.getString("copy_content"))
                         .copyTips(extraData.getString("copy_tips"))
                         .radius(8)

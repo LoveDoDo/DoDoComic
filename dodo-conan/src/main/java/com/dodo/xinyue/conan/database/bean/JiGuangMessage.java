@@ -60,22 +60,20 @@ public class JiGuangMessage {
     //其他数据(样式等) json格式
     private String extraData;
     //点击操作
-    private int action;
+//    private int action;
     //是否已读
     private boolean read;
     //时间戳
     private long timestamp;
-    @Generated(hash = 713390108)
+    @Generated(hash = 2049396045)
     public JiGuangMessage(Long id, String messageID, int type, String title,
-            String content, String extraData, int action, boolean read,
-            long timestamp) {
+            String content, String extraData, boolean read, long timestamp) {
         this.id = id;
         this.messageID = messageID;
         this.type = type;
         this.title = title;
         this.content = content;
         this.extraData = extraData;
-        this.action = action;
         this.read = read;
         this.timestamp = timestamp;
     }
@@ -117,12 +115,6 @@ public class JiGuangMessage {
     }
     public void setExtraData(String extraData) {
         this.extraData = extraData;
-    }
-    public int getAction() {
-        return this.action;
-    }
-    public void setAction(int action) {
-        this.action = action;
     }
     public boolean getRead() {
         return this.read;
