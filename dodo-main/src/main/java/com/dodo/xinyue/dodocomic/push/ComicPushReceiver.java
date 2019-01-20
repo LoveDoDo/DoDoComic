@@ -76,12 +76,14 @@ public class ComicPushReceiver extends BroadcastReceiver {
      * }
      */
     private void handleMessage(Bundle bundle, String action) {
-        final String messageID = bundle.getString(JPushInterface.EXTRA_MSG_ID);
-        final String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
-                bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);
         final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
         final JSONObject data = JSON.parseObject(dataJson);
         final int type = getMessageType(data);
+        //TODO 这里需要判断一下是否需要接收消息并存入数据库
+
+        final String messageID = bundle.getString(JPushInterface.EXTRA_MSG_ID);
+        final String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
+                bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);
         final String title = getMessageTitle(data);
         final String extraData = getExtraData(data);
         final boolean read = false;
@@ -102,7 +104,7 @@ public class ComicPushReceiver extends BroadcastReceiver {
     }
 
     private int getMessageType(JSONObject data) {
-        int type = JiGuangMessage.TYPE_NOTICE;//默认
+        int type = JiGuangMessage.TYPE_NONE;//默认
         if (data != null) {
             type = data.getIntValue("type");
         }
@@ -117,8 +119,26 @@ public class ComicPushReceiver extends BroadcastReceiver {
         if (TextUtils.isEmpty(title)) {
             final int type = getMessageType(data);
             switch (type) {
+                case JiGuangMessage.TYPE_NONE:
+                    title = "新消息";
+                    break;
                 case JiGuangMessage.TYPE_NOTICE:
                     title = "公告";
+                    break;
+                case JiGuangMessage.TYPE_INFERENCE:
+                    title = "侦探推理题";
+                    break;
+                case JiGuangMessage.TYPE_JOKE:
+                    title = "开心一刻";
+                    break;
+                case JiGuangMessage.TYPE_ACTIVE:
+                    title = "心灵鸡汤";
+                    break;
+                case JiGuangMessage.TYPE_CLASSIC:
+                    title = "古诗词赏析";
+                    break;
+                case JiGuangMessage.TYPE_CONAN:
+                    title = "名侦探柯南";
                     break;
                 default:
                     title = "新消息";

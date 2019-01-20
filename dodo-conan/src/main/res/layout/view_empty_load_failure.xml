@@ -11,10 +11,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="→_→\n啥都木有~"
+        android:text="加载失败，"
         android:textColor="@color/white"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.4"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击重试"
+        android:textColor="@color/dodo_blue"
         android:textSize="16sp" />
 
 </LinearLayout>

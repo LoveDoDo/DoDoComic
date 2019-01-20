@@ -266,7 +266,7 @@ public class IndexContentDelegate extends DoDoDelegate {
         mAdapter = IndexAdapter.create(new ArrayList<>(), indexDelegate);
         mAdapter.bindToRecyclerView(mRecyclerView);
         mLoadingView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_loading, mRecyclerView, false);
-        mLoadFailureView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_no_data, mRecyclerView, false);
+        mLoadFailureView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_load_failure, mRecyclerView, false);
         mLoadFailureView.setOnClickListener(v -> requestData());
         mAdapter.setOnItemClickListener(IndexItemClickListener.create(indexDelegate));
         mAdapter.setOnItemChildClickListener(IndexItemChildClickListener.create(indexDelegate));
@@ -299,7 +299,7 @@ public class IndexContentDelegate extends DoDoDelegate {
         mDataConverter = new IndexDataConverter();
         final List<MulEntity> data = mDataConverter.setFormIndex(mFormIndex).setLanguageIndex(mLanguageIndex).setTypeIndex(mTypeIndex).setJsonData(json).convert();
         if (data.size() <= 0) {
-            mAdapter.setEmptyView(R.layout.view_empty_no_data, mRecyclerView);
+            mAdapter.setEmptyView(R.layout.view_empty_load_failure, mRecyclerView);
             return;
         }
         mAdapter.setNewData(data);

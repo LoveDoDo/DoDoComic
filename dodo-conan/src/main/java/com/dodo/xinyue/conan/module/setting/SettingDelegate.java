@@ -16,7 +16,7 @@ import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.setting.about.AboutDelegate;
 import com.dodo.xinyue.conan.module.setting.cache.ClearCacheDelegate;
-import com.dodo.xinyue.conan.module.setting.message.MessageDelegate;
+import com.dodo.xinyue.conan.module.setting.message.MessageSettingDelegate;
 import com.dodo.xinyue.conan.module.setting.preference.IndexPreferenceDelegate;
 import com.dodo.xinyue.conan.view.SwitchButton;
 import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
@@ -69,7 +69,7 @@ public class SettingDelegate extends BaseModuleDelegate {
 
     @OnClick(R2.id.rlMessage)
     void onMessageClicked() {
-        start(MessageDelegate.create());
+        start(MessageSettingDelegate.create());
     }
 
     @OnClick(R2.id.rlDiscoverGift)

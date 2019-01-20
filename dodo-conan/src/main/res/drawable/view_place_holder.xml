@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--使用层叠布局适配不用尺寸的手机-->
+    <item android:drawable="@color/black_20" />
+
+    <item android:gravity="center" >
+        <bitmap android:src="@drawable/icon_place_holder" />
+    </item>
+
+</layer-list>

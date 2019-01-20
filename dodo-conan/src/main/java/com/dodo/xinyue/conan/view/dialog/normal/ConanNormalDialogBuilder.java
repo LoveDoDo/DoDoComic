@@ -14,6 +14,12 @@ public class ConanNormalDialogBuilder extends BaseDialogBuilder<ConanNormalDialo
     private String mTitle = null;
     private String mContent = null;
     private IConfirm mConfirm = null;
+    private boolean mOnlyOneButton = false;//是否只显示确定按钮
+
+    ConanNormalDialogBuilder() {
+        radius(12);
+        widthScale(0.85f);
+    }
 
     public final ConanNormalDialogBuilder title(String title) {
         this.mTitle = title;
@@ -30,13 +36,19 @@ public class ConanNormalDialogBuilder extends BaseDialogBuilder<ConanNormalDialo
         return this;
     }
 
+    public final ConanNormalDialogBuilder onlyOneButton(boolean onlyOneButton) {
+        this.mOnlyOneButton = onlyOneButton;
+        return this;
+    }
+
     @Override
     public ConanNormalDialog build() {
         return new ConanNormalDialog(
                 getDialogPublicParamsBean(),
                 mTitle,
                 mContent,
-                mConfirm
+                mConfirm,
+                mOnlyOneButton
         );
     }
 

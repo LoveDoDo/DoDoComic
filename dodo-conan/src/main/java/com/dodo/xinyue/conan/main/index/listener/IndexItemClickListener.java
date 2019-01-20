@@ -5,6 +5,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.main.index.data.IndexItemType;
+import com.dodo.xinyue.conan.module.message.MessageCenterDelegate;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulFields;
@@ -57,6 +58,8 @@ public class IndexItemClickListener extends MulItemClickListener {
 
 //        ArrayList<Integer> list = new ArrayList<>();
 //        list.get(0);
+
+        DELEGATE.getParentDelegate().start(MessageCenterDelegate.create());
 
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:

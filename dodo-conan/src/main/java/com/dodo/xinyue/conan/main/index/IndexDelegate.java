@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dodo.xinyue.conan.R;
@@ -33,8 +32,6 @@ import com.dodo.xinyue.conan.main.index.dialog.ConanListDialog;
 import com.dodo.xinyue.conan.module.history.HistoryDelegate;
 import com.dodo.xinyue.conan.module.money.MoneyDelegate;
 import com.dodo.xinyue.conan.module.search.SearchDelegate;
-import com.dodo.xinyue.conan.view.dialog.message.ConanMessageDialog;
-import com.dodo.xinyue.conan.view.dialog.update.ConanUpdateDialog;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
 import com.dodo.xinyue.core.net.RestClient;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -337,29 +334,12 @@ public class IndexDelegate extends BaseBottomItemDelegate {
     @OnLongClick(R2.id.tvSearch)
     boolean onTvSearchLongClicked() {
         ToastUtils.showShort("搜索");
-        ConanUpdateDialog.builder()
-                .title(AppUtils.getAppName() + "更新啦~")
-                .content("DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~")
-                .versionName("1")
-                .packageSize("2")
-                .bottomLeftRadius(8)
-                .bottomRightRadius(8)
-                .widthScale(0.85f)
-                .build()
-                .show();
         return true;
     }
 
     @OnLongClick(R2.id.tvHistory)
     boolean onTvHistoryLongClicked() {
         ToastUtils.showShort("历史记录");
-        ConanMessageDialog.builder()
-                .title("公告")
-                .content("DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~DoDo祝你国庆节快乐~~")
-                .radius(8)
-                .widthScale(0.85f)
-                .build()
-                .show();
         return true;
     }
 

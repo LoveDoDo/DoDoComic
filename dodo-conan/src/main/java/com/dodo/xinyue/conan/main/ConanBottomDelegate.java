@@ -3,8 +3,6 @@ package com.dodo.xinyue.conan.main;
 import android.os.Bundle;
 import android.view.Gravity;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
@@ -195,34 +193,12 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     public void onShowMessageEvent(JiGuangMessage event) {
         EventBusActivityScope.getDefault(DoDo.getActivity()).removeStickyEvent(event);
         EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(new NewMessageEvent());
-        final JSONObject extraData = JSON.parseObject(event.getExtraData());
-        final int type = event.getType();
-        switch (type) {
-            case JiGuangMessage.TYPE_NOTICE:
-                //公告
-                ConanMessageDialog.builder()
-                        .title(event.getTitle())
-                        .content(event.getContent())
-                        .isStart(extraData.getBooleanValue("start"))//默认值必须是false
-                        .isHtml(extraData.getBooleanValue("html"))
-                        .action(extraData.getIntValue("action"))
-                        .copyContent(extraData.getString("copy_content"))
-                        .copyTips(extraData.getString("copy_tips"))
-                        .radius(8)
-                        .widthScale(0.85f)
-                        .build()
-                        .pendingShow();
+        //TODO 这里需要判断一下是否需要展示，以及展示的方式
+        ConanMessageDialog.builder()
+                .message(event)
+                .build()
+                .pendingShow();
 
-
-
-                break;
-            case JiGuangMessage.TYPE_NONE:
-                //其他
-
-                break;
-            default:
-                break;
-        }
         final int form = ApiHelper.getMessageForm();
         switch (form) {
             case JiGuangMessage.FORM_DIALOG:

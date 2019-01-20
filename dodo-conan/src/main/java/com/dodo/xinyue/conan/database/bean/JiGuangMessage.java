@@ -16,26 +16,46 @@ import org.greenrobot.greendao.annotation.Generated;
 public class JiGuangMessage {
 
     /**
-     * 展示形式：Dialog(默认)
+     * 展示形式：不展示(默认)
      */
-    public static final int FORM_DIALOG = 0;
+    public static final int FORM_NONE = 0;
+    /**
+     * 展示形式：Dialog
+     */
+    public static final int FORM_DIALOG = 1;
     /**
      * 展示形式：通知
      */
-    public static final int FORM_NOTIFICATION = 1;
-    /**
-     * 展示形式：不展示
-     */
-    public static final int FORM_NONE = 2;
+    public static final int FORM_NOTIFICATION = 2;
 
     /**
-     * 消息类型：公告(默认)
+     * 消息类型：其他(默认)
      */
-    public static final int TYPE_NOTICE = 0;
+    public static final int TYPE_NONE = 0;
     /**
-     * 消息类型：其他
+     * 消息类型：公告
      */
-    public static final int TYPE_NONE = 1;
+    public static final int TYPE_NOTICE = 1;
+    /**
+     * 消息类型：推理
+     */
+    public static final int TYPE_INFERENCE = 2;
+    /**
+     * 消息类型：笑话
+     */
+    public static final int TYPE_JOKE = 3;
+    /**
+     * 消息类型：鸡汤
+     */
+    public static final int TYPE_ACTIVE = 4;
+    /**
+     * 消息类型：古诗
+     */
+    public static final int TYPE_CLASSIC = 5;
+    /**
+     * 消息类型：柯南
+     */
+    public static final int TYPE_CONAN = 6;
 
     /**
      * 点击操作：无操作(默认)
@@ -59,8 +79,6 @@ public class JiGuangMessage {
     private String content;
     //其他数据(样式等) json格式
     private String extraData;
-    //点击操作
-//    private int action;
     //是否已读
     private boolean read;
     //时间戳

@@ -14,12 +14,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * MessageDelegate
+ * MessageSettingDelegate
  *
  * @author DoDo
  * @date 2018/10/30
  */
-public class MessageDelegate extends BaseModuleDelegate {
+public class MessageSettingDelegate extends BaseModuleDelegate {
 
     @BindView(R2.id.sbReceiveNewMessage)
     SwitchButton mSbReceiveNewMessage = null;
@@ -29,13 +29,13 @@ public class MessageDelegate extends BaseModuleDelegate {
         mSbReceiveNewMessage.toggle();
     }
 
-    public static MessageDelegate create() {
-        return new MessageDelegate();
+    public static MessageSettingDelegate create() {
+        return new MessageSettingDelegate();
     }
 
     @Override
     public Object setChildLayout() {
-        return R.layout.delegate_message;
+        return R.layout.delegate_message_setting;
     }
 
     @Override

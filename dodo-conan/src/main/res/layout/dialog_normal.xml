@@ -18,20 +18,30 @@
         android:textSize="16sp"
         tool:text="标题" />
 
-    <TextView
-        android:id="@+id/tvContent"
+
+    <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="26dp"
-        android:layout_marginTop="4dp"
-        android:lineSpacingMultiplier="1.2"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        tool:text="内容" />
+        android:overScrollMode="never"
+        android:paddingBottom="26dp"
+        android:paddingTop="4dp"
+        android:scrollbarThumbVertical="@drawable/shape_scrollbar_bg"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingEnd="22dp"
+            android:paddingStart="22dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tool:text="内容" />
+
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -39,6 +49,7 @@
         android:background="#20ffffff" />
 
     <LinearLayout
+        android:id="@+id/llTwoButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
@@ -71,5 +82,17 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvConfirm2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/selector_list_dialog_cancel"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tool:visibility="visible" />
 
 </LinearLayout>

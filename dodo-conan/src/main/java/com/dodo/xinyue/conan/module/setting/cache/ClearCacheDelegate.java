@@ -11,7 +11,6 @@ import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.setting.cache.helper.ClearCacheTask;
 import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
-import com.dodo.xinyue.core.ui.dialog.options.DialogOptions;
 import com.dodo.xinyue.core.util.CommonUtil;
 
 import butterknife.BindView;
@@ -28,11 +27,6 @@ public class ClearCacheDelegate extends BaseModuleDelegate {
     private static final String ARGS_ALL_CACHE_SIZE = "args_all_cache_size";
     private static final String ARGS_JSON_CACHE_SIZE = "args_json_cache_size";
     private static final String ARGS_GLIDE_CACHE_SIZE = "args_glide_cache_size";
-
-    private static final DialogOptions DIALOG_OPTIONS =
-            new DialogOptions()
-                    .radius(12)
-                    .widthScale(0.85f);
 
     private long mAllCacheSize = 0;
     private long mJsonCacheSize = 0;
@@ -65,7 +59,6 @@ public class ClearCacheDelegate extends BaseModuleDelegate {
                         ToastUtils.showShort("清除缓存文件成功");
                     }).execute(ClearCacheTask.CLEAR_ALL_CACHE);
                 })
-                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
 
@@ -89,7 +82,6 @@ public class ClearCacheDelegate extends BaseModuleDelegate {
                         ToastUtils.showShort("清除缓存文件成功");
                     }).execute(ClearCacheTask.CLEAR_FILE_CACHE);
                 })
-                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
 
@@ -113,7 +105,6 @@ public class ClearCacheDelegate extends BaseModuleDelegate {
                         ToastUtils.showShort("清除缓存文件成功");
                     }).execute(ClearCacheTask.CLEAR_IMAGE_CACHE);
                 })
-                .options(DIALOG_OPTIONS)
                 .build()
                 .show();
 

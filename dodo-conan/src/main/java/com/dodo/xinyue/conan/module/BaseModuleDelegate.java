@@ -20,6 +20,8 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * BaseModuleDelegate
  * 二级页面的基类
  *
+ * TODO 如果包含RecyclerView，要显示scrollbar并且不显示OverScrollMode，必须代码里动态设置setOverScrollMode(View.OVER_SCROLL_NEVER);，布局里设置不起作用
+ *
  * @author DoDo
  * @date 2019/1/18
  */

@@ -68,6 +68,8 @@ public abstract class BaseDialog extends AppCompatDialog
     private int mContainerWidth;
     private int mContainerHeight;
 
+    private boolean mIsForceShow = false;//是否强制显示
+
     /**
      * 公共参数
      */
@@ -366,6 +368,10 @@ public abstract class BaseDialog extends AppCompatDialog
 //        if (!DialogManager.getInstance().canShow(this)) {
 //            return;
 //        }
+        if (mIsForceShow) {
+            super.show();
+            return;
+        }
         DialogManager.getInstance().cancelLastDialog();
         DialogManager.getInstance().bindDialog(this);
         super.show();
@@ -376,6 +382,10 @@ public abstract class BaseDialog extends AppCompatDialog
 //        if (!DialogManager.getInstance().canCancel()) {
 //            return;
 //        }
+        if (mIsForceShow) {
+            super.cancel();
+            return;
+        }
         DialogManager.getInstance().unbindDialog();
         super.cancel();
         DialogManager.getInstance().checkPending();
@@ -386,6 +396,14 @@ public abstract class BaseDialog extends AppCompatDialog
      */
     public void pendingShow() {
         DialogManager.getInstance().pendingShow(this);
+    }
+
+    /**
+     * 强制显示
+     */
+    public void forceShow() {
+        mIsForceShow = true;
+        show();
     }
 
 }
