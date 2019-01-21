@@ -214,4 +214,86 @@ public class ApiHelper {
                 .apply();
     }
 
+    /**
+     * Message默认标题
+     */
+    public static String getMessageDefaultTitle(int messageType) {
+        String title;
+        switch (messageType) {
+            case JiGuangMessage.TYPE_NONE:
+                title = "新消息";
+                break;
+            case JiGuangMessage.TYPE_NOTICE:
+                title = "公告";
+                break;
+            case JiGuangMessage.TYPE_INFERENCE:
+                title = "侦探推理";
+                break;
+            case JiGuangMessage.TYPE_JOKE:
+                title = "开心一刻";
+                break;
+            case JiGuangMessage.TYPE_ACTIVE:
+                title = "心灵鸡汤";
+                break;
+            case JiGuangMessage.TYPE_CLASSIC:
+                title = "古诗词赏析";
+                break;
+            case JiGuangMessage.TYPE_CONAN:
+                title = "名侦探柯南";
+                break;
+            default:
+                title = "新消息";
+                break;
+        }
+        return title;
+    }
+
+    /**
+     * 消息中心的标题
+     */
+    public static String getMessageNickName(int messageType) {
+        String title;
+        switch (messageType) {
+            case JiGuangMessage.TYPE_NONE:
+                title = "新消息";
+                break;
+            case JiGuangMessage.TYPE_NOTICE:
+                title = "系统通知";
+                break;
+            case JiGuangMessage.TYPE_INFERENCE:
+                title = "侦探推理";
+                break;
+            case JiGuangMessage.TYPE_JOKE:
+                title = "开心一刻";
+                break;
+            case JiGuangMessage.TYPE_ACTIVE:
+                title = "心灵鸡汤";
+                break;
+            case JiGuangMessage.TYPE_CLASSIC:
+                title = "古诗词赏析";
+                break;
+            case JiGuangMessage.TYPE_CONAN:
+                title = "名侦探柯南";
+                break;
+            default:
+                title = "新消息";
+                break;
+        }
+        return title;
+    }
+
+    /**
+     * Message是否设置为免打扰
+     */
+    public static boolean getMessageIsQuiet(int messageType) {
+        return DoDoPreference.getAppPreference().getBoolean("message_" + messageType + "_is_quiet", false);
+    }
+
+    public static void setMessageQuiet(int messageType, boolean isQuiet) {
+        DoDoPreference.getAppPreference()
+                .edit()
+                .putBoolean("message_" + messageType + "_is_quiet", isQuiet)
+                .apply();
+    }
+
 }

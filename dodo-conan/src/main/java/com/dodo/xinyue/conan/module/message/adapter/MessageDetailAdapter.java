@@ -1,10 +1,12 @@
 package com.dodo.xinyue.conan.module.message.adapter;
 
 import android.text.Html;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.TimeUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.module.message.data.MessageCenterItemType;
@@ -57,18 +59,33 @@ public class MessageDetailAdapter extends MulAdapter {
     }
 
     private void setMessageDetail(MulHolder holder, MulEntity entity) {
+        holder.addOnClickListener(R.id.tvOpen)
+                .addOnClickListener(R.id.rlContainer)
+                .addOnLongClickListener(R.id.rlContainer);
 
         JiGuangMessage bean = entity.getBean();
+        final JSONObject extraData = JSON.parseObject(bean.getExtraData());
 
         String title = bean.getTitle();
-        String content = bean.getContent();
-        long timestamp = bean.getTimestamp();
         holder.setText(R.id.tvTitle, title);
-//                .setText(R.id.tvContent, content);
-//                .setText(R.id.tvTime, TimeUtils.getFriendlyTimeSpanByNow(timestamp));
+
+        long timestamp = bean.getTimestamp();
+        holder.setText(R.id.tvTime, TimeUtils.getFriendlyTimeSpanByNow(timestamp));
+
+        String cover = extraData.getString("cover");
+        if (!TextUtils.isEmpty(cover)) {
+            holder.setGone(R.id.ivPic, true);
+        } else {
+            holder.setGone(R.id.ivPic, false);
+        }
+
+        String content = bean.getContent();
+        if (TextUtils.isEmpty(content)) {
+            holder.setGone(R.id.tvContent, false);
+            return;
+        }
 
         final TextView tvContent = holder.getView(R.id.tvContent);
-        final JSONObject extraData = JSON.parseObject(bean.getExtraData());
         boolean isHtml = extraData.getBooleanValue("html");
         if (!isHtml) {
             tvContent.setText(content);
@@ -77,8 +94,7 @@ public class MessageDetailAdapter extends MulAdapter {
             tvContent.setText(Html.fromHtml(content.replace("\n","<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
         }
 
-        holder.addOnClickListener(R.id.tvOpen)
-                .addOnClickListener(R.id.llContainer);
+        holder.setGone(R.id.tvContent, true);
     }
 
 }

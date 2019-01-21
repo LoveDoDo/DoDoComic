@@ -1,14 +1,17 @@
 package com.dodo.xinyue.conan.module.message.adapter;
 
 import android.text.Html;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.TimeUtils;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.message.data.MessageCenterItemType;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.image.GlideApp;
@@ -71,24 +74,43 @@ public class MessageCenterAdapter extends MulAdapter {
 
         JiGuangMessage bean = entity.getBean();
         int type = bean.getType();
-        String title;
-        switch (type) {
-            case JiGuangMessage.TYPE_NOTICE:
-                title = "系统通知";
-                break;
-            case JiGuangMessage.TYPE_NONE:
-                title = "新消息";
-                break;
-            default:
-                title = bean.getTitle();
-                break;
+        String title = ApiHelper.getMessageNickName(type);
+        holder.setText(R.id.tvTitle, title);
+
+        if (TextUtils.isEmpty(bean.getMessageID())) {
+            holder.setGone(R.id.tvContent, false);
+            holder.setGone(R.id.tvTime, false);
+            holder.setGone(R.id.tvQuiet, false);
+            holder.setGone(R.id.ivPic, false);
+            boolean isQuiet = ApiHelper.getMessageIsQuiet(type);
+            if (isQuiet) {
+                holder.setGone(R.id.tvQuiet2, true);
+            } else {
+                holder.setGone(R.id.tvQuiet2, false);
+            }
+            return;
+        }
+
+        holder.setGone(R.id.tvQuiet2, false);
+
+        long timestamp = bean.getTimestamp();
+        holder.setText(R.id.tvTime, TimeUtils.getFriendlyTimeSpanByNow(timestamp));
+        holder.setGone(R.id.tvTime, true);
+
+        boolean isQuiet = ApiHelper.getMessageIsQuiet(type);
+        if (isQuiet) {
+            holder.setGone(R.id.tvQuiet, true);
+        } else {
+            holder.setGone(R.id.tvQuiet, false);
         }
 
         String content = bean.getContent();
-        long timestamp = bean.getTimestamp();
-        holder.setText(R.id.tvTitle, title);
-//                .setText(R.id.tvContent, HtmlUtil.delHTMLTag(content));
-//                .setText(R.id.tvTime, TimeUtils.getFriendlyTimeSpanByNow(timestamp));
+        if (TextUtils.isEmpty(content)) {
+            holder.setGone(R.id.ivPic, true);
+            return;
+        }
+
+        holder.setGone(R.id.ivPic, false);
 
         final TextView tvContent = holder.getView(R.id.tvContent);
         final JSONObject extraData = JSON.parseObject(bean.getExtraData());
@@ -97,8 +119,9 @@ public class MessageCenterAdapter extends MulAdapter {
             tvContent.setText(content);
         } else {
             //解决不能换行的问题
-            tvContent.setText(Html.fromHtml(content.replace("\n","<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
+            tvContent.setText(Html.fromHtml(content.replace("\n", "<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
         }
+        holder.setGone(R.id.tvContent, true);
 
     }
 

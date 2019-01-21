@@ -10,11 +10,12 @@ import android.view.View;
 
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
-import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.message.adapter.MessageDetailAdapter;
 import com.dodo.xinyue.conan.module.message.data.MessageDetailDataConverter;
 import com.dodo.xinyue.conan.module.message.listener.MessageDetailItemChildClickListener;
+import com.dodo.xinyue.conan.module.message.listener.MessageDetailItemChildLongClickListener;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
 
 import java.util.ArrayList;
@@ -57,16 +58,7 @@ public class MessageDetailDelegate extends BaseModuleDelegate {
             return;
         }
         mType = args.getInt(ARGS_TYPE);
-        switch (mType) {
-            case JiGuangMessage.TYPE_NOTICE:
-                mTitle = "系统通知";
-                break;
-            case JiGuangMessage.TYPE_NONE:
-                mTitle = "新消息";
-                break;
-            default:
-                break;
-        }
+        mTitle = ApiHelper.getMessageNickName(mType);
     }
 
     @Override
@@ -117,6 +109,7 @@ public class MessageDetailDelegate extends BaseModuleDelegate {
         mLoadingView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_loading, mRecyclerView, false);
         mNoDataView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_no_data, mRecyclerView, false);
         mAdapter.setOnItemChildClickListener(MessageDetailItemChildClickListener.create(this));
+        mAdapter.setOnItemChildLongClickListener(MessageDetailItemChildLongClickListener.create(this));
     }
 
 }

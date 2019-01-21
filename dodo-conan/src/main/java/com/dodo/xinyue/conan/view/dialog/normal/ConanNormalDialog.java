@@ -1,5 +1,6 @@
 package com.dodo.xinyue.conan.view.dialog.normal;
 
+import android.text.Html;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ public class ConanNormalDialog extends BaseDialog {
     private final String mContent;
     private final IConfirm mConfirm;
     private final boolean mOnlyOneButton;
+    private final boolean mIsHtml;
 
     @BindView(R2.id.tvTitle)
     TextView mTvTitle = null;
@@ -59,12 +61,14 @@ public class ConanNormalDialog extends BaseDialog {
                              String title,
                              String content,
                              IConfirm confirm,
-                             boolean onlyOneButton) {
+                             boolean onlyOneButton,
+                             boolean isHtml) {
         super(bean);
         this.mTitle = title;
         this.mContent = content;
         this.mConfirm = confirm;
         this.mOnlyOneButton = onlyOneButton;
+        this.mIsHtml = isHtml;
     }
 
     public static ConanNormalDialogBuilder builder() {
@@ -95,6 +99,11 @@ public class ConanNormalDialog extends BaseDialog {
             mTvConfirm2.setVisibility(View.VISIBLE);
         }
         mTvTitle.setText(mTitle);
-        mTvContent.setText(mContent);
+        if (!mIsHtml) {
+            mTvContent.setText(mContent);
+        } else {
+            //解决不能换行的问题
+            mTvContent.setText(Html.fromHtml(mContent.replace("\n", "<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
+        }
     }
 }

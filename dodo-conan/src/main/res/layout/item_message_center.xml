@@ -22,8 +22,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginEnd="12dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -48,23 +48,61 @@
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white_80"
                 android:layout_gravity="start"
+                android:textColor="@color/white_80"
                 android:textSize="10sp"
-                android:text="1月1日 12:00" />
+                tool:text="1月1日 12:00" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvQuiet2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="{icon-quiet}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tool:visibility="visible" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvContent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tool:text="内容" />
+            android:orientation="horizontal">
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/ivPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="{icon-pic}"
+                android:textColor="@color/qihoo_color"
+                android:textSize="18sp"
+                android:visibility="gone"
+                tool:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tool:text="内容" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvQuiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="{icon-quiet}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tool:visibility="visible" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

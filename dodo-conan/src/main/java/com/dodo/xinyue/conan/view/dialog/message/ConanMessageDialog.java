@@ -187,7 +187,6 @@ public class ConanMessageDialog extends BaseDialog {
             }
         }
         if (!TextUtils.isEmpty(mCover)) {
-            mIvCover.setVisibility(View.VISIBLE);//TODO imageView不可见的话，Glide不回调加载成功的监听
             mTvProgress.setVisibility(View.INVISIBLE);
             mRotationAnim = ObjectAnimator.ofFloat(mTvProgress, "rotation", 0, 360);
             mRotationAnim.setDuration(1314);
@@ -255,6 +254,7 @@ public class ConanMessageDialog extends BaseDialog {
                         public void onLoadStarted(@Nullable Drawable placeholder) {
                             super.onLoadStarted(placeholder);
                             Log.d(TAG, "图片开始加载");
+                            mIvCover.setVisibility(View.VISIBLE);//TODO imageView不可见的话，Glide不回调加载成功的监听
                         }
 
                         @Override

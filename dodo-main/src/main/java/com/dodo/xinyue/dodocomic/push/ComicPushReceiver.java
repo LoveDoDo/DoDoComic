@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dodo.xinyue.conan.database.ConanDataBaseManager;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.core.app.DoDo;
 
 import cn.jpush.android.api.JPushInterface;
@@ -101,6 +102,7 @@ public class ComicPushReceiver extends BroadcastReceiver {
         ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
 
         EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
+
     }
 
     private int getMessageType(JSONObject data) {
@@ -118,32 +120,7 @@ public class ComicPushReceiver extends BroadcastReceiver {
         }
         if (TextUtils.isEmpty(title)) {
             final int type = getMessageType(data);
-            switch (type) {
-                case JiGuangMessage.TYPE_NONE:
-                    title = "新消息";
-                    break;
-                case JiGuangMessage.TYPE_NOTICE:
-                    title = "公告";
-                    break;
-                case JiGuangMessage.TYPE_INFERENCE:
-                    title = "侦探推理题";
-                    break;
-                case JiGuangMessage.TYPE_JOKE:
-                    title = "开心一刻";
-                    break;
-                case JiGuangMessage.TYPE_ACTIVE:
-                    title = "心灵鸡汤";
-                    break;
-                case JiGuangMessage.TYPE_CLASSIC:
-                    title = "古诗词赏析";
-                    break;
-                case JiGuangMessage.TYPE_CONAN:
-                    title = "名侦探柯南";
-                    break;
-                default:
-                    title = "新消息";
-                    break;
-            }
+            title = ApiHelper.getMessageDefaultTitle(type);
         }
         return title;
     }

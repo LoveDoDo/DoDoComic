@@ -14,6 +14,7 @@ import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.module.message.adapter.MessageCenterAdapter;
 import com.dodo.xinyue.conan.module.message.data.MessageCenterDataConverter;
 import com.dodo.xinyue.conan.module.message.listener.MessageCenterItemClickListener;
+import com.dodo.xinyue.conan.module.message.listener.MessageCenterItemLongClickListener;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
@@ -75,10 +76,6 @@ public class MessageCenterContentDelegate extends DoDoDelegate {
     private void loadData() {
         mAdapter.setEmptyView(mLoadingView);
         mDataConverter = new MessageCenterDataConverter();
-        if (mDataConverter.getMessageCount(mType) <= 0) {
-            mAdapter.setEmptyView(mNoDataView);
-            return;
-        }
         mAdapter.setNewData(mDataConverter.setType(mType).convert());
     }
 
@@ -99,15 +96,14 @@ public class MessageCenterContentDelegate extends DoDoDelegate {
     }
 
     private View mLoadingView = null;
-    private View mNoDataView = null;
 
     private void initAdapter() {
         final MessageCenterDelegate topDelegate = getParentDelegate();
         mAdapter = MessageCenterAdapter.create(new ArrayList<>(), null);
         mAdapter.bindToRecyclerView(mRecyclerView);
         mLoadingView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_loading, mRecyclerView, false);
-        mNoDataView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_no_data, mRecyclerView, false);
         mAdapter.setOnItemClickListener(MessageCenterItemClickListener.create(topDelegate));
+        mAdapter.setOnItemLongClickListener(MessageCenterItemLongClickListener.create(topDelegate));
     }
 
     /**

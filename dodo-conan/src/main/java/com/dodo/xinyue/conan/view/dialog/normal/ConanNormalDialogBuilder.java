@@ -15,6 +15,7 @@ public class ConanNormalDialogBuilder extends BaseDialogBuilder<ConanNormalDialo
     private String mContent = null;
     private IConfirm mConfirm = null;
     private boolean mOnlyOneButton = false;//是否只显示确定按钮
+    private boolean mIsHtml = false;
 
     ConanNormalDialogBuilder() {
         radius(12);
@@ -41,6 +42,11 @@ public class ConanNormalDialogBuilder extends BaseDialogBuilder<ConanNormalDialo
         return this;
     }
 
+    public final ConanNormalDialogBuilder isHtml(boolean isHtml) {
+        this.mIsHtml = isHtml;
+        return this;
+    }
+
     @Override
     public ConanNormalDialog build() {
         return new ConanNormalDialog(
@@ -48,7 +54,8 @@ public class ConanNormalDialogBuilder extends BaseDialogBuilder<ConanNormalDialo
                 mTitle,
                 mContent,
                 mConfirm,
-                mOnlyOneButton
+                mOnlyOneButton,
+                mIsHtml
         );
     }
 

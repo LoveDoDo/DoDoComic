@@ -15,10 +15,14 @@ import java.util.List;
  * @date 2018/10/4
  */
 @SuppressWarnings("unchecked")
-public abstract class BaseListDialogBuilder<T extends BaseDialogBuilder,K extends BaseDialog> extends BaseDialogBuilder<T, K> {
+public abstract class BaseListDialogBuilder<T extends BaseDialogBuilder, K extends BaseDialog> extends BaseDialogBuilder<T, K> {
 
     protected final List<ListDialogBean> mDataList = new ArrayList<>();
     protected OnItemSelectedListener mOnItemSelectedListener = null;
+
+    public final T addItem(String data) {
+        return addItem(data, false);
+    }
 
     public final T addItem(String data, boolean isSelected) {
         mDataList.add(new ListDialogBean(data, isSelected));

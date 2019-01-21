@@ -10,6 +10,14 @@ import com.joanzapata.iconify.Icon;
  */
 public enum ConanIcons implements Icon {
     /**
+     * 免打扰
+     */
+    icon_quiet('\ue75e'),
+    /**
+     * 图片
+     */
+    icon_pic('\ue719'),
+    /**
      * 刷新 WebView
      */
     icon_refresh_webview('\ue60f'),

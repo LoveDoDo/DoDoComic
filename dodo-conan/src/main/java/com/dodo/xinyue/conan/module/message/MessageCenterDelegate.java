@@ -19,8 +19,8 @@ import butterknife.BindView;
  */
 public class MessageCenterDelegate extends BaseModuleDelegate {
 
-    private static final int TYPE_NOTICE = 0;
-    private static final int TYPE_OTHER = 1;
+    public static final int TYPE_NOTICE = 0;
+    public static final int TYPE_OTHER = 1;
     private static final String[] TITLES = new String[]{"公告", "其他"};
     private static final int[] TYPES = new int[]{TYPE_NOTICE, TYPE_OTHER};
 

@@ -28,7 +28,7 @@ public class MessageDetailItemChildClickListener extends MulItemChildClickListen
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position, MulEntity entity, int viewId) {
-        if (viewId == R.id.llContainer) {
+        if (viewId == R.id.rlContainer) {
             openMessage(entity);
         } else if (viewId == R.id.tvOpen) {
             openMessage(entity);
