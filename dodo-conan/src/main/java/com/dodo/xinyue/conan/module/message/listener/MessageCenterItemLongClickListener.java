@@ -1,13 +1,13 @@
 package com.dodo.xinyue.conan.module.message.listener;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dodo.xinyue.conan.database.ConanDataBaseManager;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
-import com.dodo.xinyue.conan.database.bean.JiGuangMessageDao;
+import com.dodo.xinyue.conan.database.listener.IHandleMessage;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.message.data.MessageCenterItemType;
 import com.dodo.xinyue.conan.view.dialog.list.ConanSimpleListDialog;
@@ -19,10 +19,7 @@ import com.dodo.xinyue.core.ui.dialog.manager.DialogManager;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulFields;
 import com.dodo.xinyue.core.ui.recycler.MulItemLongClickListener;
-
-import org.greenrobot.greendao.async.AsyncOperation;
-import org.greenrobot.greendao.async.AsyncOperationListener;
-import org.greenrobot.greendao.async.AsyncSession;
+import com.dodo.xinyue.core.util.log.DoDoLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +66,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                                     String title = ApiHelper.getMessageNickName(type);
                                     ConanNormalDialog.builder()
                                             .title("清空消息")
-                                            .content("确定清空<font color=#2ca9e1>" + title + "</font>里面的所有消息？")
+                                            .content("确定清空<font color=#2ca9e1>" + title + "</font>？")
                                             .isHtml(true)
                                             .confirm(() -> clearMessage(type))
                                             .build()
@@ -95,21 +92,21 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                 .cancelable(false)
                 .build()
                 .show();
-        final long currentTime = System.currentTimeMillis();
-        AsyncSession asyncSession = ConanDataBaseManager.getInstance().getMessageDao()
-                .getSession().startAsyncSession();
-        asyncSession.setListenerMainThread(new AsyncOperationListener() {
+        ConanDataBaseManager.deleteAllMessageAsync(messageType, new IHandleMessage() {
             @Override
-            public void onAsyncOperationCompleted(AsyncOperation operation) {
-                Log.d("gsfgdgdbf", "删除完成，用时：" + operation.getDuration());
+            public void onSuccess(List<JiGuangMessage> result) {
+                DoDoLogger.d("清空消息成功");
+                ToastUtils.showShort("操作成功");
+                DialogManager.getInstance().cancelLastDialog();
+            }
+
+            @Override
+            public void onFailure() {
+                DoDoLogger.d("清空消息失败");
+                ToastUtils.showShort("操作失败");
                 DialogManager.getInstance().cancelLastDialog();
             }
         });
-        List<JiGuangMessage> list = ConanDataBaseManager.getInstance().getMessageDao()
-                .queryBuilder()
-                .where(JiGuangMessageDao.Properties.Type.eq(messageType))
-                .list();
-        asyncSession.deleteInTx(JiGuangMessage.class, list);
     }
 
 }

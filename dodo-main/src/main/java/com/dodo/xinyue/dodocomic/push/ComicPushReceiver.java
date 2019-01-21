@@ -11,10 +11,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.dodo.xinyue.conan.database.ConanDataBaseManager;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.helper.ApiHelper;
-import com.dodo.xinyue.core.app.DoDo;
 
 import cn.jpush.android.api.JPushInterface;
-import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 
 /**
  * 极光推送 自定义的广播接收器
@@ -90,18 +88,32 @@ public class ComicPushReceiver extends BroadcastReceiver {
         final boolean read = false;
         final long timestamp = System.currentTimeMillis();
 
-        final JiGuangMessage message = new JiGuangMessage();
-        message.setMessageID(messageID);
-        message.setType(type);
-        message.setTitle(title);
-        message.setContent(content);
-        message.setExtraData(extraData);
-        message.setRead(read);
-        message.setTimestamp(timestamp);
-        //插入数据库
-        ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
+//        final JiGuangMessage message = new JiGuangMessage();
+//        message.setMessageID(messageID);
+//        message.setType(type);
+//        message.setTitle(title);
+//        message.setContent(content);
+//        message.setExtraData(extraData);
+//        message.setRead(read);
+//        message.setTimestamp(timestamp);
+//        //插入数据库
+//        ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
 
-        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
+//        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
+
+        for (int i = 0; i < 10000; i++) {
+            final JiGuangMessage message = new JiGuangMessage();
+            message.setMessageID(messageID);
+            message.setType(type);
+            message.setTitle((i + 1) + "");
+            message.setContent(content);
+            message.setExtraData(extraData);
+            message.setRead(read);
+            message.setTimestamp(timestamp);
+            //插入数据库
+            ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
+        }
+
 
     }
 

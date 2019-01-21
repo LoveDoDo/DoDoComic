@@ -1,5 +1,9 @@
 package com.dodo.xinyue.conan.database.listener;
 
+import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+
+import java.util.List;
+
 /**
  * IHandleMessage
  *
@@ -8,6 +12,8 @@ package com.dodo.xinyue.conan.database.listener;
  */
 public interface IHandleMessage {
 
-    void onCompleted(boolean isSuccess);
+    void onSuccess(List<JiGuangMessage> result);
+
+    void onFailure();
 
 }

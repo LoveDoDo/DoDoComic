@@ -81,15 +81,6 @@ public class MessageCenterDataConverter extends DataConverter {
         return cover;
     }
 
-    @Deprecated
-    public long getMessageCount(int type) {
-        return ConanDataBaseManager.getInstance().getMessageDao()
-                .queryBuilder()
-                .where(JiGuangMessageDao.Properties.Type.eq(type))
-                .buildCount()
-                .count();
-    }
-
     public final MessageCenterDataConverter setType(int type) {
         this.mType = type;
         return this;

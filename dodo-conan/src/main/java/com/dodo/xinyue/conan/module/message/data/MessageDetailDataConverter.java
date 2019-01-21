@@ -1,8 +1,6 @@
 package com.dodo.xinyue.conan.module.message.data;
 
-import com.dodo.xinyue.conan.database.ConanDataBaseManager;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
-import com.dodo.xinyue.conan.database.bean.JiGuangMessageDao;
 import com.dodo.xinyue.core.ui.recycler.DataConverter;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 
@@ -17,38 +15,48 @@ import java.util.List;
  */
 public class MessageDetailDataConverter extends DataConverter {
 
-    private int mType;
+    private List<JiGuangMessage> mData;
 
     @Override
     public ArrayList<MulEntity> convert() {
-        List<JiGuangMessage> list = ConanDataBaseManager.getInstance().getMessageDao()
-                .queryBuilder()
-                .where(JiGuangMessageDao.Properties.Type.eq(mType))
-                .orderDesc(JiGuangMessageDao.Properties.Id)//倒序
-                .list();
-        int size = list.size();
+//        ENTITIES.clear();//TODO 清空数据源会影响adapter的addData(Collection<> data)方法
+        /**
+         * 问题记录
+         *
+         * 使用adapter的addData(Collection<> data)方法批量添加数据的时候，不能使用ENTITIES.clear()清空原数据源，会造成两份重复的新数据
+         * addData内部使用的list.addAll()进行新老数据的合并，所以新数据源必须new一个新的对象
+         */
+        int size = mData.size();
         for (int i = 0; i < size; i++) {
             final MulEntity entity = MulEntity.builder()
                     .setItemType(MessageCenterItemType.ITEM_MESSAGE_DETAIL)
-                    .setBean(list.get(i))
+                    .setBean(mData.get(i))
                     .build();
             ENTITIES.add(entity);
         }
-
         return ENTITIES;
     }
 
-    public long getMessageCount(int type) {
-        return ConanDataBaseManager.getInstance().getMessageDao()
-                .queryBuilder()
-                .where(JiGuangMessageDao.Properties.Type.eq(type))
-                .buildCount()
-                .count();
+    public final MessageDetailDataConverter setData(List<JiGuangMessage> data) {
+        this.mData = data;
+        return this;
     }
 
-    public final MessageDetailDataConverter setType(int type) {
-        this.mType = type;
-        return this;
+    /**
+     * 追加新数据
+     * 适用于分页加载
+     */
+    public final List<MulEntity> addData(List<JiGuangMessage> newData) {
+        final List<MulEntity> entities = new ArrayList<>();
+        final int size = newData.size();
+        for (int i = 0; i < size; i++) {
+            final MulEntity entity = MulEntity.builder()
+                    .setItemType(MessageCenterItemType.ITEM_MESSAGE_DETAIL)
+                    .setBean(newData.get(i))
+                    .build();
+            entities.add(entity);
+        }
+        return entities;
     }
 
 }
