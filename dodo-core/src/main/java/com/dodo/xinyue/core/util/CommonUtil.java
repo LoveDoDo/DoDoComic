@@ -365,6 +365,8 @@ public final class CommonUtil {
 
     /**
      * 生成不重复唯一长整数
+     *
+     * 如：3420235332700095000
      */
     public static long random() {
         return UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;

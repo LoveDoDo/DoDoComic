@@ -67,6 +67,7 @@ public class ConanMessageDialog extends BaseDialog {
     private String mCover;//封面图
     private boolean mIsEndOfLastLine;//最后一行是否置于尾部 适用于古诗词等类型的落款
     private String mAnswer;//推理题的答案
+    private boolean mIsRetract;//是否缩进 每行都缩进
 
     private ObjectAnimator mRotationAnim = null;
     private boolean mCoverLoadDone = false;//图片是否加载完成
@@ -139,6 +140,7 @@ public class ConanMessageDialog extends BaseDialog {
         mCover = extraData.getString("cover");
         mIsEndOfLastLine = extraData.getBooleanValue("end");
         mAnswer = extraData.getString("answer");
+        mIsRetract = extraData.getBooleanValue("retract");
 
     }
 
@@ -164,6 +166,22 @@ public class ConanMessageDialog extends BaseDialog {
                 }
             }
         });
+
+        if (mIsRetract) {
+            if (!TextUtils.isEmpty(mContent)) {
+                String[] tempArray = mContent.split("\n");
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < tempArray.length; i++) {
+                    sb.append("\t\t\t\t");//一个汉字=\t\t
+                    sb.append(tempArray[i]);
+                    if (i != tempArray.length - 1) {
+                        //除了最后一行
+                        sb.append("\n");
+                    }
+                }
+                mContent = sb.toString();
+            }
+        }
 
         if (mType == JiGuangMessage.TYPE_INFERENCE) {
             if (!TextUtils.isEmpty(mAnswer)) {
@@ -208,16 +226,28 @@ public class ConanMessageDialog extends BaseDialog {
             if (!TextUtils.isEmpty(mContent)) {
                 mTvLastLine.setVisibility(View.VISIBLE);
                 String[] tempArray = mContent.split("\n");
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < tempArray.length; i++) {
-                    if (i == tempArray.length - 1) {
-                        //最后一行
-                        mTvLastLine.setText(tempArray[i]);
-                    } else {
-                        sb.append(tempArray[i]);
+                if (tempArray.length == 1) {
+                    //单行
+                    mTvContent.setVisibility(View.GONE);
+                    mTvLastLine.setText(mContent);
+                } else {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < tempArray.length; i++) {
+                        if (i == tempArray.length - 1) {
+                            //最后一行
+                            mTvLastLine.setText(tempArray[i]);
+                        } else {
+                            sb.append(tempArray[i]);
+                            if (i != tempArray.length - 2) {
+                                //倒数第二行也不能加换行符，因为倒数第二行是正文的最后一行
+                                sb.append("\n");
+                            }
+
+                        }
                     }
+                    mContent = sb.toString();
                 }
-                mContent = sb.toString();
+
             }
         }
         if (TextUtils.isEmpty(mContent)) {
@@ -227,12 +257,23 @@ public class ConanMessageDialog extends BaseDialog {
 
         mTvTitle.setText(mTitle);
 
-        if (!mIsHtml) {
-            mTvContent.setText(mContent);
-        } else {
-            //解决不能换行的问题
-            mTvContent.setText(Html.fromHtml(mContent.replace("\n", "<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
+        if (mTvContent.getVisibility() == View.VISIBLE) {
+            if (!mIsHtml) {
+                mTvContent.setText(mContent);
+            } else {
+                //解决不能换行的问题
+                mTvContent.setText(Html.fromHtml(mContent.replace("\n", "<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
+            }
+        } else if (mTvLastLine.getVisibility() == View.VISIBLE) {
+            //单行
+            if (!mIsHtml) {
+                mTvLastLine.setText(mContent);
+            } else {
+                //解决不能换行的问题
+                mTvLastLine.setText(Html.fromHtml(mContent.replace("\n", "<br>")));//例如："这是<font color=#ff0000>红色</font>,这是<font color=#0000ff>蓝色</font>"
+            }
         }
+
         if (mAction == JiGuangMessage.ACTION_COPY) {
             mTvConfirm.setText("复制");
         }

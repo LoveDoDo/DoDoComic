@@ -8,18 +8,13 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.dodo.xinyue.conan.database.ConanDataBaseManager;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
-import com.dodo.xinyue.conan.database.listener.IHandleMessage;
-import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.helper.ApiHelper;
-import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
-import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
-import com.dodo.xinyue.core.util.CommonUtil;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.dodo.xinyue.core.app.DoDo;
 
 import cn.jpush.android.api.JPushInterface;
+import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 
 /**
  * 极光推送 自定义的广播接收器
@@ -88,67 +83,70 @@ public class ComicPushReceiver extends BroadcastReceiver {
         //TODO 这里需要判断一下是否需要接收消息并存入数据库
 
         final long messageID = Long.valueOf(bundle.getString(JPushInterface.EXTRA_MSG_ID));
-        final String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
+        String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
                 bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);
+        if (!TextUtils.isEmpty(content)) {
+            content = content.trim();
+        }
         final String title = getMessageTitle(data);
         final String extraData = getExtraData(data);
         final boolean read = false;
         final long timestamp = System.currentTimeMillis();
 
-//        final JiGuangMessage message = new JiGuangMessage();
-//        message.setMessageID(messageID);
-//        message.setType(type);
-//        message.setTitle(title);
-//        message.setContent(content);
-//        message.setExtraData(extraData);
-//        message.setRead(read);
-//        message.setTimestamp(timestamp);
-//        //插入数据库
-//        ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
+        final JiGuangMessage message = new JiGuangMessage();
+        message.setMessageID(messageID);
+        message.setType(type);
+        message.setTitle(title);
+        message.setContent(content);
+        message.setExtraData(extraData);
+        message.setRead(read);
+        message.setTimestamp(timestamp);
+        //插入数据库
+        ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
 
-//        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
+        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
 
-        ConanLoadingDialog.builder()
-                .build()
-                .show();
+    }
 
-        final List<JiGuangMessage> messages = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
-            final JiGuangMessage message = new JiGuangMessage();
-            message.setMessageID(CommonUtil.random());
-            message.setType(type);
-            message.setTitle((i + 1) + "");
-            message.setContent(content);
-            message.setExtraData(extraData);
-            message.setRead(read);
-            message.setTimestamp(timestamp);
-
-            messages.add(message);
-        }
-        ConanMessageDBUtil.insertOrReplaceInTxAsync(messages, new IHandleMessage() {
-            @Override
-            public void onSuccess(List<JiGuangMessage> result, long duration) {
-                ConanNormalDialog.builder()
-                        .title("加入完成")
-                        .content("用时：" + duration)
-                        .onlyOneButton(true)
-                        .build()
-                        .show();
-            }
-
-            @Override
-            public void onFailure() {
-                ConanNormalDialog.builder()
-                        .title("加入失败")
-                        .content("")
-                        .onlyOneButton(true)
-                        .build()
-                        .show();
-            }
-        });
-
-
-
+    private void test() {
+//        ConanLoadingDialog.builder()
+//                .build()
+//                .show();
+//
+//        final List<JiGuangMessage> messages = new ArrayList<>();
+//        for (int i = 0; i < 10000; i++) {
+//            final JiGuangMessage message = new JiGuangMessage();
+//            message.setMessageID(CommonUtil.random());
+//            message.setType(type);
+//            message.setTitle((i + 1) + "");
+//            message.setContent(content);
+//            message.setExtraData(extraData);
+//            message.setRead(read);
+//            message.setTimestamp(timestamp);
+//
+//            messages.add(message);
+//        }
+//        ConanMessageDBUtil.insertOrReplaceInTxAsync(messages, new IHandleMessage() {
+//            @Override
+//            public void onSuccess(List<JiGuangMessage> result, long duration) {
+//                ConanNormalDialog.builder()
+//                        .title("加入完成")
+//                        .content("用时：" + duration)
+//                        .onlyOneButton(true)
+//                        .build()
+//                        .show();
+//            }
+//
+//            @Override
+//            public void onFailure() {
+//                ConanNormalDialog.builder()
+//                        .title("加入失败")
+//                        .content("")
+//                        .onlyOneButton(true)
+//                        .build()
+//                        .show();
+//            }
+//        });
     }
 
     private int getMessageType(JSONObject data) {
