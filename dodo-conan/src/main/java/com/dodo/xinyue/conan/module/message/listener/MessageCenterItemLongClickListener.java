@@ -1,13 +1,12 @@
 package com.dodo.xinyue.conan.module.message.listener;
 
-import android.text.TextUtils;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.database.listener.IHandleMessage;
+import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.message.data.MessageCenterItemType;
 import com.dodo.xinyue.conan.view.dialog.list.ConanSimpleListDialog;
@@ -51,7 +50,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                 final String isQuietStr = isQuiet ? "解除免打扰" : "免打扰";
                 final ArrayList<ListDialogBean> data = new ArrayList<>();
                 data.add(new ListDialogBean(isQuietStr, false));
-                if (!TextUtils.isEmpty(bean.getMessageID())) {
+                if (bean.getMessageID() != 0) {
                     data.add(new ListDialogBean("清空消息", false));
                 }
                 ConanSimpleListDialog.builder()
@@ -94,7 +93,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                 .show();
         ConanMessageDBUtil.deleteAllMessageAsync(messageType, new IHandleMessage() {
             @Override
-            public void onSuccess(List<JiGuangMessage> result) {
+            public void onSuccess(List<JiGuangMessage> result, long duration) {
                 DoDoLogger.d("清空消息成功");
                 ToastUtils.showShort("操作成功");
                 DialogManager.getInstance().cancelLastDialog();

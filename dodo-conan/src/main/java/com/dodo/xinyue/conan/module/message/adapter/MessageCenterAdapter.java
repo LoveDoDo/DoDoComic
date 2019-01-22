@@ -77,7 +77,7 @@ public class MessageCenterAdapter extends MulAdapter {
         String title = ApiHelper.getMessageNickName(type);
         holder.setText(R.id.tvTitle, title);
 
-        if (TextUtils.isEmpty(bean.getMessageID())) {
+        if (bean.getMessageID() == 0) {
             holder.setGone(R.id.tvContent, false);
             holder.setGone(R.id.tvTime, false);
             holder.setGone(R.id.tvQuiet, false);

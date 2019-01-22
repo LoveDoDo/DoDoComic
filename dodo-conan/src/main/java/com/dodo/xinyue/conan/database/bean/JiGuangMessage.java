@@ -2,7 +2,9 @@ package com.dodo.xinyue.conan.database.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * 极光推送的消息dao
@@ -70,8 +72,11 @@ public class JiGuangMessage {
     @Id(autoincrement = true)
     private Long id;
     //消息ID
-    private String messageID;
+//    @Index(unique = true)
+    @Unique
+    private long messageID;
     //类型
+    @Index
     private int type;
     //消息标题
     private String title;
@@ -83,8 +88,8 @@ public class JiGuangMessage {
     private boolean read;
     //时间戳
     private long timestamp;
-    @Generated(hash = 2049396045)
-    public JiGuangMessage(Long id, String messageID, int type, String title,
+    @Generated(hash = 1727221321)
+    public JiGuangMessage(Long id, long messageID, int type, String title,
             String content, String extraData, boolean read, long timestamp) {
         this.id = id;
         this.messageID = messageID;
@@ -104,10 +109,10 @@ public class JiGuangMessage {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getMessageID() {
+    public long getMessageID() {
         return this.messageID;
     }
-    public void setMessageID(String messageID) {
+    public void setMessageID(long messageID) {
         this.messageID = messageID;
     }
     public int getType() {
@@ -146,6 +151,5 @@ public class JiGuangMessage {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
-
 
 }

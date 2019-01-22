@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * 公共功能集
@@ -360,6 +361,13 @@ public final class CommonUtil {
         } catch (Exception e){
         }
         return JSON.toJSONString(deviceInfo);
+    }
+
+    /**
+     * 生成不重复唯一长整数
+     */
+    public static long random() {
+        return UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
     }
 
 }

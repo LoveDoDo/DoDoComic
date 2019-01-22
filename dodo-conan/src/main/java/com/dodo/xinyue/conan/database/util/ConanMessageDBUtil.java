@@ -24,6 +24,8 @@ public class ConanMessageDBUtil {
     /**
      * 查询指定type的消息总数
      *
+     * 数量过多会造成卡顿
+     *
      * @param messageType
      * @return
      */
@@ -36,30 +38,30 @@ public class ConanMessageDBUtil {
     }
 
     public static void getMessageCountAsync(int messageType, final IHandleMessage listener) {
-        AsyncSession asyncSession = ConanDataBaseManager.getInstance().getMessageDao()
-                .getSession().startAsyncSession();
-        asyncSession.setListenerMainThread(new AsyncOperationListener() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onAsyncOperationCompleted(AsyncOperation operation) {
-                if (operation.isCompletedSucessfully()) {
-                    if (listener != null) {
-                        final List<JiGuangMessage> result = (List<JiGuangMessage>) operation.getResult();
-                        listener.onSuccess(result);
-                    }
-                    return;
-                }
-                if (listener != null) {
-                    listener.onFailure();
-                }
-            }
-        });
-        ConanDataBaseManager.getInstance().getMessageDao()
-                .queryBuilder()
-                .where(JiGuangMessageDao.Properties.Type.eq(messageType))
-                .orderDesc(JiGuangMessageDao.Properties.Id)//倒序
-                .build().setParameter()
-//        asyncSession.queryList(query);
+//        AsyncSession asyncSession = ConanDataBaseManager.getInstance().getMessageDao()
+//                .getSession().startAsyncSession();
+//        asyncSession.setListenerMainThread(new AsyncOperationListener() {
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            public void onAsyncOperationCompleted(AsyncOperation operation) {
+//                if (operation.isCompletedSucessfully()) {
+//                    if (listener != null) {
+//                        final List<JiGuangMessage> result = (List<JiGuangMessage>) operation.getResult();
+//                        listener.onSuccess(result);
+//                    }
+//                    return;
+//                }
+//                if (listener != null) {
+//                    listener.onFailure();
+//                }
+//            }
+//        });
+//        ConanDataBaseManager.getInstance().getMessageDao()
+//                .queryBuilder()
+//                .where(JiGuangMessageDao.Properties.Type.eq(messageType))
+//                .orderDesc(JiGuangMessageDao.Properties.Id)//倒序
+//                .build();
+////        asyncSession.queryList(query);
     }
 
     /**
@@ -96,7 +98,7 @@ public class ConanMessageDBUtil {
                 if (operation.isCompletedSucessfully()) {
                     if (listener != null) {
                         final List<JiGuangMessage> result = (List<JiGuangMessage>) operation.getResult();
-                        listener.onSuccess(result);
+                        listener.onSuccess(result, operation.getDuration());
                     }
                     return;
                 }
@@ -131,7 +133,7 @@ public class ConanMessageDBUtil {
                 if (operation.isCompletedSucessfully()) {
                     if (listener != null) {
                         final List<JiGuangMessage> result = (List<JiGuangMessage>) operation.getResult();
-                        listener.onSuccess(result);
+                        listener.onSuccess(result, operation.getDuration());
                     }
                     return;
                 }
@@ -156,7 +158,8 @@ public class ConanMessageDBUtil {
     public static void deleteAllMessageAsync(int messageType, final IHandleMessage listener) {
         queryAllMessageAsync(messageType, new IHandleMessage() {
             @Override
-            public void onSuccess(List<JiGuangMessage> result) {
+            public void onSuccess(List<JiGuangMessage> result, long duration) {
+                final long queryDuration = duration;
                 AsyncSession asyncSession = ConanDataBaseManager.getInstance().getMessageDao()
                         .getSession().startAsyncSession();
                 asyncSession.setListenerMainThread(new AsyncOperationListener() {
@@ -165,7 +168,7 @@ public class ConanMessageDBUtil {
 //                        Log.d("gsfgdgdbf", "删除完成，用时：" + operation.getDuration());
                         if (operation.isCompletedSucessfully()) {
                             if (listener != null) {
-                                listener.onSuccess(null);
+                                listener.onSuccess(null, operation.getDuration() + queryDuration);
                             }
                             return;
                         }
@@ -201,7 +204,7 @@ public class ConanMessageDBUtil {
                 ConanDataBaseManager.getInstance().getMessageDao().detachAll();//清除缓存
                 if (operation.isCompletedSucessfully()) {
                     if (listener != null) {
-                        listener.onSuccess(null);
+                        listener.onSuccess(null, operation.getDuration());
                     }
                     return;
                 }

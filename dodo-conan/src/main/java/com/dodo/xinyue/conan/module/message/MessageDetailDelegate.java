@@ -39,7 +39,7 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
 
     private static final String TAG = "MessageDetailDelegate";
     private static final String ARGS_TYPE = "args_type";
-    private static final int PAGE_COUNT = 10;//分页加载 每页item数
+    private static final int PAGE_COUNT = 6;//分页加载 每页item数
     private int mPage = 0;//分页加载 页数
 
     private int mType;
@@ -52,6 +52,11 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
     private MessageDetailDataConverter mDataConverter = null;
     private GridLayoutManager mLayoutManager = null;
 
+    private boolean mEnterAnimEnd = false;//入场动画结束标识
+    private boolean mFirstQueryEnd = false;//首次查询结束标识
+    private boolean mFirstLoadDataEnd = false;//首次加载数据完成
+
+    private List<JiGuangMessage> mFirstQueryResult = null;
 
     public static MessageDetailDelegate create(int type) {
         final Bundle args = new Bundle();
@@ -89,27 +94,59 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
         initAdapter();
 
         mDataConverter = new MessageDetailDataConverter();
-
+        loadData();
     }
 
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-        mAdapter.setEmptyView(mLoadingView);
-        loadData();
+
+        mEnterAnimEnd = true;
+        if (mFirstQueryEnd) {
+            if (mFirstLoadDataEnd) {
+                return;
+            }
+            mFirstLoadDataEnd = true;
+            mAdapter.setNewData(mDataConverter.setData(mFirstQueryResult).convert());
+            mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);//必须放在setNewData()之后
+            mAdapter.setEmptyView(mNoDataView);
+        } else {
+            mAdapter.setEmptyView(mLoadingView);
+        }
     }
 
     private void loadData() {
         ConanMessageDBUtil.queryMessageAsync(mType, mPage++, PAGE_COUNT, new IHandleMessage() {
             @Override
-            public void onSuccess(List<JiGuangMessage> result) {
-                mAdapter.setNewData(mDataConverter.setData(result).convert());
-                mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);
-                mAdapter.setEmptyView(mNoDataView);
+            public void onSuccess(List<JiGuangMessage> result, long duration) {
+                mFirstQueryEnd = true;
+                if (duration < 30) {
+                    mFirstLoadDataEnd = true;
+                    mAdapter.setNewData(mDataConverter.setData(result).convert());
+                    mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);//必须放在setNewData()之后
+                    mAdapter.setEmptyView(mNoDataView);
+                    return;
+                }
+                if (!mEnterAnimEnd) {
+                    //入场动画还没结束，已经查询到结果了
+                    //等入场动画结束，再填充数据
+                    mFirstQueryResult = result;
+                } else {
+                    //入场动画已经结束了，才查询到结果
+                    if (mFirstLoadDataEnd) {
+                        return;
+                    }
+                    mFirstLoadDataEnd = true;
+                    mAdapter.setNewData(mDataConverter.setData(result).convert());
+                    mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);//必须放在setNewData()之后
+                    mAdapter.setEmptyView(mNoDataView);
+                }
             }
 
             @Override
             public void onFailure() {
+                mFirstQueryEnd = true;
+                mFirstLoadDataEnd = true;
                 mAdapter.setEmptyView(mNoDataView);
                 DoDoLogger.d("查询消息失败");
             }
@@ -151,7 +188,7 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
             public void run() {
                 ConanMessageDBUtil.queryMessageAsync(mType, mPage++, PAGE_COUNT, new IHandleMessage() {
                     @Override
-                    public void onSuccess(List<JiGuangMessage> result) {
+                    public void onSuccess(List<JiGuangMessage> result, long duration) {
                         final int size = result.size();
                         if (size <= 0) {
                             mAdapter.loadMoreEnd(true);

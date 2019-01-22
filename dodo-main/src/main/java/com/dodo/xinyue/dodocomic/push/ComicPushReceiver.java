@@ -8,12 +8,13 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.database.listener.IHandleMessage;
+import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
 import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
+import com.dodo.xinyue.core.util.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class ComicPushReceiver extends BroadcastReceiver {
         final int type = getMessageType(data);
         //TODO 这里需要判断一下是否需要接收消息并存入数据库
 
-        final String messageID = bundle.getString(JPushInterface.EXTRA_MSG_ID);
+        final long messageID = Long.valueOf(bundle.getString(JPushInterface.EXTRA_MSG_ID));
         final String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
                 bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);
         final String title = getMessageTitle(data);
@@ -112,9 +113,9 @@ public class ComicPushReceiver extends BroadcastReceiver {
                 .show();
 
         final List<JiGuangMessage> messages = new ArrayList<>();
-        for (int i = 0; i < 3000; i++) {
+        for (int i = 0; i < 10000; i++) {
             final JiGuangMessage message = new JiGuangMessage();
-            message.setMessageID(messageID);
+            message.setMessageID(CommonUtil.random());
             message.setType(type);
             message.setTitle((i + 1) + "");
             message.setContent(content);
@@ -124,13 +125,13 @@ public class ComicPushReceiver extends BroadcastReceiver {
 
             messages.add(message);
         }
-
         ConanMessageDBUtil.insertOrReplaceInTxAsync(messages, new IHandleMessage() {
             @Override
-            public void onSuccess(List<JiGuangMessage> result) {
+            public void onSuccess(List<JiGuangMessage> result, long duration) {
                 ConanNormalDialog.builder()
                         .title("加入完成")
-                        .content("")
+                        .content("用时：" + duration)
+                        .onlyOneButton(true)
                         .build()
                         .show();
             }
@@ -140,6 +141,7 @@ public class ComicPushReceiver extends BroadcastReceiver {
                 ConanNormalDialog.builder()
                         .title("加入失败")
                         .content("")
+                        .onlyOneButton(true)
                         .build()
                         .show();
             }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IHandleMessage {
 
-    void onSuccess(List<JiGuangMessage> result);
+    void onSuccess(List<JiGuangMessage> result, long duration);
 
     void onFailure();
 
