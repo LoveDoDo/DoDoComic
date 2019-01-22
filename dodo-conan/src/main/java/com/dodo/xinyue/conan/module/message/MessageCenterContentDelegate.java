@@ -20,6 +20,7 @@ import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
+import com.dodo.xinyue.core.util.log.DoDoLogger;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -74,27 +75,28 @@ public class MessageCenterContentDelegate extends DoDoDelegate {
         initAdapter();
 
         mDataConverter = new MessageCenterDataConverter();
-
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mAdapter.setEmptyView(mLoadingView);
                 loadData();
             }
-        },258);//因为当前Delegate没有动画，不走onEnterAnimationEnd，所以这里延时时间为动画时长
+        }, 258);//因为当前Delegate没有动画，不走onEnterAnimationEnd，所以这里延时时间为动画时长
+
     }
 
     @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
-
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
+        //子delegate没有入场动画，所以不走这个回调
     }
 
     private void loadData() {
 
         mDataConverter.convertAsync(mType, new IConvertMessage() {
             @Override
-            public void onCompleted(List<MulEntity> data) {
+            public void onCompleted(List<MulEntity> data, long duration) {
+                DoDoLogger.d("MessageCenter:" + duration);
                 mAdapter.setNewData(data);
             }
         });

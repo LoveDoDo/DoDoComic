@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface IConvertMessage {
 
-    void onCompleted(List<MulEntity> data);
+    void onCompleted(List<MulEntity> data, long duration);
 
 }
