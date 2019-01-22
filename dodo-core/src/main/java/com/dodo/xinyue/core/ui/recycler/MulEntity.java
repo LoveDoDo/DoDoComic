@@ -2,6 +2,7 @@ package com.dodo.xinyue.core.ui.recycler;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.io.Serializable;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.LinkedHashMap;
@@ -12,7 +13,7 @@ import java.util.LinkedHashMap;
  * @author DoDo
  * @date 2017/9/10
  */
-public class MulEntity implements MultiItemEntity {
+public class MulEntity implements MultiItemEntity, Serializable {
 
     private final ReferenceQueue<LinkedHashMap<Object, Object>> ITEM_QUEUE = new ReferenceQueue<>();
     private final LinkedHashMap<Object, Object> MUL_FIELDS = new LinkedHashMap<>();
@@ -29,7 +30,6 @@ public class MulEntity implements MultiItemEntity {
 
     /**
      * dapter会从这里获取到item类型
-     *
      */
     @Override
     public int getItemType() {
@@ -52,7 +52,7 @@ public class MulEntity implements MultiItemEntity {
     }
 
     @SuppressWarnings("unchecked")
-    public final <T> T getBean(){
+    public final <T> T getBean() {
         return (T) FIELDS_REFERENCE.get().get(MulFields.BEAN);
     }
 

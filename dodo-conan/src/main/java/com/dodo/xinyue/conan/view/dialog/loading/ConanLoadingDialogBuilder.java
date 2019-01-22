@@ -13,6 +13,10 @@ public class ConanLoadingDialogBuilder extends BaseDialogBuilder<ConanLoadingDia
 
     private ITimeout mTimeout = null;
 
+    ConanLoadingDialogBuilder() {
+        anim(-1);
+    }
+
     public final ConanLoadingDialogBuilder timeout(ITimeout timeout) {
         this.mTimeout = timeout;
         return this;

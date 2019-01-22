@@ -12,15 +12,18 @@ import android.view.View;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.module.message.adapter.MessageCenterAdapter;
+import com.dodo.xinyue.conan.module.message.callback.IConvertMessage;
 import com.dodo.xinyue.conan.module.message.data.MessageCenterDataConverter;
 import com.dodo.xinyue.conan.module.message.listener.MessageCenterItemClickListener;
 import com.dodo.xinyue.conan.module.message.listener.MessageCenterItemLongClickListener;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
+import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.util.dimen.DimenUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -70,13 +73,32 @@ public class MessageCenterContentDelegate extends DoDoDelegate {
         initRecyclerView();
         initAdapter();
 
-        loadData();
+        mDataConverter = new MessageCenterDataConverter();
+
+        mRecyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.setEmptyView(mLoadingView);
+                loadData();
+            }
+        },258);//因为当前Delegate没有动画，不走onEnterAnimationEnd，所以这里延时时间为动画时长
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+
     }
 
     private void loadData() {
-        mAdapter.setEmptyView(mLoadingView);
-        mDataConverter = new MessageCenterDataConverter();
-        mAdapter.setNewData(mDataConverter.setType(mType).convert());
+
+        mDataConverter.convertAsync(mType, new IConvertMessage() {
+            @Override
+            public void onCompleted(List<MulEntity> data) {
+                mAdapter.setNewData(data);
+            }
+        });
+
     }
 
     private void initRecyclerView() {
@@ -104,6 +126,12 @@ public class MessageCenterContentDelegate extends DoDoDelegate {
         mLoadingView = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.view_empty_loading, mRecyclerView, false);
         mAdapter.setOnItemClickListener(MessageCenterItemClickListener.create(topDelegate));
         mAdapter.setOnItemLongClickListener(MessageCenterItemLongClickListener.create(topDelegate));
+    }
+
+    @Override
+    public void onDestroyView() {
+        mDataConverter.quitSafely();
+        super.onDestroyView();
     }
 
     /**

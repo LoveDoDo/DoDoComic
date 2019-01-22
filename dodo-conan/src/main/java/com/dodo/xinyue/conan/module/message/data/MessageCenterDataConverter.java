@@ -1,14 +1,16 @@
 package com.dodo.xinyue.conan.module.message.data;
 
-import com.dodo.xinyue.conan.R;
-import com.dodo.xinyue.conan.database.ConanDataBaseManager;
+import android.os.Handler;
+import android.os.Message;
+
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
-import com.dodo.xinyue.conan.database.bean.JiGuangMessageDao;
 import com.dodo.xinyue.conan.module.message.MessageCenterDelegate;
-import com.dodo.xinyue.core.ui.recycler.DataConverter;
+import com.dodo.xinyue.conan.module.message.callback.IConvertMessage;
+import com.dodo.xinyue.conan.module.message.helper.MessageHandlerThread;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MessageCenterDataConverter
@@ -16,74 +18,77 @@ import java.util.ArrayList;
  * @author DoDo
  * @date 2019/1/18
  */
-public class MessageCenterDataConverter extends DataConverter {
+public class MessageCenterDataConverter implements Handler.Callback {
 
-    private int mType;
+    private final Handler mUIHandler = new Handler(this);
+    private MessageHandlerThread mMessageHandlerThread = null;
+    private IConvertMessage mIConvertMessage = null;
 
-    @Override
-    public ArrayList<MulEntity> convert() {
-        switch (mType) {
+    /**
+     * 异步查询并转换数据
+     */
+    public final void convertAsync(int type, IConvertMessage listener) {
+        this.mIConvertMessage = listener;
+        final ArrayList<Integer> messageTypes = new ArrayList<>();
+        switch (type) {
             case MessageCenterDelegate.TYPE_NOTICE:
-                addItem(JiGuangMessage.TYPE_NOTICE);
+                messageTypes.add(JiGuangMessage.TYPE_NOTICE);
                 break;
             case MessageCenterDelegate.TYPE_OTHER:
-                addItem(JiGuangMessage.TYPE_CONAN);
-                addItem(JiGuangMessage.TYPE_INFERENCE);
-                addItem(JiGuangMessage.TYPE_JOKE);
-                addItem(JiGuangMessage.TYPE_ACTIVE);
-                addItem(JiGuangMessage.TYPE_CLASSIC);
-                addItem(JiGuangMessage.TYPE_NONE);
+                messageTypes.add(JiGuangMessage.TYPE_CONAN);
+                messageTypes.add(JiGuangMessage.TYPE_INFERENCE);
+                messageTypes.add(JiGuangMessage.TYPE_JOKE);
+                messageTypes.add(JiGuangMessage.TYPE_ACTIVE);
+                messageTypes.add(JiGuangMessage.TYPE_CLASSIC);
+                messageTypes.add(JiGuangMessage.TYPE_NONE);
                 break;
             default:
                 break;
         }
-        return ENTITIES;
-    }
 
-    private void addItem(int messageType) {
-        int cover = getCover(messageType);
-        JiGuangMessage bean = ConanDataBaseManager.getInstance().getMessageDao()
-                .queryBuilder()
-                .where(JiGuangMessageDao.Properties.Type.eq(messageType))
-                .orderDesc(JiGuangMessageDao.Properties.Id)//倒序
-                .limit(1)//限制返回结果数
-                .unique();//返回唯一结果
-        if (bean == null) {
-            bean = new JiGuangMessage();
-            bean.setType(messageType);
-        }
-        final MulEntity entity = MulEntity.builder()
-                .setItemType(MessageCenterItemType.ITEM_MESSAGE_CENTER)
-                .setBean(bean)
-                .setData(cover)
+        mMessageHandlerThread = MessageHandlerThread.builder()
+                .messageTypes(messageTypes)
+                .handler(mUIHandler)
                 .build();
-        ENTITIES.add(entity);
+        mMessageHandlerThread.start();//因为HandlerThread本身就是个线程,所以使用start启动
     }
 
-    private int getCover(int messageType) {
-        int cover;
-        switch (messageType) {
-            case JiGuangMessage.TYPE_NOTICE:
-                cover = R.drawable.icon_message_notice;
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean handleMessage(Message msg) {
+        if (msg == null || msg.getData() == null) {
+            return false;
+        }
+
+        switch (msg.what) {
+            case MessageHandlerThread.STATUS_SUCCESS:
+                final List<MulEntity> data = (List<MulEntity>) msg.getData().getSerializable(MessageHandlerThread.KEY_DATA);
+                if (mIConvertMessage != null) {
+                    mIConvertMessage.onCompleted(data);
+                }
                 break;
-            case JiGuangMessage.TYPE_NONE:
-            case JiGuangMessage.TYPE_INFERENCE:
-            case JiGuangMessage.TYPE_JOKE:
-            case JiGuangMessage.TYPE_ACTIVE:
-            case JiGuangMessage.TYPE_CLASSIC:
-            case JiGuangMessage.TYPE_CONAN:
-                cover = R.drawable.icon_message_other;
+            case MessageHandlerThread.STATUS_FAILURE:
+                if (mIConvertMessage != null) {
+                    mIConvertMessage.onCompleted(null);
+                }
                 break;
             default:
-                cover = R.drawable.icon_message_other_2;
+                if (mIConvertMessage != null) {
+                    mIConvertMessage.onCompleted(null);
+                }
                 break;
         }
-        return cover;
+        return true;
     }
 
-    public final MessageCenterDataConverter setType(int type) {
-        this.mType = type;
-        return this;
+    /**
+     * 安全关闭异步任务
+     */
+    public final void quitSafely() {
+        mUIHandler.removeCallbacksAndMessages(null);
+        if (mMessageHandlerThread != null) {
+            mMessageHandlerThread.quitSafely();
+        }
+//        mUIHandler = null;
     }
-
 }

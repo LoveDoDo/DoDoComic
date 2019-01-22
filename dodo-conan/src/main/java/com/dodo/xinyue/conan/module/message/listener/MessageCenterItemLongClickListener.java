@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.dodo.xinyue.conan.database.ConanDataBaseManager;
+import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.database.listener.IHandleMessage;
 import com.dodo.xinyue.conan.helper.ApiHelper;
@@ -92,7 +92,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                 .cancelable(false)
                 .build()
                 .show();
-        ConanDataBaseManager.deleteAllMessageAsync(messageType, new IHandleMessage() {
+        ConanMessageDBUtil.deleteAllMessageAsync(messageType, new IHandleMessage() {
             @Override
             public void onSuccess(List<JiGuangMessage> result) {
                 DoDoLogger.d("清空消息成功");

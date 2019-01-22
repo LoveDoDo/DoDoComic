@@ -1,6 +1,7 @@
 package com.dodo.xinyue.conan.module.message;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 
 import com.dodo.xinyue.conan.R;
@@ -46,6 +47,12 @@ public class MessageCenterDelegate extends BaseModuleDelegate {
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
+
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         mViewPagerContent.setOffscreenPageLimit(TITLES.length);//缓存全部
         mViewPagerContent.setAdapter(new MessageCenterPagerAdapter(getChildFragmentManager(), TITLES, TYPES));
         mTabLayout.setViewPager(mViewPagerContent);

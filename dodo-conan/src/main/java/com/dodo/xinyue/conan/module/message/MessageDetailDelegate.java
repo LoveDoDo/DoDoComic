@@ -11,9 +11,9 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
-import com.dodo.xinyue.conan.database.ConanDataBaseManager;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.database.listener.IHandleMessage;
+import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.message.adapter.MessageDetailAdapter;
@@ -79,7 +79,7 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
 
     @Override
     public String setTitle() {
-        return mTitle + "(" + ConanDataBaseManager.getMessageCount(mType) + ")";
+        return mTitle;
     }
 
     @Override
@@ -88,21 +88,24 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
         initRecyclerView();
         initAdapter();
 
+        mDataConverter = new MessageDetailDataConverter();
+
+    }
+
+    @Override
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
+        mAdapter.setEmptyView(mLoadingView);
         loadData();
     }
 
     private void loadData() {
-        mAdapter.setEmptyView(mLoadingView);
-        mDataConverter = new MessageDetailDataConverter();
-        if (ConanDataBaseManager.getMessageCount(mType) <= 0) {
-            mAdapter.setEmptyView(mNoDataView);
-            return;
-        }
-        ConanDataBaseManager.queryMessageAsync(mType, mPage++, PAGE_COUNT, new IHandleMessage() {
+        ConanMessageDBUtil.queryMessageAsync(mType, mPage++, PAGE_COUNT, new IHandleMessage() {
             @Override
             public void onSuccess(List<JiGuangMessage> result) {
                 mAdapter.setNewData(mDataConverter.setData(result).convert());
                 mAdapter.disableLoadMoreIfNotFullPage(mRecyclerView);
+                mAdapter.setEmptyView(mNoDataView);
             }
 
             @Override
@@ -146,7 +149,7 @@ public class MessageDetailDelegate extends BaseModuleDelegate implements BaseQui
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ConanDataBaseManager.queryMessageAsync(mType, mPage++, PAGE_COUNT, new IHandleMessage() {
+                ConanMessageDBUtil.queryMessageAsync(mType, mPage++, PAGE_COUNT, new IHandleMessage() {
                     @Override
                     public void onSuccess(List<JiGuangMessage> result) {
                         final int size = result.size();

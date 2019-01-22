@@ -89,7 +89,12 @@ public abstract class BaseDelegate extends Fragment
         super.onDestroy();
         if (mUnbinder != null) {
             //解除视图绑定
-            mUnbinder.unbind();
+            try {
+                mUnbinder.unbind();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

@@ -8,9 +8,15 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.dodo.xinyue.conan.database.ConanDataBaseManager;
+import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+import com.dodo.xinyue.conan.database.listener.IHandleMessage;
 import com.dodo.xinyue.conan.helper.ApiHelper;
+import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
+import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -101,7 +107,12 @@ public class ComicPushReceiver extends BroadcastReceiver {
 
 //        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(message);
 
-        for (int i = 0; i < 10000; i++) {
+        ConanLoadingDialog.builder()
+                .build()
+                .show();
+
+        final List<JiGuangMessage> messages = new ArrayList<>();
+        for (int i = 0; i < 3000; i++) {
             final JiGuangMessage message = new JiGuangMessage();
             message.setMessageID(messageID);
             message.setType(type);
@@ -110,9 +121,30 @@ public class ComicPushReceiver extends BroadcastReceiver {
             message.setExtraData(extraData);
             message.setRead(read);
             message.setTimestamp(timestamp);
-            //插入数据库
-            ConanDataBaseManager.getInstance().getMessageDao().insertOrReplace(message);
+
+            messages.add(message);
         }
+
+        ConanMessageDBUtil.insertOrReplaceInTxAsync(messages, new IHandleMessage() {
+            @Override
+            public void onSuccess(List<JiGuangMessage> result) {
+                ConanNormalDialog.builder()
+                        .title("加入完成")
+                        .content("")
+                        .build()
+                        .show();
+            }
+
+            @Override
+            public void onFailure() {
+                ConanNormalDialog.builder()
+                        .title("加入失败")
+                        .content("")
+                        .build()
+                        .show();
+            }
+        });
+
 
 
     }
