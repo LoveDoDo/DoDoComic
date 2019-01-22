@@ -39,25 +39,30 @@ public class JiGuangMessage {
      */
     public static final int TYPE_NOTICE = 1;
     /**
+     * 消息类型：柯南
+     */
+    public static final int TYPE_CONAN = 2;
+    /**
      * 消息类型：推理
      */
-    public static final int TYPE_INFERENCE = 2;
+    public static final int TYPE_INFERENCE = 3;
     /**
      * 消息类型：笑话
      */
-    public static final int TYPE_JOKE = 3;
+    public static final int TYPE_JOKE = 4;
     /**
      * 消息类型：鸡汤
      */
-    public static final int TYPE_ACTIVE = 4;
+    public static final int TYPE_ACTIVE = 5;
     /**
      * 消息类型：古诗
      */
-    public static final int TYPE_CLASSIC = 5;
+    public static final int TYPE_CLASSIC = 6;
+
     /**
-     * 消息类型：柯南
+     * 消息类型：影视
      */
-    public static final int TYPE_CONAN = 6;
+    public static final int TYPE_MOVIE = 7;
 
     /**
      * 点击操作：无操作(默认)

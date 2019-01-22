@@ -40,6 +40,7 @@ public class MessageCenterDataConverter implements Handler.Callback {
                 messageTypes.add(JiGuangMessage.TYPE_JOKE);
                 messageTypes.add(JiGuangMessage.TYPE_ACTIVE);
                 messageTypes.add(JiGuangMessage.TYPE_CLASSIC);
+                messageTypes.add(JiGuangMessage.TYPE_MOVIE);
                 messageTypes.add(JiGuangMessage.TYPE_NONE);
                 break;
             default:

@@ -226,6 +226,9 @@ public class ApiHelper {
             case JiGuangMessage.TYPE_NOTICE:
                 title = "公告";
                 break;
+            case JiGuangMessage.TYPE_CONAN:
+                title = "柯南";
+                break;
             case JiGuangMessage.TYPE_INFERENCE:
                 title = "侦探推理";
                 break;
@@ -238,8 +241,8 @@ public class ApiHelper {
             case JiGuangMessage.TYPE_CLASSIC:
                 title = "古诗词赏析";
                 break;
-            case JiGuangMessage.TYPE_CONAN:
-                title = "名侦探柯南";
+            case JiGuangMessage.TYPE_MOVIE:
+                title = "影视精选";
                 break;
             default:
                 title = "新消息";
@@ -255,10 +258,13 @@ public class ApiHelper {
         String title;
         switch (messageType) {
             case JiGuangMessage.TYPE_NONE:
-                title = "新消息";
+                title = "其他";
                 break;
             case JiGuangMessage.TYPE_NOTICE:
                 title = "系统通知";
+                break;
+            case JiGuangMessage.TYPE_CONAN:
+                title = "名侦探柯南";
                 break;
             case JiGuangMessage.TYPE_INFERENCE:
                 title = "侦探推理";
@@ -272,8 +278,8 @@ public class ApiHelper {
             case JiGuangMessage.TYPE_CLASSIC:
                 title = "古诗词赏析";
                 break;
-            case JiGuangMessage.TYPE_CONAN:
-                title = "名侦探柯南";
+            case JiGuangMessage.TYPE_MOVIE:
+                title = "影视精选";
                 break;
             default:
                 title = "新消息";

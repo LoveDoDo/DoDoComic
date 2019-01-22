@@ -141,12 +141,13 @@ public class MessageHandlerThread extends HandlerThread implements Handler.Callb
             case JiGuangMessage.TYPE_NOTICE:
                 cover = R.drawable.icon_message_notice;
                 break;
-            case JiGuangMessage.TYPE_NONE:
+            case JiGuangMessage.TYPE_CONAN:
             case JiGuangMessage.TYPE_INFERENCE:
             case JiGuangMessage.TYPE_JOKE:
             case JiGuangMessage.TYPE_ACTIVE:
             case JiGuangMessage.TYPE_CLASSIC:
-            case JiGuangMessage.TYPE_CONAN:
+            case JiGuangMessage.TYPE_MOVIE:
+            case JiGuangMessage.TYPE_NONE:
                 cover = R.drawable.icon_message_other;
                 break;
             default:
