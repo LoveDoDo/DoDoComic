@@ -95,14 +95,14 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
             @Override
             public void onSuccess(List<JiGuangMessage> result, long duration) {
                 DoDoLogger.d("清空消息成功");
-                ToastUtils.showShort("操作成功");
+                ToastUtils.showShort("已清空");
                 DialogManager.getInstance().cancelLastDialog();
             }
 
             @Override
             public void onFailure() {
                 DoDoLogger.d("清空消息失败");
-                ToastUtils.showShort("操作失败");
+                ToastUtils.showShort("清空失败");
                 DialogManager.getInstance().cancelLastDialog();
             }
         });

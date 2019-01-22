@@ -68,6 +68,7 @@ public class ConanMessageDialog extends BaseDialog {
     private boolean mIsEndOfLastLine;//最后一行是否置于尾部 适用于古诗词等类型的落款
     private String mAnswer;//推理题的答案
     private boolean mIsRetract;//是否缩进 每行都缩进
+    private String mButtonText;//按钮文字 默认为：确定/复制/查看答案
 
     private ObjectAnimator mRotationAnim = null;
     private boolean mCoverLoadDone = false;//图片是否加载完成
@@ -92,17 +93,6 @@ public class ConanMessageDialog extends BaseDialog {
 
     @OnClick(R2.id.tvConfirm)
     void onTvConfirmClicked() {
-        switch (mAction) {
-            case JiGuangMessage.ACTION_COPY:
-                if (CommonUtil.copyToClipboard(mCopyContent)) {
-                    ToastUtils.showShort(mCopyTips);
-                } else {
-                    ToastUtils.showShort("复制失败");
-                }
-                break;
-            default:
-                break;
-        }
         if (mType == JiGuangMessage.TYPE_INFERENCE) {
             if (!TextUtils.isEmpty(mAnswer)) {
                 //显示推理答案
@@ -116,6 +106,18 @@ public class ConanMessageDialog extends BaseDialog {
                         .forceShow();
                 return;
             }
+        }
+
+        switch (mAction) {
+            case JiGuangMessage.ACTION_COPY:
+                if (CommonUtil.copyToClipboard(mCopyContent)) {
+                    ToastUtils.showShort(mCopyTips);
+                } else {
+                    ToastUtils.showShort("复制失败");
+                }
+                break;
+            default:
+                break;
         }
         cancel();
     }
@@ -141,6 +143,7 @@ public class ConanMessageDialog extends BaseDialog {
         mIsEndOfLastLine = extraData.getBooleanValue("end");
         mAnswer = extraData.getString("answer");
         mIsRetract = extraData.getBooleanValue("retract");
+        mButtonText = extraData.getString("button_text");
 
     }
 
@@ -277,6 +280,11 @@ public class ConanMessageDialog extends BaseDialog {
         if (mAction == JiGuangMessage.ACTION_COPY) {
             mTvConfirm.setText("复制");
         }
+
+        if (!TextUtils.isEmpty(mButtonText)) {
+            mTvConfirm.setText(mButtonText);
+        }
+
         if (!TextUtils.isEmpty(mCover)) {
             ProgressInterceptor.addListener(mCover, new ProgressListener() {
                 @Override
