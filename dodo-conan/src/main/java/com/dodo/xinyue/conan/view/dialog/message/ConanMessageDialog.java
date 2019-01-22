@@ -31,6 +31,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
+import com.dodo.xinyue.conan.view.dialog.image.ConanImageDialog;
 import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
 import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
@@ -120,6 +121,14 @@ public class ConanMessageDialog extends BaseDialog {
                 break;
         }
         cancel();
+    }
+
+    @OnClick(R2.id.ivCover)
+    void onIvCoverClicked() {
+        ConanImageDialog.builder()
+                .image(mCover)
+                .build()
+                .forceShow();
     }
 
     public ConanMessageDialog(DialogPublicParamsBean bean,
@@ -296,7 +305,7 @@ public class ConanMessageDialog extends BaseDialog {
                     .load(mCover)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
 //                    .skipMemoryCache(true)
-                    .timeout(10 * 1000)//默认2.5
+                    .timeout(10 * 1000)//默认2.5s
                     .transition(new DrawableTransitionOptions().crossFade(188))//渐显 只有第一次加载有动画 内存加载无动画
                     .into(new DrawableImageViewTarget(mIvCover) {
                         @Override

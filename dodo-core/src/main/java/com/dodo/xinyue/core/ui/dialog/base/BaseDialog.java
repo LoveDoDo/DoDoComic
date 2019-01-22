@@ -400,6 +400,8 @@ public abstract class BaseDialog extends AppCompatDialog
 
     /**
      * 强制显示
+     *
+     * 不隐藏其他Dialog，只保证自己能显示出来
      */
     public void forceShow() {
         mIsForceShow = true;
