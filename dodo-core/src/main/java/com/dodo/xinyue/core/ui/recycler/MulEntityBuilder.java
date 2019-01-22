@@ -10,11 +10,24 @@ import java.util.LinkedHashMap;
  */
 public class MulEntityBuilder {
 
-    private static final LinkedHashMap<Object, Object> FIELDS = new LinkedHashMap<>();
+    private final LinkedHashMap<Object, Object> FIELDS;//去掉static关键字,避免序列化时出现ConcurrentModificationException异常
+
+    /**
+     *  java.util.ConcurrentModificationException
+     *
+     * 该异常表示迭代器迭代过程中，迭代的对象发生了改变，如数据项增加或删除。
+     * [解决方案]：由于迭代对象不是线程安全，在迭代的过程中，会检查modCount是否和初始modCount即expectedModCount一致，如果不一致，则认为数据有变化，迭代终止并抛出异常。常出现的场景是，两个线程同时对集合进行操作，线程1对集合进行遍历，而线程2对集合进行增加、删除操作，此时将会发生ConcurrentModificationException异常。
+     * 具体方法：多线程访问时要增加同步锁，或者建议使用线程安全的集合：
+     * 1. 使用ConcurrentHashMap替换HashMap，CopyOnWriteArrayList替换ArrayList；
+     * 2. 或者使用使用Vector替换ArrayList，Vector是线程安全的。Vector的缺点：大量数据操作时，由于线程安全，性能比ArrayList低.
+     */
 
     public MulEntityBuilder() {
         //清除之前的数据
-        FIELDS.clear();
+//        FIELDS.clear();
+
+        FIELDS = new LinkedHashMap<>();
+
     }
 
     public final MulEntityBuilder setField(Object key, Object value) {
@@ -75,7 +88,7 @@ public class MulEntityBuilder {
     }
 
     public final MulEntityBuilder setId(int size) {
-        FIELDS.put(MulFields.ID,size);
+        FIELDS.put(MulFields.ID, size);
         return this;
     }
 
