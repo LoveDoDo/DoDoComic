@@ -8,8 +8,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.TimeUtils;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.chad.library.adapter.base.animation.AlphaInAnimation;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
 import com.dodo.xinyue.conan.helper.ApiHelper;
@@ -36,6 +35,8 @@ public class MessageCenterAdapter extends MulAdapter {
 
     protected MessageCenterAdapter(List<MulEntity> data, DoDoDelegate delegate) {
         super(data, delegate);
+        openLoadAnimation(new AlphaInAnimation());
+        setDuration(88);
     }
 
     public static MessageCenterAdapter create(List<MulEntity> data, DoDoDelegate delegate) {
@@ -70,8 +71,9 @@ public class MessageCenterAdapter extends MulAdapter {
         GlideApp.with(mContext)
                 .load(cover)
                 .apply(DEFAULT_OPTIONS)
-                .transform(new CircleCrop())
-                .transition(new DrawableTransitionOptions().crossFade(88))//渐显 只有第一次加载有动画 内存加载无动画
+//                .transform(new CircleCrop())
+                .placeholder(R.color.black_10)
+//                .transition(new DrawableTransitionOptions().crossFade(88))//渐显 只有第一次加载有动画 内存加载无动画
                 .into((ImageView) holder.getView(R.id.ivCover));
 
         JiGuangMessage bean = entity.getBean();
