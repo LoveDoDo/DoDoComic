@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.dodo.xinyue.core.R;
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
 import com.dodo.xinyue.core.ui.dialog.callback.ICloseDialog;
@@ -26,11 +27,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by YuanJun on 2018/1/12 16:05
- */
-
-/**
  * BaseDialog
+ *
+ * Dialog本质是一个window，内部new了一个PhoneWindow，所有view都是添加到这个window里的
+ * popupWindow本质是一个View，通过全局唯一的WindowManager的addView方法添加iew到视图顶层
+ *
+ * popupWindow的contentView依附在设置的parentView上,如果parentView销毁,则popupWindow也会销毁(可以跨window,比如parentView为Dialog上的view)
  *
  * @author DoDo
  * @date 2018/1/12
@@ -69,6 +71,7 @@ public abstract class BaseDialog extends AppCompatDialog
     private int mContainerHeight;
 
     private boolean mIsForceShow = false;//是否强制显示
+    private boolean mIsHide = false;//隐藏标识 适用于隐藏后再次显示的情况
 
     /**
      * 公共参数
@@ -82,7 +85,8 @@ public abstract class BaseDialog extends AppCompatDialog
     private float mHeightScale;//高度缩放比例 0-1
     private boolean mCanceledOnTouchOutside;//窗口外点击取消Dialog
     private boolean mCancelable;//返回键取消Dialog
-    private boolean mCoverStatusBar;//覆盖状态栏(全屏)
+    private boolean mCoverStatusBar;//覆盖顶部状态栏
+    private boolean mCoverNavigationBar;//覆盖底部导航栏
     private boolean mBackgroundDimEnabled;//背景变暗
     private IOpenDialog mIOpenDialog;//回调 打开Dialog
     private ICloseDialog mICloseDialog;//回调 关闭Dialog
@@ -101,6 +105,7 @@ public abstract class BaseDialog extends AppCompatDialog
         this.mCanceledOnTouchOutside = bean.isCanceledOnTouchOutside();
         this.mCancelable = bean.isCancelable();
         this.mCoverStatusBar = bean.isCoverStatusBar();
+        this.mCoverNavigationBar = bean.isCoverNavigationBar();
         this.mBackgroundDimEnabled = bean.isBackgroundDimEnabled();
         this.mIOpenDialog = bean.getIOpenDialog();
         this.mICloseDialog = bean.getICloseDialog();
@@ -148,7 +153,13 @@ public abstract class BaseDialog extends AppCompatDialog
             mWrapContainerView.setLayoutParams(layoutParams);
         }
 
-        //适配全面屏 必须放在setContentView()之后
+        if (!mCoverNavigationBar) {
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mWrapContainerView.getLayoutParams();
+            layoutParams.bottomMargin = DimenUtil.getNavigationBarHeight();
+            mWrapContainerView.setLayoutParams(layoutParams);
+        }
+
+        //设置窗口属性，必须放在setContentView()之后
         initWindowAttrs();
 
         //添加事件
@@ -205,10 +216,10 @@ public abstract class BaseDialog extends AppCompatDialog
      */
     @SuppressLint("ClickableViewAccessibility")
     private void initContainerView() {
-        //圆角布局
+        //限制布局
         mContainerView = new RelativeLayout(mContext);
         //居中
-        mContainerView.setGravity(mDialogGravity);
+        mContainerView.setGravity(mDialogGravity);//设置内部的mWrapContainerView的位置
         //背景透明
         mContainerView.setBackgroundColor(Color.TRANSPARENT);
         //屏蔽点击音效
@@ -222,7 +233,7 @@ public abstract class BaseDialog extends AppCompatDialog
         }
 
         int deviceWidth = DimenUtil.getScreenWidth();
-        int deviceHeight = DimenUtil.getScreenHeight();
+        int deviceHeight = DimenUtil.getScreenHeight() + BarUtils.getNavBarHeight();//加上底部导航栏高度
 
         mContainerWidth = (int) (deviceWidth * mWidthScale);
         mContainerHeight = (int) (deviceHeight * mHeightScale);
@@ -252,7 +263,8 @@ public abstract class BaseDialog extends AppCompatDialog
      * <p>
      * android4.4以上
      */
-    private void _coverStatusBar() {
+    @Deprecated
+    private void coverStatusBar() {
         mContainerView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -261,7 +273,7 @@ public abstract class BaseDialog extends AppCompatDialog
     }
 
     /**
-     * 适配全面屏
+     * 设置窗口大小，背景变暗
      */
     private void initWindowAttrs() {
         final Window dialogWindow = getWindow();
@@ -274,9 +286,9 @@ public abstract class BaseDialog extends AppCompatDialog
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.width = mContainerWidth;
         lp.height = mContainerHeight;
-        lp.gravity = Gravity.TOP;//不设置的话,会在屏幕下方空出一些间距
         if (!mBackgroundDimEnabled) {
-            lp.dimAmount = 0f;
+            lp.dimAmount = 0f;//取值0~1 0=不变暗 1=完全变黑
+//            dialogWindow.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//用于适配华为等机型
         }
         dialogWindow.setAttributes(lp);
     }
@@ -302,44 +314,16 @@ public abstract class BaseDialog extends AppCompatDialog
         return mCustomView;
     }
 
-    /**
-     * 设置window窗口容器属性，必须放在setContentView()之后
-     * <p>
-     * 暂时没用
-     */
-    private void _initWindowAttrs() {
-        //设置dialog布局参数
-        int deviceWidth = DimenUtil.getScreenWidth();
-        int deviceHeight = DimenUtil.getScreenHeight();
-
-        final Window dialogWindow = getWindow();
-
-        if (dialogWindow != null) {
-            final WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-            //窗口必须和内容布局大小一致，以便于点击非窗口区域可以dismiss
-            //需要一个相对布局包裹住内容布局，
-            //窗口最大为整个屏幕 减去 状态栏 减去 上下左右大约10个dp的间距
-            //width或height设置为WRAP_CONTENT，则宽高
-//            lp.width = (int) (deviceWidth * 0.85f);//
-            lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-//            lp.height = deviceHeight;//内容区（除去状态栏的部分）
-            lp.height = ViewGroup.LayoutParams.MATCH_PARENT;//全屏
-            //偏移
-//            lp.height += deviceHeight / LOADER_OFFSET_SCALE;
-            lp.gravity = Gravity.CENTER;
-//            lp.gravity = Gravity.LEFT | Gravity.TOP;
-//            lp.x = 100;
-//            lp.y = lp.y-100;
-
-        }
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
         //该方法在onDetachedFromWindow()后执行
         if (mUnbinder != null) {
-            mUnbinder.unbind();
+            try {
+                mUnbinder.unbind();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -365,13 +349,17 @@ public abstract class BaseDialog extends AppCompatDialog
 
     @Override
     public void show() {
-//        if (!DialogManager.getInstance().canShow(this)) {
-//            return;
-//        }
         if (mIsForceShow) {
             super.show();
             return;
         }
+
+        if (mIsHide) {
+            mIsHide = false;
+            super.show();
+            return;
+        }
+
         DialogManager.getInstance().cancelLastDialog();
         DialogManager.getInstance().bindDialog(this);
         super.show();
@@ -379,9 +367,6 @@ public abstract class BaseDialog extends AppCompatDialog
 
     @Override
     public void cancel() {
-//        if (!DialogManager.getInstance().canCancel()) {
-//            return;
-//        }
         if (mIsForceShow) {
             super.cancel();
             return;
@@ -408,4 +393,24 @@ public abstract class BaseDialog extends AppCompatDialog
         show();
     }
 
+    /**
+     * 隐藏后isShowing()仍然为true,再次调用show()只会将mDecor设置为可视状态
+     */
+    @Override
+    public void hide() {
+        super.hide();//内部实现：mDecor.setVisibility(View.GONE);
+        mIsHide = true;
+    }
+
+    /**
+     * 直接隐藏 无动画
+     */
+    public void hideNoAnim() {
+        final Window dialogWindow = getWindow();
+        if (dialogWindow == null) {
+            return;
+        }
+        dialogWindow.getDecorView().setVisibility(View.INVISIBLE);
+        mIsHide = true;
+    }
 }

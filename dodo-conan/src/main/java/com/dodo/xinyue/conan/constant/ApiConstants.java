@@ -21,6 +21,7 @@ public class ApiConstants {
                     .anim(R.style.DialogBottomAnim)
                     .topLeftRadius(6)
                     .topRightRadius(6)
+                    .coverNavigationBar(false)
                     .gravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
 
     /**

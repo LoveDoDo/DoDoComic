@@ -70,8 +70,11 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
         if (options.isValid(DialogOptionFields.CANCELABLE)) {
             cancelable(options.getOption(DialogOptionFields.CANCELABLE));
         }
-        if (options.isValid(DialogOptionFields.COVER_STATUSBAR)) {
-            coverStatusBar(options.getOption(DialogOptionFields.COVER_STATUSBAR));
+        if (options.isValid(DialogOptionFields.COVER_STATUS_BAR)) {
+            coverStatusBar(options.getOption(DialogOptionFields.COVER_STATUS_BAR));
+        }
+        if (options.isValid(DialogOptionFields.COVER_NAVIGATION_BAR)) {
+            coverNavigationBar(options.getOption(DialogOptionFields.COVER_NAVIGATION_BAR));
         }
         if (options.isValid(DialogOptionFields.BACKGROUND_DIM_ENABLED)) {
             backgroundDimEnabled(options.getOption(DialogOptionFields.BACKGROUND_DIM_ENABLED));
@@ -153,6 +156,11 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
 
     public final T coverStatusBar(boolean coverStatusBar) {
         mDialogPublicParamsBean.setCoverStatusBar(coverStatusBar);
+        return (T) this;
+    }
+
+    public final T coverNavigationBar(boolean coverNavigationBar) {
+        mDialogPublicParamsBean.setCoverNavigationBar(coverNavigationBar);
         return (T) this;
     }
 

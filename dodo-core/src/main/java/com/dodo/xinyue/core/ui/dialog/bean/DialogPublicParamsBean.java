@@ -3,12 +3,10 @@ package com.dodo.xinyue.core.ui.dialog.bean;
 import android.content.Context;
 import android.view.Gravity;
 
+import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 import com.dodo.xinyue.core.ui.dialog.callback.ICloseDialog;
 import com.dodo.xinyue.core.ui.dialog.callback.IOpenDialog;
-import com.dodo.xinyue.core.app.DoDo;
-
-import static com.dodo.xinyue.core.ui.dialog.base.BaseDialog.DEFAULT_ANIM;
-import static com.dodo.xinyue.core.ui.dialog.base.BaseDialog.DEFAULT_THEME;
 
 /**
  * DialogPublicParamsBean
@@ -22,15 +20,16 @@ public class DialogPublicParamsBean {
      * 公共参数
      */
     private Context mContext = DoDo.getActivity();//上下文 不能传Application,必须传Activity
-    private int mDialogTheme = DEFAULT_THEME;//主题/样式
-    private int mDialogAnim = DEFAULT_ANIM;//动画
+    private int mDialogTheme = BaseDialog.DEFAULT_THEME;//主题/样式
+    private int mDialogAnim = BaseDialog.DEFAULT_ANIM;//动画
     private int mDialogGravity = Gravity.CENTER;//显示位置 多个用 | 分割
     private int[] mDialogRadius = new int[]{0, 0, 0, 0};//圆角 单位dp {左上 右上 左下 右下}
     private float mWidthScale = 1f;//宽度缩放比例 0-1
     private float mHeightScale = 1f;//高度缩放比例 0-1
     private boolean mCanceledOnTouchOutside = true;//窗口外点击取消Dialog
     private boolean mCancelable = true;//返回键取消Dialog
-    private boolean mCoverStatusBar = true;//覆盖状态栏(全屏)
+    private boolean mCoverStatusBar = true;//覆盖顶部状态栏
+    private boolean mCoverNavigationBar = true;//覆盖底部导航栏
     private boolean mBackgroundDimEnabled = true;//背景变暗
     private IOpenDialog mIOpenDialog = null;//回调 打开Dialog
     private ICloseDialog mICloseDialog = null;//回调 关闭Dialog
@@ -129,6 +128,14 @@ public class DialogPublicParamsBean {
 
     public void setCoverStatusBar(boolean coverStatusBar) {
         this.mCoverStatusBar = coverStatusBar;
+    }
+
+    public boolean isCoverNavigationBar() {
+        return mCoverNavigationBar;
+    }
+
+    public void setCoverNavigationBar(boolean coverNavigationBar) {
+        this.mCoverNavigationBar = coverNavigationBar;
     }
 
     public boolean isBackgroundDimEnabled() {

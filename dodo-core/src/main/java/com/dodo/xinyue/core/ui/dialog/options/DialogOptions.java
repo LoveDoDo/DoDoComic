@@ -98,7 +98,12 @@ public class DialogOptions {
     }
 
     public final DialogOptions coverStatusBar(boolean coverStatusBar) {
-        OPTIONS.put(DialogOptionFields.COVER_STATUSBAR, coverStatusBar);
+        OPTIONS.put(DialogOptionFields.COVER_STATUS_BAR, coverStatusBar);
+        return this;
+    }
+
+    public final DialogOptions coverNavigationBar(boolean coverNavigationBar) {
+        OPTIONS.put(DialogOptionFields.COVER_NAVIGATION_BAR, coverNavigationBar);
         return this;
     }
 
