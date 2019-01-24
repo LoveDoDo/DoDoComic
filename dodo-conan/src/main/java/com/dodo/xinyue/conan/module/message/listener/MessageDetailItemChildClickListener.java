@@ -40,7 +40,7 @@ public class MessageDetailItemChildClickListener extends MulItemChildClickListen
         ConanMessageDialog.builder()
                 .message(bean)
                 .build()
-                .pendingShow();
+                .show();
     }
 
 }

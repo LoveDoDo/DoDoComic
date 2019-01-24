@@ -221,4 +221,7 @@ dependencies {
     api  'com.umeng.umsdk:analytics:8.0.0'
     api  'com.umeng.umsdk:common:2.0.0'
 
+    //PhotoView 手势缩放图片
+    api 'com.github.chrisbanes:PhotoView:2.0.0'
+
 }

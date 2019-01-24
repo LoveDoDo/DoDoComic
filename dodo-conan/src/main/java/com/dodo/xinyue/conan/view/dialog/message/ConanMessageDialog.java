@@ -103,6 +103,8 @@ public class ConanMessageDialog extends BaseDialog {
                         .onlyOneButton(true)
                         .radius(8)
                         .widthScale(0.85f)
+                        .onOpen(this::hide)
+                        .onClose(this::show)
                         .build()
                         .forceShow();
                 return;
@@ -127,6 +129,8 @@ public class ConanMessageDialog extends BaseDialog {
     void onIvCoverClicked() {
         ConanImageDialog.builder()
                 .image(mCover)
+                .onOpen(this::hide)
+                .onClose(this::show)
                 .build()
                 .forceShow();
     }

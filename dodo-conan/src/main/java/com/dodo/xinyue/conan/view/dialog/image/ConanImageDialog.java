@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -19,13 +18,16 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
+import com.dodo.xinyue.conan.view.dialog.list.ConanSimpleListDialog;
 import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
 import com.dodo.xinyue.core.ui.image.GlideApp;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * ConanImageDialog
@@ -41,13 +43,31 @@ public class ConanImageDialog extends BaseDialog {
     private boolean mCoverLoadDone = false;//图片是否加载完成
 
     @BindView(R2.id.iv)
-    AppCompatImageView mIv;
+    PhotoView mPhotoView;
     @BindView(R2.id.tvProgress)
     IconTextView mTvProgress = null;
 
     @OnClick(R2.id.iv)
-    void onIvClicked() {
+    void onPhotoViewClicked() {
         cancel();
+    }
+
+    @OnLongClick(R2.id.iv)
+    boolean onPhotoViewLongClicked() {
+        ConanSimpleListDialog.builder()
+                .addItem("保存图片")
+                .onSelected(selectedIndex -> {
+                    switch (selectedIndex) {
+                        case 0:
+
+                            break;
+                        default:
+                            break;
+                    }
+                })
+                .build()
+                .forceShow();
+        return true;
     }
 
     public ConanImageDialog(DialogPublicParamsBean bean,
@@ -91,7 +111,7 @@ public class ConanImageDialog extends BaseDialog {
 //                    .skipMemoryCache(true)
                 .timeout(10 * 1000)//默认2.5s
                 .transition(new DrawableTransitionOptions().crossFade(188))//渐显 只有第一次加载有动画 内存加载无动画
-                .into(new DrawableImageViewTarget(mIv) {
+                .into(new DrawableImageViewTarget(mPhotoView) {
                     @Override
                     public void onLoadStarted(@Nullable Drawable placeholder) {
                         super.onLoadStarted(placeholder);
