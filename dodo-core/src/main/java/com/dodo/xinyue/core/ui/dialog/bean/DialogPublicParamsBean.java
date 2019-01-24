@@ -28,8 +28,8 @@ public class DialogPublicParamsBean {
     private float mHeightScale = 1f;//高度缩放比例 0-1
     private boolean mCanceledOnTouchOutside = true;//窗口外点击取消Dialog
     private boolean mCancelable = true;//返回键取消Dialog
-    private boolean mCoverStatusBar = true;//覆盖顶部状态栏
-    private boolean mCoverNavigationBar = true;//覆盖底部导航栏
+    private boolean mCoverStatusBar = false;//覆盖顶部状态栏
+    private boolean mCoverNavigationBar = false;//覆盖底部导航栏
     private boolean mBackgroundDimEnabled = true;//背景变暗
     private IOpenDialog mIOpenDialog = null;//回调 打开Dialog
     private ICloseDialog mICloseDialog = null;//回调 关闭Dialog
