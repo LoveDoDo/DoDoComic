@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class MessageHandlerThread extends HandlerThread implements Handler.Callback {
 
-    public static final String KEY_DATA = "key_data";
+//    public static final String KEY_DATA = "key_data";
     public static final String KEY_DURATION = "key_duration";
     public static final String KEY_MESSAGE_TYPE = "key_message_type";
     private static final String KEY_IS_DONE = "key_is_done";
@@ -110,7 +110,9 @@ public class MessageHandlerThread extends HandlerThread implements Handler.Callb
     private void sendSuccessMessage() {
         final Message successMsg = mUIHandler.obtainMessage(STATUS_SUCCESS);
         final Bundle args = new Bundle();
-        args.putSerializable(KEY_DATA, mData);
+//        args.putSerializable(KEY_DATA, mData);
+        //TODO 使用obj存储，可以不用序列化
+        successMsg.obj = mData;
         args.putLong(KEY_DURATION, mDuration);
         successMsg.setData(args);
         mUIHandler.sendMessage(successMsg);

@@ -63,7 +63,8 @@ public class MessageCenterDataConverter implements Handler.Callback {
 
         switch (msg.what) {
             case MessageHandlerThread.STATUS_SUCCESS:
-                final List<MulEntity> data = (List<MulEntity>) msg.getData().getSerializable(MessageHandlerThread.KEY_DATA);
+//                final List<MulEntity> data = (List<MulEntity>) msg.getData().getSerializable(MessageHandlerThread.KEY_DATA);
+                final List<MulEntity> data = (List<MulEntity>) msg.obj;
                 final long duration = msg.getData().getLong(MessageHandlerThread.KEY_DURATION);
                 if (mIConvertMessage != null) {
                     mIConvertMessage.onCompleted(data, duration);

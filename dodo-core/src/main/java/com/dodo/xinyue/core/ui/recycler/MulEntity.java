@@ -2,7 +2,6 @@ package com.dodo.xinyue.core.ui.recycler;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
-import java.io.Serializable;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.util.LinkedHashMap;
@@ -13,7 +12,7 @@ import java.util.LinkedHashMap;
  * @author DoDo
  * @date 2017/9/10
  */
-public class MulEntity implements MultiItemEntity, Serializable {
+public class MulEntity implements MultiItemEntity {
 
     private final ReferenceQueue<LinkedHashMap<Object, Object>> ITEM_QUEUE = new ReferenceQueue<>();
     private final LinkedHashMap<Object, Object> MUL_FIELDS = new LinkedHashMap<>();
