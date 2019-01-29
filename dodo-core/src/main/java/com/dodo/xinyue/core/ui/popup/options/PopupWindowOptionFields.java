@@ -1,15 +1,14 @@
-package com.dodo.xinyue.core.ui.dialog.options;
+package com.dodo.xinyue.core.ui.popup.options;
 
 /**
- * OptionFields
+ * PopupWindowOptionFields
  *
  * @author DoDo
- * @date 2018/10/6
+ * @date 2019/1/24
  */
-public enum DialogOptionFields {
+public enum  PopupWindowOptionFields {
 
     CONTEXT,
-    THEME,
     ANIM,
     GRAVITY,
     RADIUS,

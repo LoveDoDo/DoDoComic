@@ -1,11 +1,14 @@
 package com.dodo.xinyue.conan.main.index.listener;
 
+import android.view.Gravity;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.main.index.data.IndexItemType;
 import com.dodo.xinyue.conan.module.message.MessageCenterDelegate;
+import com.dodo.xinyue.conan.view.popup.normal.ConanNormalPopupWindow;
+import com.dodo.xinyue.conan.view.popup.normal.ConanTestDialog;
 import com.dodo.xinyue.core.delegates.DoDoDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulEntity;
 import com.dodo.xinyue.core.ui.recycler.MulFields;
@@ -59,7 +62,67 @@ public class IndexItemClickListener extends MulItemClickListener {
 //        ArrayList<Integer> list = new ArrayList<>();
 //        list.get(0);
 
-        DELEGATE.getParentDelegate().start(MessageCenterDelegate.create());
+//        DELEGATE.getParentDelegate().start(MessageCenterDelegate.create());
+
+
+        switch (position) {
+            case 0:
+//                ConanNormalPopupWindow.builder()
+//                        .canceledOnTouchOutside(false)
+//                        .gravity(Gravity.START|Gravity.TOP)
+//                        .build()
+//                        .show(view);
+                ConanNormalPopupWindow.builder()
+                        .gravity(Gravity.CENTER|Gravity.TOP)
+                        .widthScale(0.85f)
+                        .heightScale(0.85f)
+//                        .fullScreen(true)
+                        .build()
+                        .show(view);
+                break;
+            case 1:
+                ConanTestDialog.builder()
+                        .gravity(Gravity.CENTER|Gravity.TOP)
+                        .widthScale(0.85f)
+                        .heightScale(0.85f)
+//                        .fullScreen(true)
+                        .build()
+                        .show();
+//                ConanNormalPopupWindow.builder()
+//                        .cancelable(false)
+//                        .coverStatusBar(true)
+//                        .gravity(Gravity.RIGHT|Gravity.TOP)
+//                        .build()
+//                        .show(view);
+                break;
+            case 2:
+                ConanNormalPopupWindow.builder()
+                        .coverNavigationBar(true)
+                        .gravity(Gravity.START|Gravity.BOTTOM)
+                        .build()
+                        .show(view);
+                break;
+            case 3:
+                ConanNormalPopupWindow.builder()
+                        .fullScreen(true)
+                        .gravity(Gravity.CENTER|Gravity.BOTTOM)
+                        .build()
+                        .show(view);
+                break;
+            case 4:
+                ConanNormalPopupWindow.builder()
+                        .cancelable(false)
+                        .canceledOnTouchOutside(false)
+                        .gravity(Gravity.CENTER|Gravity.TOP)
+                        .widthScale(0.85f)
+                        .heightScale(0.85f)
+                        .build()
+                        .show(view);
+                break;
+            default:
+                DELEGATE.getParentDelegate().start(MessageCenterDelegate.create());
+                break;
+        }
 
         switch (adapter.getItemViewType(position)) {
             case IndexItemType.COMIC_TEXT:

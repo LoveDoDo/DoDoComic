@@ -31,8 +31,8 @@ import com.bumptech.glide.request.transition.Transition;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.database.bean.JiGuangMessage;
-import com.dodo.xinyue.conan.view.dialog.image.ConanImageDialog;
 import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
+import com.dodo.xinyue.conan.view.popup.image.ConanImagePopupWindow;
 import com.dodo.xinyue.core.ui.dialog.base.BaseDialog;
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
 import com.dodo.xinyue.core.ui.image.GlideApp;
@@ -127,12 +127,28 @@ public class ConanMessageDialog extends BaseDialog {
 
     @OnClick(R2.id.ivCover)
     void onIvCoverClicked() {
-        ConanImageDialog.builder()
+//        ConanImageDialog.builder()
+//                .image(mCover)
+//                .onOpen(this::hide)
+//                .onClose(this::show)
+//                .build()
+//                .forceShow();
+
+        ConanImagePopupWindow.builder()
                 .image(mCover)
-                .onOpen(this::hide)
-                .onClose(this::show)
+//                .onOpen(this::hide)
+//                .onClose(this::show)
+//                .backgroundDimEnabled(true)
+//                .anim(-1)
+//                .dimTime(500)
+//                .dimCount(1f)
                 .build()
-                .forceShow();
+                .show(getContainerView());
+
+//        ConanNormalPopupWindow.builder()
+//                .build()
+//                .show(getContainerView());
+
     }
 
     public ConanMessageDialog(DialogPublicParamsBean bean,

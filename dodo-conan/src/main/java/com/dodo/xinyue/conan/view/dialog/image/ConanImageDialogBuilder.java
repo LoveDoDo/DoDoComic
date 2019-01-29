@@ -13,8 +13,7 @@ public class ConanImageDialogBuilder extends BaseDialogBuilder<ConanImageDialogB
     private String mImage;
 
     ConanImageDialogBuilder() {
-        coverStatusBar(true);
-        coverNavigationBar(true);
+        fullScreen(true);
     }
 
     public final ConanImageDialogBuilder image(String image) {

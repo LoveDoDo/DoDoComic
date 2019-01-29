@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.annotation.FloatRange;
 import android.support.annotation.StyleRes;
 
-import com.dodo.xinyue.core.ui.dialog.callback.ICloseDialog;
-import com.dodo.xinyue.core.ui.dialog.callback.IOpenDialog;
+import com.dodo.xinyue.core.ui.dialog.callback.IClose;
+import com.dodo.xinyue.core.ui.dialog.callback.IOpen;
 
 import java.util.HashMap;
 
@@ -38,42 +38,42 @@ public class DialogOptions {
     }
 
     public final DialogOptions theme(@StyleRes int themeStyleId) {
-        OPTIONS.put(DialogOptionFields.DIALOG_THEME, themeStyleId);
+        OPTIONS.put(DialogOptionFields.THEME, themeStyleId);
         return this;
     }
 
     public final DialogOptions anim(@StyleRes int animStyleId) {
-        OPTIONS.put(DialogOptionFields.DIALOG_ANIM, animStyleId);
+        OPTIONS.put(DialogOptionFields.ANIM, animStyleId);
         return this;
     }
 
     public final DialogOptions gravity(int gravity) {
-        OPTIONS.put(DialogOptionFields.DIALOG_GRAVITY, gravity);
+        OPTIONS.put(DialogOptionFields.GRAVITY, gravity);
         return this;
     }
 
     public final DialogOptions radius(int radius) {
-        OPTIONS.put(DialogOptionFields.DIALOG_RADIUS, radius);
+        OPTIONS.put(DialogOptionFields.RADIUS, radius);
         return this;
     }
 
     public final DialogOptions topLeftRadius(int topLeftRadius) {
-        OPTIONS.put(DialogOptionFields.DIALOG_TOP_LEFT_RADIUS, topLeftRadius);
+        OPTIONS.put(DialogOptionFields.TOP_LEFT_RADIUS, topLeftRadius);
         return this;
     }
 
     public final DialogOptions topRightRadius(int topRightRadius) {
-        OPTIONS.put(DialogOptionFields.DIALOG_TOP_RIGHT_RADIUS, topRightRadius);
+        OPTIONS.put(DialogOptionFields.TOP_RIGHT_RADIUS, topRightRadius);
         return this;
     }
 
     public final DialogOptions bottomLeftRadius(int bottomLeftRadius) {
-        OPTIONS.put(DialogOptionFields.DIALOG_BOTTOM_LEFT_RADIUS, bottomLeftRadius);
+        OPTIONS.put(DialogOptionFields.BOTTOM_LEFT_RADIUS, bottomLeftRadius);
         return this;
     }
 
     public final DialogOptions bottomRightRadius(int bottomRightRadius) {
-        OPTIONS.put(DialogOptionFields.DIALOG_BOTTOM_RIGHT_RADIUS, bottomRightRadius);
+        OPTIONS.put(DialogOptionFields.BOTTOM_RIGHT_RADIUS, bottomRightRadius);
         return this;
     }
 
@@ -107,18 +107,23 @@ public class DialogOptions {
         return this;
     }
 
+    public final DialogOptions fullScreen(boolean fullScreen) {
+        OPTIONS.put(DialogOptionFields.FULL_SCREEN, fullScreen);
+        return this;
+    }
+
     public final DialogOptions backgroundDimEnabled(boolean backgroundDimEnabled) {
         OPTIONS.put(DialogOptionFields.BACKGROUND_DIM_ENABLED, backgroundDimEnabled);
         return this;
     }
 
-    public final DialogOptions onOpen(IOpenDialog iOpenDialog) {
-        OPTIONS.put(DialogOptionFields.IOPEN_DIALOG, iOpenDialog);
+    public final DialogOptions onOpen(IOpen iOpen) {
+        OPTIONS.put(DialogOptionFields.I_OPEN, iOpen);
         return this;
     }
 
-    public final DialogOptions onClose(ICloseDialog iCloseDialog) {
-        OPTIONS.put(DialogOptionFields.ICLOSE_DIALOG, iCloseDialog);
+    public final DialogOptions onClose(IClose iClose) {
+        OPTIONS.put(DialogOptionFields.I_CLOSE, iClose);
         return this;
     }
 

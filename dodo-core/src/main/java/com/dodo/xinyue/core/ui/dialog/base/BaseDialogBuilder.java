@@ -5,8 +5,8 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.StyleRes;
 
 import com.dodo.xinyue.core.ui.dialog.bean.DialogPublicParamsBean;
-import com.dodo.xinyue.core.ui.dialog.callback.ICloseDialog;
-import com.dodo.xinyue.core.ui.dialog.callback.IOpenDialog;
+import com.dodo.xinyue.core.ui.dialog.callback.IClose;
+import com.dodo.xinyue.core.ui.dialog.callback.IOpen;
 import com.dodo.xinyue.core.ui.dialog.options.DialogOptionFields;
 import com.dodo.xinyue.core.ui.dialog.options.DialogOptions;
 
@@ -34,29 +34,29 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
         if (options.isValid(DialogOptionFields.CONTEXT)) {
             context(options.getOption(DialogOptionFields.CONTEXT));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_THEME)) {
-            theme(options.getOption(DialogOptionFields.DIALOG_THEME));
+        if (options.isValid(DialogOptionFields.THEME)) {
+            theme(options.getOption(DialogOptionFields.THEME));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_ANIM)) {
-            anim(options.getOption(DialogOptionFields.DIALOG_ANIM));
+        if (options.isValid(DialogOptionFields.ANIM)) {
+            anim(options.getOption(DialogOptionFields.ANIM));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_GRAVITY)) {
-            gravity(options.getOption(DialogOptionFields.DIALOG_GRAVITY));
+        if (options.isValid(DialogOptionFields.GRAVITY)) {
+            gravity(options.getOption(DialogOptionFields.GRAVITY));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_RADIUS)) {
-            radius(options.getOption(DialogOptionFields.DIALOG_RADIUS));
+        if (options.isValid(DialogOptionFields.RADIUS)) {
+            radius(options.getOption(DialogOptionFields.RADIUS));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_TOP_LEFT_RADIUS)) {
-            topLeftRadius(options.getOption(DialogOptionFields.DIALOG_TOP_LEFT_RADIUS));
+        if (options.isValid(DialogOptionFields.TOP_LEFT_RADIUS)) {
+            topLeftRadius(options.getOption(DialogOptionFields.TOP_LEFT_RADIUS));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_TOP_RIGHT_RADIUS)) {
-            topRightRadius(options.getOption(DialogOptionFields.DIALOG_TOP_RIGHT_RADIUS));
+        if (options.isValid(DialogOptionFields.TOP_RIGHT_RADIUS)) {
+            topRightRadius(options.getOption(DialogOptionFields.TOP_RIGHT_RADIUS));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_BOTTOM_LEFT_RADIUS)) {
-            bottomLeftRadius(options.getOption(DialogOptionFields.DIALOG_BOTTOM_LEFT_RADIUS));
+        if (options.isValid(DialogOptionFields.BOTTOM_LEFT_RADIUS)) {
+            bottomLeftRadius(options.getOption(DialogOptionFields.BOTTOM_LEFT_RADIUS));
         }
-        if (options.isValid(DialogOptionFields.DIALOG_BOTTOM_RIGHT_RADIUS)) {
-            bottomRightRadius(options.getOption(DialogOptionFields.DIALOG_BOTTOM_RIGHT_RADIUS));
+        if (options.isValid(DialogOptionFields.BOTTOM_RIGHT_RADIUS)) {
+            bottomRightRadius(options.getOption(DialogOptionFields.BOTTOM_RIGHT_RADIUS));
         }
         if (options.isValid(DialogOptionFields.WIDTH_SCALE)) {
             widthScale(options.getOption(DialogOptionFields.WIDTH_SCALE));
@@ -76,14 +76,17 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
         if (options.isValid(DialogOptionFields.COVER_NAVIGATION_BAR)) {
             coverNavigationBar(options.getOption(DialogOptionFields.COVER_NAVIGATION_BAR));
         }
+        if (options.isValid(DialogOptionFields.FULL_SCREEN)) {
+            fullScreen(options.getOption(DialogOptionFields.FULL_SCREEN));
+        }
         if (options.isValid(DialogOptionFields.BACKGROUND_DIM_ENABLED)) {
             backgroundDimEnabled(options.getOption(DialogOptionFields.BACKGROUND_DIM_ENABLED));
         }
-        if (options.isValid(DialogOptionFields.IOPEN_DIALOG)) {
-            onOpen(options.getOption(DialogOptionFields.IOPEN_DIALOG));
+        if (options.isValid(DialogOptionFields.I_OPEN)) {
+            onOpen(options.getOption(DialogOptionFields.I_OPEN));
         }
-        if (options.isValid(DialogOptionFields.ICLOSE_DIALOG)) {
-            onClose(options.getOption(DialogOptionFields.ICLOSE_DIALOG));
+        if (options.isValid(DialogOptionFields.I_CLOSE)) {
+            onClose(options.getOption(DialogOptionFields.I_CLOSE));
         }
 
         return (T) this;
@@ -95,42 +98,42 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
     }
 
     public final T theme(@StyleRes int themeStyleId) {
-        mDialogPublicParamsBean.setDialogTheme(themeStyleId);
+        mDialogPublicParamsBean.setTheme(themeStyleId);
         return (T) this;
     }
 
     public final T anim(@StyleRes int animStyleId) {
-        mDialogPublicParamsBean.setDialogAnim(animStyleId);
+        mDialogPublicParamsBean.setAnim(animStyleId);
         return (T) this;
     }
 
     public final T gravity(int gravity) {
-        mDialogPublicParamsBean.setDialogGravity(gravity);
+        mDialogPublicParamsBean.setGravity(gravity);
         return (T) this;
     }
 
     public final T radius(int radius) {
-        mDialogPublicParamsBean.setDialogRadius(new int[]{radius, radius, radius, radius});
+        mDialogPublicParamsBean.setRadius(new int[]{radius, radius, radius, radius});
         return (T) this;
     }
 
     public final T topLeftRadius(int topLeftRadius) {
-        mDialogPublicParamsBean.setDialogTopLeftRadius(topLeftRadius);
+        mDialogPublicParamsBean.setTopLeftRadius(topLeftRadius);
         return (T) this;
     }
 
     public final T topRightRadius(int topRightRadius) {
-        mDialogPublicParamsBean.setDialogTopRightRadius(topRightRadius);
+        mDialogPublicParamsBean.setTopRightRadius(topRightRadius);
         return (T) this;
     }
 
     public final T bottomLeftRadius(int bottomLeftRadius) {
-        mDialogPublicParamsBean.setDialogBottomLeftRadius(bottomLeftRadius);
+        mDialogPublicParamsBean.setBottomLeftRadius(bottomLeftRadius);
         return (T) this;
     }
 
     public final T bottomRightRadius(int bottomRightRadius) {
-        mDialogPublicParamsBean.setDialogBottomRightRadius(bottomRightRadius);
+        mDialogPublicParamsBean.setBottomRightRadius(bottomRightRadius);
         return (T) this;
     }
 
@@ -164,18 +167,23 @@ public abstract class BaseDialogBuilder<T extends BaseDialogBuilder, K extends B
         return (T) this;
     }
 
+    public final T fullScreen(boolean fullScreen) {
+        mDialogPublicParamsBean.setFullScreen(fullScreen);
+        return (T) this;
+    }
+
     public final T backgroundDimEnabled(boolean backgroundDimEnabled) {
         mDialogPublicParamsBean.setBackgroundDimEnabled(backgroundDimEnabled);
         return (T) this;
     }
 
-    public final T onOpen(IOpenDialog iOpenDialog) {
-        mDialogPublicParamsBean.setIOpenDialog(iOpenDialog);
+    public final T onOpen(IOpen iOpen) {
+        mDialogPublicParamsBean.setIOpen(iOpen);
         return (T) this;
     }
 
-    public final T onClose(ICloseDialog iCloseDialog) {
-        mDialogPublicParamsBean.setICloseDialog(iCloseDialog);
+    public final T onClose(IClose iClose) {
+        mDialogPublicParamsBean.setIClose(iClose);
         return (T) this;
     }
 

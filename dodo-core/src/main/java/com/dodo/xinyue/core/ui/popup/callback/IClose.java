@@ -1,10 +1,10 @@
-package com.dodo.xinyue.core.ui.dialog.callback;
+package com.dodo.xinyue.core.ui.popup.callback;
 
 /**
  * IClose
  *
  * @author DoDo
- * @date 2018/10/4
+ * @date 2019/1/24
  */
 public interface IClose {
 
