@@ -49,47 +49,47 @@ public class WebViewClientImpl extends WebViewClient {
     @Nullable
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        if (url.contains("pl-ali.youku.com/playlist")) {
-//            Log.e("webhahaha", url);
-        } else {
-//            Log.e("webeee", url);
-        }
-
-        if (
-                url.contains("baiduyoukualiyun.com")
-                        || url.contains("atm.youku.com")
-                        || (url.contains("cibntv.net/youku/") && !url.contains("vku.youku.com") && url.contains(".mp4"))
-                        || (url.contains("hudong.alicdn.com/api/data/") && url.contains("player.youku.com"))
-                        || url.contains("hudong.pl.youku.com/interact/player/get/plugins?")
-                        || url.contains("hudong.pl.youku.com/interact/web/get/timeLinePlugin?")
-                        || url.contains("hudong.pl.youku.com/jsapi/interact/playerPlugins.js")
-                        || url.contains("hudong.pl.youku.com/n/interact/player/get/plugins?")
-                        || (url.contains("k.youku.com/player/getFlvPath/sid/") && url.contains("&vl="))
-                        || url.contains("youku.com/cms/tool/pub/get_putdata.")
-                        || url.contains("youku.com/dress/")
-                        || (url.contains("youku.com/QVideo/") && url.contains("ajax/getDefaultItem?"))
-                        || (url.contains("youku.com") && url.contains("lotteryToolbar"))
-                        || (url.contains("youku.com") && url.contains("playlistIkuAD"))
-                        || (url.contains("youku.com") && url.contains("relationvideo_async"))
-                        || (url.contains("youku.com") && url.contains("seebuyGuide"))
-                        || (url.contains("youku.com") && url.contains("seebuyhome"))
-                        || (url.contains("youku.com") && url.contains("u-ads.adap.tv"))
-                        || (url.contains("youku.com") && url.contains("a.ads.cn.miaozhen.com"))
-                        || url.contains("atm.youku.com/cast/getFlvUrl.")
-                        || (url.contains("static.atm.youku.com") && url.contains(".swf"))
-                        || url.contains("valf.atm.youku.com/vf?site=1&rst=mp4&")
-                        || (url.contains("youku.com") && url.contains("adshow"))
-                        || (url.contains("youku.com") && url.contains("showAd"))
-                        || (url.contains("youku.com") && url.contains("mmstat.com/eg.js"))
-                        || url.contains("youku.com/cms/player/userinfo/")
-                        || url.contains("youku.com/cms/playlog/get?")
-                        || (url.contains(".mp4?ccode=") && url.contains("&duration=30&"))
-                        || (url.contains(".mp4?ccode=") && url.contains("&duration=29&"))
-                        || (url.contains("atm.youku.com") && !url.contains("v.youku.com"))
-                        || url.contains("youku.com/cms/player/userinfo/")
-                ) {
-            return new WebResourceResponse(null, null, null);//含有广告资源屏蔽请求
-        }
+//        if (url.contains("pl-ali.youku.com/playlist")) {
+////            Log.e("webhahaha", url);
+//        } else {
+////            Log.e("webeee", url);
+//        }
+//
+//        if (
+//                url.contains("baiduyoukualiyun.com")
+//                        || url.contains("atm.youku.com")
+//                        || (url.contains("cibntv.net/youku/") && !url.contains("vku.youku.com") && url.contains(".mp4"))
+//                        || (url.contains("hudong.alicdn.com/api/data/") && url.contains("player.youku.com"))
+//                        || url.contains("hudong.pl.youku.com/interact/player/get/plugins?")
+//                        || url.contains("hudong.pl.youku.com/interact/web/get/timeLinePlugin?")
+//                        || url.contains("hudong.pl.youku.com/jsapi/interact/playerPlugins.js")
+//                        || url.contains("hudong.pl.youku.com/n/interact/player/get/plugins?")
+//                        || (url.contains("k.youku.com/player/getFlvPath/sid/") && url.contains("&vl="))
+//                        || url.contains("youku.com/cms/tool/pub/get_putdata.")
+//                        || url.contains("youku.com/dress/")
+//                        || (url.contains("youku.com/QVideo/") && url.contains("ajax/getDefaultItem?"))
+//                        || (url.contains("youku.com") && url.contains("lotteryToolbar"))
+//                        || (url.contains("youku.com") && url.contains("playlistIkuAD"))
+//                        || (url.contains("youku.com") && url.contains("relationvideo_async"))
+//                        || (url.contains("youku.com") && url.contains("seebuyGuide"))
+//                        || (url.contains("youku.com") && url.contains("seebuyhome"))
+//                        || (url.contains("youku.com") && url.contains("u-ads.adap.tv"))
+//                        || (url.contains("youku.com") && url.contains("a.ads.cn.miaozhen.com"))
+//                        || url.contains("atm.youku.com/cast/getFlvUrl.")
+//                        || (url.contains("static.atm.youku.com") && url.contains(".swf"))
+//                        || url.contains("valf.atm.youku.com/vf?site=1&rst=mp4&")
+//                        || (url.contains("youku.com") && url.contains("adshow"))
+//                        || (url.contains("youku.com") && url.contains("showAd"))
+//                        || (url.contains("youku.com") && url.contains("mmstat.com/eg.js"))
+//                        || url.contains("youku.com/cms/player/userinfo/")
+//                        || url.contains("youku.com/cms/playlog/get?")
+//                        || (url.contains(".mp4?ccode=") && url.contains("&duration=30&"))
+//                        || (url.contains(".mp4?ccode=") && url.contains("&duration=29&"))
+//                        || (url.contains("atm.youku.com") && !url.contains("v.youku.com"))
+//                        || url.contains("youku.com/cms/player/userinfo/")
+//                ) {
+//            return new WebResourceResponse(null, null, null);//含有广告资源屏蔽请求
+//        }
 
 //        if (
 //                (url.contains(".mp4?ccode=") && url.contains("&duration=30&"))
@@ -124,6 +124,9 @@ public class WebViewClientImpl extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
         super.onReceivedError(view, request, error);
-        isLoadError = true;
+        if (request.isForMainFrame()) {//或者： if(request.getUrl().toString() .equals(getUrl()))
+            isLoadError = true;
+        }
+
     }
 }

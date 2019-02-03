@@ -10,6 +10,14 @@ import com.joanzapata.iconify.Icon;
  */
 public enum ConanIcons implements Icon {
     /**
+     * 影视精选
+     */
+    icon_yingshi('\ue688'),
+    /**
+     * 心灵鸡汤
+     */
+    icon_sun('\ue654'),
+    /**
      * 免打扰
      */
     icon_quiet('\ue75e'),

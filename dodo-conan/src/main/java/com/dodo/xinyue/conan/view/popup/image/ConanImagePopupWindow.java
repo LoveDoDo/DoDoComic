@@ -17,7 +17,6 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
-import com.dodo.xinyue.conan.view.dialog.list.ConanSimpleListDialog;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.ui.image.GlideApp;
 import com.dodo.xinyue.core.ui.popup.base.BasePopupWindow;
@@ -27,7 +26,6 @@ import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 
 /**
  * ConanImagePopupWindow
@@ -52,23 +50,23 @@ public class ConanImagePopupWindow extends BasePopupWindow {
         cancel();
     }
 
-    @OnLongClick(R2.id.iv)
-    boolean onPhotoViewLongClicked() {
-        ConanSimpleListDialog.builder()
-                .addItem("保存图片")
-                .onSelected(selectedIndex -> {
-                    switch (selectedIndex) {
-                        case 0:
-
-                            break;
-                        default:
-                            break;
-                    }
-                })
-                .build()
-                .forceShow();
-        return true;
-    }
+//    @OnLongClick(R2.id.iv)
+//    boolean onPhotoViewLongClicked() {
+//        ConanSimpleListDialog.builder()
+//                .addItem("保存图片")
+//                .onSelected(selectedIndex -> {
+//                    switch (selectedIndex) {
+//                        case 0:
+//
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                })
+//                .build()
+//                .forceShow();
+//        return true;
+//    }
 
     ConanImagePopupWindow(PopupWindowPublicParamsBean bean,
                           String image) {

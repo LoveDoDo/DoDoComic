@@ -51,7 +51,7 @@ dependencies {
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.android.support:design:27.1.1'
 
-    //字体图标
+    //字体图标  https://github.com/JoanZapata/android-iconify
     api 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2' // (v4.5)
 //    compile 'com.joanzapata.iconify:android-iconify-entypo:2.2.2' // (v3,2015)
 //    compile 'com.joanzapata.iconify:android-iconify-typicons:2.2.2' // (v2.0.7)
@@ -62,7 +62,7 @@ dependencies {
 //    compile 'com.joanzapata.iconify:android-iconify-simplelineicons:2.2.2' // (v1.0.0)
     api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2' // (v2.0.1)
 
-    //Fragment依赖
+    //Fragment依赖    https://github.com/YoKeyword/Fragmentation
     api 'me.yokeyword:fragmentation:1.3.6'
     api 'me.yokeyword:fragmentation-swipeback:1.3.6'
 
@@ -70,7 +70,7 @@ dependencies {
     //需同时依赖EventBus
     api 'me.yokeyword:eventbus-activity-scope:1.1.0'
 
-    //EventBus 事件总线
+    //EventBus 事件总线 https://github.com/greenrobot/EventBus
     api 'org.greenrobot:eventbus:3.1.1'
 
     //ButterKnife依赖
@@ -79,86 +79,86 @@ dependencies {
     //每个module都需要添加注解处理器
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    //网络请求依赖
-    api 'com.squareup.okio:okio:2.0.0'
-    api 'com.squareup.okhttp3:okhttp:3.11.0'
-    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    //网络请求依赖    https://github.com/square/okhttp    https://github.com/square/retrofit  https://github.com/square/okio
+    api 'com.squareup.okio:okio:2.2.2'
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
 
     //转换器 支持返回String类型 最原始的
-    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
 
-    //Loader依赖
+    //Loader依赖  https://github.com/81813780/AVLoadingIndicatorView
     api 'com.wang.avi:library:2.1.3'
 
-    //Banner依赖
-//    api 'com.bigkoo:convenientbanner:2.1.4'
+    //Banner依赖  https://github.com/youth5201314/banner
     api 'com.youth.banner:banner:1.4.10'
+//    api 'com.bigkoo:convenientbanner:2.1.4'
 
     //Banner依赖 - ViewPager页面变换，3D效果等
-    api 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+//    api 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
 
-    //Stetho查看数据库，网络抓包，视图等
+    //Stetho查看数据库，网络抓包，视图等  https://github.com/facebook/stetho
     api 'com.facebook.stetho:stetho:1.5.0'
     api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
-    //Json依赖
+    //Json依赖    https://github.com/alibaba/fastjson
     //compile 'com.alibaba:fastjson:1.2.49'
     //Json依赖 Android版
     //noinspection GradleDependency
     api 'com.alibaba:fastjson:1.1.70.android'
 
-    //Log
+    //Log   https://github.com/orhanobut/logger
     api 'com.orhanobut:logger:2.2.0'
 
-    //数据库
+    //数据库   https://github.com/greenrobot/greenDAO
     api 'org.greenrobot:greendao:3.2.2'
     api 'org.greenrobot:greendao-generator:3.2.2'
 
-    //RecyclerView依赖
+    //RecyclerView依赖    https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
 
     //RecyclerView 分割线
-    api 'com.github.fondesa:recycler-view-divider:2.0.1'
-    api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    api 'com.github.fondesa:recycler-view-divider:2.0.1'    //https://github.com/Fondesa/RecyclerViewDivider
+    api 'com.yqritc:recyclerview-flexibledivider:1.4.0' //https://github.com/yqritc/RecyclerView-FlexibleDivider
 
-    //图片处理
+    //图片处理  https://github.com/bumptech/glide
     api 'com.github.bumptech.glide:glide:4.8.0'
     api 'com.github.bumptech.glide:okhttp3-integration:4.8.0@aar'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     //沉浸式状态栏
-    api('com.github.niorgai:StatusBarCompat:2.1.4', {
+    api('com.github.niorgai:StatusBarCompat:2.1.4', {   //https://github.com/niorgai/StatusBarCompat
         exclude group: 'com.android.support'
     })
-    api 'com.jaeger.statusbarutil:library:1.5.1'
+    api 'com.jaeger.statusbarutil:library:1.5.1'    //https://github.com/laobie/StatusBarUtil
 
-    //Google AutoValue
-    implementation "com.google.auto.value:auto-value-annotations:1.6.2"
+    //Google AutoValue  https://github.com/google/auto/blob/master/value/userguide/index.md
+    api "com.google.auto.value:auto-value-annotations:1.6.2"
     annotationProcessor "com.google.auto.value:auto-value:1.6.2"
 
     //CircleImageView
-    api 'de.hdodenhof:circleimageview:2.2.0'
-    api 'com.makeramen:roundedimageview:2.3.0'
+    api 'de.hdodenhof:circleimageview:3.0.0'    //https://github.com/hdodenhof/CircleImageView
+    api 'com.makeramen:roundedimageview:2.3.0'  //https://github.com/vinc3m1/RoundedImageView
 
-    //View动画依赖
+    //View动画依赖  https://github.com/daimajia/AndroidViewAnimations
     api 'com.daimajia.easing:library:2.0@aar'
     api 'com.daimajia.androidanimations:library:2.3@aar'
 
     //TextView渐变特效
-    api 'com.sdsmdg.harjot:rotatingtext:1.0.2'
+//    api 'com.sdsmdg.harjot:rotatingtext:1.0.2'
 
-    //TabLayout库
+    //TabLayout库    https://github.com/H07000223/FlycoTabLayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
-    //流式布局
-    api('com.google.android:flexbox:1.0.0', {
+    //流式布局  https://github.com/google/flexbox-layout
+    api('com.google.android:flexbox:1.1.0', {
         exclude group: 'com.android.support'
     })
 
-    //工具包
-    api 'com.blankj:utilcode:1.20.1'
+    //工具包   https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
+    api 'com.blankj:utilcode:1.23.4'
 
-    //动态权限处理
+    //动态权限处理    https://github.com/permissions-dispatcher/PermissionsDispatcher
     compileOnly ('com.github.hotchemi:permissionsdispatcher:3.2.0'){
         exclude module: 'support-v13'
     }
@@ -172,17 +172,17 @@ dependencies {
     //    compile project(':material-spinner-1.0.5')
 
     //dialog
-    api 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
+//    api 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
 
     //java 8 stream支持
-    api 'com.annimon:stream:1.2.1'
+//    api 'com.annimon:stream:1.2.1'
 
-    //内存泄漏检测
-    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.1'
-    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
-    debugApi 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+    //内存泄漏检测    https://github.com/square/leakcanary
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    debugApi 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
 
-    //二维码
+    //二维码   https://github.com/zxing/zxing
     implementation 'com.google.zxing:core:3.3.3'
     implementation('me.dm7.barcodescanner:zbar:1.9.8') {
         exclude group: 'com.android.support'
@@ -192,26 +192,26 @@ dependencies {
     //    compile 'com.zzhoujay.richtext:richtext:3.0.5'
 
     //VLayout
-    api('com.alibaba.android:vlayout:1.2.8@aar') {
-        transitive = true
-    }
+//    api('com.alibaba.android:vlayout:1.2.8@aar') {
+//        transitive = true
+//    }
 
     //RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+//    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+//    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+//    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
-    //svg
+    //svg   https://github.com/geftimov/android-pathview
     api 'com.eftimoff:android-pathview:1.0.8@aar'
 
     //高斯模糊
-    api 'jp.wasabeef:glide-transformations:3.3.0'
+//    api 'jp.wasabeef:glide-transformations:3.3.0'
 
     /*
     * 1、执行命令：adb forward tcp:8080 tcp:8080
     * 2、浏览器访问：localhost:8080
     * */
-    //调试数据库和SharedPreference
+    //调试数据库和SharedPreference    https://github.com/amitshekhariitbhu/Android-Debug-Database
     debugApi 'com.amitshekhar.android:debug-db:1.0.4'
 
     //腾讯Bugly
@@ -221,7 +221,7 @@ dependencies {
     api  'com.umeng.umsdk:analytics:8.0.0'
     api  'com.umeng.umsdk:common:2.0.0'
 
-    //PhotoView 手势缩放图片
+    //PhotoView 手势缩放图片  https://github.com/chrisbanes/PhotoView
     api 'com.github.chrisbanes:PhotoView:2.0.0'
 
 }

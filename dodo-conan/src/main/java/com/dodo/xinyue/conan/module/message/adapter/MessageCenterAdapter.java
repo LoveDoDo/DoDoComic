@@ -86,7 +86,7 @@ public class MessageCenterAdapter extends MulAdapter {
             holder.setGone(R.id.tvTime, false);
             holder.setGone(R.id.tvQuiet, false);
             holder.setGone(R.id.ivPic, false);
-            boolean isQuiet = ApiHelper.getMessageIsQuiet(type);
+            boolean isQuiet = ApiHelper.isMessageQuiet(type);
             if (isQuiet) {
                 holder.setGone(R.id.tvQuiet2, true);
             } else {
@@ -101,7 +101,7 @@ public class MessageCenterAdapter extends MulAdapter {
         holder.setText(R.id.tvTime, TimeUtils.getFriendlyTimeSpanByNow(timestamp));
         holder.setGone(R.id.tvTime, true);
 
-        boolean isQuiet = ApiHelper.getMessageIsQuiet(type);
+        boolean isQuiet = ApiHelper.isMessageQuiet(type);
         if (isQuiet) {
             holder.setGone(R.id.tvQuiet, true);
         } else {

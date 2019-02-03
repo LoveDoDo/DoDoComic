@@ -403,18 +403,21 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         final int lastIndex = mLanguageIndex;
         mLanguageIndex = mLanguageIndexList.get(selectedIndex);
 
-        requestData();
-
         YoYo.with(new TextScaleFadeInAnim())
-                .onStart(animator -> mTvLanguage.setText(ApiHelper.getLanguageStr(lastIndex)))
+                .onStart(animator -> {
+                    onLoadingStatus();
+                    mTvLanguage.setText(ApiHelper.getLanguageStr(lastIndex));
+                })
                 .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                         .onStart(animator1 -> mTvLanguage.setText(ApiHelper.getLanguageStr(mLanguageIndex)))
+                        .onEnd(animator12 -> requestData())
                         .interpolate(new DecelerateInterpolator())
                         .duration(300)
                         .playOn(mTvLanguage))
                 .interpolate(new AccelerateInterpolator())
                 .duration(300)
                 .playOn(mTvLanguage);
+
     }
 
     @OnClick(R2.id.llType)
@@ -439,12 +442,14 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         final int lastIndex = mTypeIndex;
         mTypeIndex = mTypeIndexList.get(selectedIndex);
 
-        requestData();
-
         YoYo.with(new TextScaleFadeInAnim())
-                .onStart(animator -> mTvType.setText(ApiHelper.getTypeStr(lastIndex)))
+                .onStart(animator -> {
+                    onLoadingStatus();
+                    mTvType.setText(ApiHelper.getTypeStr(lastIndex));
+                })
                 .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                         .onStart(animator1 -> mTvType.setText(ApiHelper.getTypeStr(mTypeIndex)))
+                        .onEnd(animator12 -> requestData())
                         .interpolate(new DecelerateInterpolator())
                         .duration(300)
                         .playOn(mTvType))
@@ -475,12 +480,14 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         final int lastIndex = mSourceIndex;
         mSourceIndex = mSourceIndexList.get(selectedIndex);
 
-        requestData();
-
         YoYo.with(new TextScaleFadeInAnim())
-                .onStart(animator -> mTvSource.setText(ApiHelper.getSourceStr(lastIndex)))
+                .onStart(animator -> {
+                    requestData();
+                    mTvSource.setText(ApiHelper.getSourceStr(lastIndex));
+                })
                 .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                         .onStart(animator1 -> mTvSource.setText(ApiHelper.getSourceStr(mSourceIndex)))
+                        .onEnd(animator12 -> requestData())
                         .interpolate(new DecelerateInterpolator())
                         .duration(300)
                         .playOn(mTvSource))
@@ -512,7 +519,10 @@ public class IndexDelegate extends BaseBottomItemDelegate {
         mFormIndex = mFormIndexList.get(selectedIndex);
 
         YoYo.with(new TextScaleFadeInAnim())
-                .onStart(animator -> mTvForm.setText(ApiHelper.getFormStr(lastIndex)))
+                .onStart(animator -> {
+                    onLoadingStatus();
+                    mTvForm.setText(ApiHelper.getFormStr(lastIndex));
+                })
                 .onEnd(animator -> YoYo.with(new TextScaleFadeOutAnim())
                         .onStart(animator1 -> mTvForm.setText(ApiHelper.getFormStr(mFormIndex)))
                         .onEnd(animator12 -> requestData())

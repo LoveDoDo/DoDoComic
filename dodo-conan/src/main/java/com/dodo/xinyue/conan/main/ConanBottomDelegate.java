@@ -111,7 +111,7 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
 
     @Override
     public int setBackgroundRes() {
-        return R.drawable.yueyue;
+        return R.drawable.default_background;
     }
 
     @Override
@@ -192,8 +192,11 @@ public class ConanBottomDelegate extends BaseBottomDelegate {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onShowMessageEvent(JiGuangMessage event) {
         EventBusActivityScope.getDefault(DoDo.getActivity()).removeStickyEvent(event);
-        EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(new NewMessageEvent());
-        //TODO 这里需要判断一下是否需要展示，以及展示的方式
+        if (ApiHelper.isMessageQuiet(event.getType())) {
+            //消息免打扰 红点显示
+            EventBusActivityScope.getDefault(DoDo.getActivity()).postSticky(new NewMessageEvent());
+            return;
+        }
         ConanMessageDialog.builder()
                 .message(event)
                 .build()

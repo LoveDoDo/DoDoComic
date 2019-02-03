@@ -57,6 +57,9 @@ public class WebViewInitializer {
 //
 //        settings.setBlockNetworkImage(true);
 
+        //允许加载混合网络协议 http与https混合内容
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
         return webView;
     }
 

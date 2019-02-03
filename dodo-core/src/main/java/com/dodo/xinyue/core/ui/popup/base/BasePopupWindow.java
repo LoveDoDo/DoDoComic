@@ -220,9 +220,11 @@ public abstract class BasePopupWindow extends PopupWindow
         }
 
         if (!mCoverNavigationBar) {
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mWrapContainerView.getLayoutParams();
-            layoutParams.bottomMargin = DimenUtil.getNavigationBarHeight();
-            mWrapContainerView.setLayoutParams(layoutParams);
+            if (DimenUtil.isShowNavBar()) {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mWrapContainerView.getLayoutParams();
+                layoutParams.bottomMargin = DimenUtil.getNavigationBarHeight();//不准，明明没有导航栏，结果确是144
+                mWrapContainerView.setLayoutParams(layoutParams);
+            }
         }
 
         int deviceWidth = DimenUtil.getScreenWidth();

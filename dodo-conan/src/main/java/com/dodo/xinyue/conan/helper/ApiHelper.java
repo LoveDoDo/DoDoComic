@@ -239,7 +239,7 @@ public class ApiHelper {
                 title = "心灵鸡汤";
                 break;
             case JiGuangMessage.TYPE_CLASSIC:
-                title = "古诗词赏析";
+                title = "古韵美文";
                 break;
             case JiGuangMessage.TYPE_MOVIE:
                 title = "影视精选";
@@ -276,7 +276,7 @@ public class ApiHelper {
                 title = "心灵鸡汤";
                 break;
             case JiGuangMessage.TYPE_CLASSIC:
-                title = "古诗词赏析";
+                title = "古韵美文";
                 break;
             case JiGuangMessage.TYPE_MOVIE:
                 title = "影视精选";
@@ -291,7 +291,7 @@ public class ApiHelper {
     /**
      * Message是否设置为免打扰
      */
-    public static boolean getMessageIsQuiet(int messageType) {
+    public static boolean isMessageQuiet(int messageType) {
         return DoDoPreference.getAppPreference().getBoolean("message_" + messageType + "_is_quiet", false);
     }
 

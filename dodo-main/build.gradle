@@ -19,7 +19,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.0.0112_beta"//测试版：1.0.0.0112_beta
+        versionName "0.1.0.0201"//测试版：1.0.0.0112_beta
 
         /*极光推送*/
         ndk {
@@ -50,9 +50,9 @@ android {
         }
         release {
             minifyEnabled false
-//            minifyEnabled true // 混淆
-//            zipAlignEnabled true // zip align(对齐，排列)优化。
-//            shrinkResources true // 去掉没有用的资源文件
+//            minifyEnabled true // 开启混淆
+//            zipAlignEnabled true // 压缩优化
+//            shrinkResources true // 移出无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BUGLY_APP_ID", "\"ef116b1fc0\""
             buildConfigField "String", "BUGLY_APP_KEY", "\"63961484-adaa-403b-98e4-d1ab8fa6ea25\""
@@ -86,8 +86,9 @@ dependencies {
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    implementation 'cn.jiguang.sdk:jpush:3.1.6'  // 极光推送
-    implementation 'cn.jiguang.sdk:jcore:1.2.5'  // 极光推送
+    //极光推送  https://www.jiguang.cn/dev/#/app/list#dev
+    implementation 'cn.jiguang.sdk:jpush:3.1.6'
+    implementation 'cn.jiguang.sdk:jcore:1.2.5'
 
     //测试专用
     implementation project(':test')

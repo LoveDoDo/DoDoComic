@@ -2,6 +2,7 @@ package com.dodo.xinyue.conan.module.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
 import com.dodo.xinyue.conan.constant.ApiConstants;
+import com.dodo.xinyue.conan.database.util.ConanMessageDBUtil;
 import com.dodo.xinyue.conan.helper.ApiHelper;
 import com.dodo.xinyue.conan.module.BaseModuleDelegate;
 import com.dodo.xinyue.conan.module.setting.about.AboutDelegate;
@@ -20,7 +22,9 @@ import com.dodo.xinyue.conan.module.setting.message.MessageSettingDelegate;
 import com.dodo.xinyue.conan.module.setting.preference.IndexPreferenceDelegate;
 import com.dodo.xinyue.conan.view.SwitchButton;
 import com.dodo.xinyue.conan.view.dialog.loading.ConanLoadingDialog;
+import com.dodo.xinyue.conan.view.dialog.normal.ConanNormalDialog;
 import com.dodo.xinyue.core.app.DoDo;
+import com.dodo.xinyue.core.ui.dialog.manager.DialogManager;
 import com.dodo.xinyue.core.util.CommonUtil;
 import com.tencent.bugly.beta.Beta;
 
@@ -109,7 +113,14 @@ public class SettingDelegate extends BaseModuleDelegate {
 
     @OnClick(R2.id.llExitApp)
     void onExitAppClicked() {
-        AppUtils.exitApp();
+        ConanNormalDialog.builder()
+                .title("关闭程序")
+                .content("确定退出App？")
+                .confirm(() -> {
+                    AppUtils.exitApp();
+                })
+                .build()
+                .show();
     }
 
     @OnClick(R2.id.rlAbout)
@@ -117,6 +128,34 @@ public class SettingDelegate extends BaseModuleDelegate {
         start(AboutDelegate.create());
     }
 
+    @OnClick(R2.id.llClearMessage)
+    void onClearMessageClicked() {
+        ConanNormalDialog.builder()
+                .title("清空消息")
+                .content("确定清空全部消息记录？")
+                .confirm(() -> {
+                    ConanLoadingDialog.builder()
+                            .anim(-1)//防止旋转动画卡顿
+                            .gravity(Gravity.CENTER)
+                            .cancelable(false)
+                            .canceledOnTouchOutside(false)
+                            .onOpen(() -> {
+                                ConanMessageDBUtil.dropTable();
+                                ConanMessageDBUtil.createTable();
+                                DialogManager.getInstance().cancelLastDialog();
+                            })
+                            .onClose(() -> ToastUtils.showShort("清空消息记录成功"))
+                            .build()
+                            .show();
+
+                })
+                .build()
+                .show();
+    }
+
+    public static SettingDelegate create() {
+        return new SettingDelegate();
+    }
 
     @Override
     public Object setChildLayout() {

@@ -30,9 +30,18 @@ public class Router {
     }
 
     public final boolean handleWebUrl(BaseWebDelegate delegate, String url) {
+
+        if (url == null) {
+            return false;
+        }
+
         if (url.contains("tel:")) {
             callPhone(delegate.getContext(), url);
             return true;
+        }
+
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            return true;//拦截自定义的scheme
         }
 
 //        final DoDoDelegate topDelegate = delegate.getTopDelegate();

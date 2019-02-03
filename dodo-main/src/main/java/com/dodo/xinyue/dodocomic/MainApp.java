@@ -80,7 +80,7 @@ public class MainApp extends Application {
         /**
          * 极光推送 初始化
          */
-        JPushInterface.setDebugMode(true);//调试模式 init()之前调用 正式上线时要关闭
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);//调试模式 init()之前调用 正式上线时要关闭
         JPushInterface.init(this);
 
         /**

@@ -22,6 +22,20 @@ import java.util.List;
 public class ConanMessageDBUtil {
 
     /**
+     * 删除表
+     */
+    public static void dropTable() {
+        JiGuangMessageDao.dropTable(ConanDataBaseManager.getInstance().getMessageDao().getDatabase(), true);
+    }
+
+    /**
+     * 重建表
+     */
+    public static void createTable() {
+        JiGuangMessageDao.createTable(ConanDataBaseManager.getInstance().getMessageDao().getDatabase(), true);
+    }
+
+    /**
      * 查询指定type的消息总数
      *
      * 数量过多会造成卡顿

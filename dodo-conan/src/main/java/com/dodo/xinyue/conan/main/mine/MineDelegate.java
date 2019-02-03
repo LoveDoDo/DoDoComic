@@ -15,6 +15,8 @@ import com.dodo.xinyue.conan.main.mine.bean.MineBean;
 import com.dodo.xinyue.conan.main.mine.bean.MineItemType;
 import com.dodo.xinyue.conan.main.mine.event.NewMessageEvent;
 import com.dodo.xinyue.conan.main.mine.listener.MineItemClickListener;
+import com.dodo.xinyue.conan.module.message.MessageCenterDelegate;
+import com.dodo.xinyue.conan.module.setting.SettingDelegate;
 import com.dodo.xinyue.core.app.DoDo;
 import com.dodo.xinyue.core.delegates.bottom.BaseBottomItemDelegate;
 import com.dodo.xinyue.core.ui.recycler.MulAdapter;
@@ -48,9 +50,14 @@ public class MineDelegate extends BaseBottomItemDelegate {
     @BindView(R2.id.rv)
     RecyclerView mRecyclerView = null;
 
+    @OnClick(R2.id.rlSetting)
+    void onSettingClicked() {
+        getParentDelegate().start(SettingDelegate.create());
+    }
     @OnClick(R2.id.rlMessage)
     void onMessageClicked() {
         mRedDot.setVisibility(View.GONE);
+        getParentDelegate().start(MessageCenterDelegate.create());
     }
 
     @Override
@@ -97,12 +104,14 @@ public class MineDelegate extends BaseBottomItemDelegate {
 
     private void handleData() {
         final ArrayList<MineBean> beans = new ArrayList<>();
-        beans.add(new MineBean("{icon-tuili}", "每日推理"));
+        beans.add(new MineBean("{icon-tuili}", "侦探推理"));
         beans.add(new MineBean("{icon-joke}", "开心一刻"));
-        beans.add(new MineBean("{icon-key}", "寻宝"));
-        beans.add(new MineBean("{icon-tieba}", "柯南吧"));
+        beans.add(new MineBean("{icon-sun}", "心灵鸡汤"));
+        beans.add(new MineBean("{icon-yingshi}", "影视精选"));
+//        beans.add(new MineBean("{icon-key}", "寻宝"));
         beans.add(new MineBean("{icon-tieba}", "DoDo动漫吧"));
-        beans.add(new MineBean("{icon-money}", "赞助"));
+        beans.add(new MineBean("{icon-tieba}", "柯南吧"));
+//        beans.add(new MineBean("{icon-money}", "赞助"));
 //        beans.add(new MineBean("{icon-progress spin}", "面试"));
         final ArrayList<MulEntity> data = new ArrayList<>();
         final int size = beans.size();

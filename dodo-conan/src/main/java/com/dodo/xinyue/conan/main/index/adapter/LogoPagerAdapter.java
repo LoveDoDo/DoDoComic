@@ -6,8 +6,6 @@ import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ToastUtils;
-
 /**
  * LogoPagerAdapter
  *
@@ -43,9 +41,9 @@ public class LogoPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         final AppCompatImageView iv = new AppCompatImageView(container.getContext());
         iv.setImageResource(IMG_RES[position]);
-        if (position == 1) {
-            iv.setOnClickListener(v -> ToastUtils.showShort("恭喜找到第二条线索"));
-        }
+//        if (position == 1) {
+//            iv.setOnClickListener(v -> ToastUtils.showShort("恭喜找到第二条线索"));
+//        }
         container.addView(iv);
         return iv;
     }

@@ -80,8 +80,10 @@ public class ComicPushReceiver extends BroadcastReceiver {
         final String dataJson = bundle.getString(JPushInterface.EXTRA_EXTRA);
         final JSONObject data = JSON.parseObject(dataJson);
         final int type = getMessageType(data);
-        //TODO 这里需要判断一下是否需要接收消息并存入数据库
-
+        if (!ApiHelper.isReceiveNewMessage()) {
+            //不接受新消息
+            return;
+        }
         final long messageID = Long.valueOf(bundle.getString(JPushInterface.EXTRA_MSG_ID));
         String content = TextUtils.equals(action, JPushInterface.ACTION_NOTIFICATION_RECEIVED) ?
                 bundle.getString(JPushInterface.EXTRA_ALERT) : bundle.getString(JPushInterface.EXTRA_MESSAGE);

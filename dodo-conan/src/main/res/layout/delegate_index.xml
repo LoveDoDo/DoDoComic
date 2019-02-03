@@ -62,7 +62,9 @@
                 android:paddingStart="8dp"
                 android:text="{icon-money}"
                 android:textColor="@color/selector_icon_bg"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:visibility="gone"
+                tool:visibility="visible" />
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/tvHistory"
@@ -76,7 +78,9 @@
                 android:paddingStart="8dp"
                 android:text="{icon-history}"
                 android:textColor="@color/selector_icon_bg"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:visibility="gone"
+                tool:visibility="visible" />
 
             <com.joanzapata.iconify.widget.IconTextView
                 android:id="@+id/tvSearch"
@@ -90,7 +94,9 @@
                 android:paddingStart="8dp"
                 android:text="{icon-search}"
                 android:textColor="@color/selector_icon_bg"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:visibility="gone"
+                tool:visibility="visible" />
 
         </RelativeLayout>
 

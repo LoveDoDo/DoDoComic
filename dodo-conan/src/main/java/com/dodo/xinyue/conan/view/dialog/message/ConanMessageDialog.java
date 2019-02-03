@@ -127,28 +127,10 @@ public class ConanMessageDialog extends BaseDialog {
 
     @OnClick(R2.id.ivCover)
     void onIvCoverClicked() {
-//        ConanImageDialog.builder()
-//                .image(mCover)
-//                .onOpen(this::hide)
-//                .onClose(this::show)
-//                .build()
-//                .forceShow();
-
         ConanImagePopupWindow.builder()
                 .image(mCover)
-//                .onOpen(this::hide)
-//                .onClose(this::show)
-//                .backgroundDimEnabled(true)
-//                .anim(-1)
-//                .dimTime(500)
-//                .dimCount(1f)
                 .build()
                 .show(getContainerView());
-
-//        ConanNormalPopupWindow.builder()
-//                .build()
-//                .show(getContainerView());
-
     }
 
     public ConanMessageDialog(DialogPublicParamsBean bean,

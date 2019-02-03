@@ -46,7 +46,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
         switch (adapter.getItemViewType(position)) {
             case MessageCenterItemType.ITEM_MESSAGE_CENTER:
                 final int type = bean.getType();
-                final boolean isQuiet = ApiHelper.getMessageIsQuiet(type);
+                final boolean isQuiet = ApiHelper.isMessageQuiet(type);
                 final String isQuietStr = isQuiet ? "解除免打扰" : "免打扰";
                 final ArrayList<ListDialogBean> data = new ArrayList<>();
                 data.add(new ListDialogBean(isQuietStr, false));
@@ -67,7 +67,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                                             .title("清空消息")
                                             .content("确定清空<font color=#2ca9e1>" + title + "</font>？")
                                             .isHtml(true)
-                                            .confirm(() -> clearMessage(type))
+                                            .confirm(() -> clearMessage(type, adapter, position, entity))
                                             .build()
                                             .show();
                                     break;
@@ -84,7 +84,7 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
         return true;
     }
 
-    private void clearMessage(int messageType) {
+    private void clearMessage(int messageType, final BaseQuickAdapter adapter, final int position, MulEntity entity) {
         ConanLoadingDialog.builder()
                 .anim(-1)
                 .canceledOnTouchOutside(false)
@@ -97,6 +97,9 @@ public class MessageCenterItemLongClickListener extends MulItemLongClickListener
                 DoDoLogger.d("清空消息成功");
                 ToastUtils.showShort("已清空");
                 DialogManager.getInstance().cancelLastDialog();
+                final JiGuangMessage bean = entity.getBean();
+                bean.setMessageID(0);
+                adapter.notifyItemChanged(position);
             }
 
             @Override

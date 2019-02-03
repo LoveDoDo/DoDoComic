@@ -102,8 +102,8 @@ public class ApiConstants {
      * 默认配置
      */
     public static final Integer[] SOURCE_DEFAULT = new Integer[]{
-            SOURCE_IQIYI,
-            SOURCE_YOUKU
+            SOURCE_IQIYI
+//            SOURCE_YOUKU
     };
     /**
      * 默认配置

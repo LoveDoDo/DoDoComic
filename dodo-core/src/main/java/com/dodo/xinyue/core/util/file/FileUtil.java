@@ -280,6 +280,7 @@ public final class FileUtil {
         try {
             while ((str = br.readLine()) != null) {
                 stringBuilder.append(str);
+                stringBuilder.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

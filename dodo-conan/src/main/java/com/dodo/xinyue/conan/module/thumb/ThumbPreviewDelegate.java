@@ -26,10 +26,12 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dodo.xinyue.conan.R;
 import com.dodo.xinyue.conan.R2;
+import com.dodo.xinyue.conan.helper.AppLinkHelper;
 import com.dodo.xinyue.conan.main.index.bean.IndexBean;
 import com.dodo.xinyue.conan.module.thumb.adapter.ThumbPreviewAdapter;
 import com.dodo.xinyue.conan.module.thumb.data.ThumbHandlerThread;
@@ -106,6 +108,9 @@ public class ThumbPreviewDelegate extends DoDoDelegate implements Handler.Callba
     private String mLanguage = null;
     private String mType = null;
 
+    private String mQipuId = null;
+    private String mVid = null;
+
     @BindView(R2.id.sb)
     SeekBar mSeekBar = null;
     @BindView(R2.id.tvCurrentTime)
@@ -143,7 +148,12 @@ public class ThumbPreviewDelegate extends DoDoDelegate implements Handler.Callba
 
     @OnClick(R2.id.tvPlay)
     void onTvPlayClicked() {
-        ToastUtils.showShort("播放");
+        if (!AppUtils.isAppInstalled("com.qiyi.video")) {
+            ToastUtils.showShort("请先安装爱奇艺Android客户端");
+            return;
+        }
+
+        AppLinkHelper.openIQiYi(mQipuId, mVid);
     }
 
     @OnClick(R2.id.tvBack)
@@ -224,8 +234,12 @@ public class ThumbPreviewDelegate extends DoDoDelegate implements Handler.Callba
         if (bean == null) {
             return;
         }
+
+        mQipuId = bean.getTvQipuId();
+        mVid = bean.getVid();
+
         mRequestUrl = "https://cache.video.iqiyi.com/jp/vi/" +
-                bean.getTvQipuId() + "/" + bean.getVid() + "/";
+                mQipuId + "/" + mVid + "/";
 
         mTitle = bean.getTitle();
         mLanguage = bean.getLanguage();

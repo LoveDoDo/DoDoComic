@@ -73,6 +73,8 @@ public abstract class BaseDialog extends AppCompatDialog
     private boolean mIsForceShow = false;//是否强制显示
     private boolean mIsHide = false;//隐藏标识 适用于隐藏后再次显示的情况
 
+    private int mNavBarHeight;//导航栏高度 获取前要先判断导航栏是否显示，否则获取到的结果可能不准
+
     /**
      * 公共参数
      */
@@ -176,7 +178,7 @@ public abstract class BaseDialog extends AppCompatDialog
 
         if (!mCoverNavigationBar) {
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mWrapContainerView.getLayoutParams();
-            layoutParams.bottomMargin = DimenUtil.getNavigationBarHeight();
+            layoutParams.bottomMargin = mNavBarHeight;//不准，明明没有导航栏，结果确是144
             mWrapContainerView.setLayoutParams(layoutParams);
         }
 
@@ -265,8 +267,14 @@ public abstract class BaseDialog extends AppCompatDialog
             });
         }
 
+        if (DimenUtil.isShowNavBar()) {
+            mNavBarHeight = BarUtils.getNavBarHeight();
+        } else {
+            mNavBarHeight = 0;
+        }
+
         int deviceWidth = DimenUtil.getScreenWidth();
-        int deviceHeight = DimenUtil.getScreenHeight() + BarUtils.getNavBarHeight();//加上底部导航栏高度
+        int deviceHeight = DimenUtil.getScreenHeight() + mNavBarHeight;//加上底部导航栏高度
 
         mContainerWidth = deviceWidth;
         mContainerHeight = deviceHeight;
