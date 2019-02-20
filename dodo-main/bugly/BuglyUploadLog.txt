@@ -1,0 +1,16 @@
+file=H:\as_work\as3.1\DoDoComic\dodo-main\build\outputs\mapping\release\mapping.txt
+sha1=580fb2bc8518c1f86357de354cbecdcb91440642
+appId=ef116b1fc0
+
+file=H:\as_work\as3.1\DoDoComic\dodo-main\build\outputs\mapping\release\mapping.txt
+sha1=580fb2bc8518c1f86357de354cbecdcb91440642
+appId=ef116b1fc0
+
+file=H:\as_work\as3.1\DoDoComic\dodo-main\build\outputs\mapping\release\mapping.txt
+sha1=580fb2bc8518c1f86357de354cbecdcb91440642
+appId=ef116b1fc0
+
+file=H:\as_work\as3.1\DoDoComic\dodo-main\build\outputs\mapping\release\mapping.txt
+sha1=4f62c12e11faf370dab7852bbe4a70a5dfeb63ee
+appId=ef116b1fc0
+

@@ -49,10 +49,9 @@ android {
             buildConfigField "String", "UMENG_APP_KEY", "\"5c2febbfb465f5ceda000c3e\""
         }
         release {
-            minifyEnabled false
-//            minifyEnabled true // 开启混淆
-//            zipAlignEnabled true // 压缩优化
-//            shrinkResources true // 移出无用资源
+            minifyEnabled true
+            zipAlignEnabled true // 压缩优化
+            shrinkResources true // 移出无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BUGLY_APP_ID", "\"ef116b1fc0\""
             buildConfigField "String", "BUGLY_APP_KEY", "\"63961484-adaa-403b-98e4-d1ab8fa6ea25\""

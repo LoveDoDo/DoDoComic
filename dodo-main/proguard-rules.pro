@@ -64,19 +64,19 @@
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
-# Ignore JSR 305 annotations for embedding nullability information.
--dontwarn javax.annotation.**
-
-# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
--dontwarn kotlin.Unit
-
-# Top-level functions that can only be used by Kotlin.
--dontwarn retrofit2.-KotlinExtensions
-
-# With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
-# and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
--if interface * { @retrofit2.http.* <methods>; }
--keep,allowobfuscation interface <1>
+## Ignore JSR 305 annotations for embedding nullability information.
+#-dontwarn javax.annotation.**
+#
+## Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+#-dontwarn kotlin.Unit
+#
+## Top-level functions that can only be used by Kotlin.
+#-dontwarn retrofit2.-KotlinExtensions
+#
+## With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
+## and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
+#-if interface * { @retrofit2.http.* <methods>; }
+#-keep,allowobfuscation interface <1>
 
 #OKio
 # Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
@@ -98,9 +98,9 @@
 -keep class com.alibaba.fastjson.** { *; }
 
 #greenDao
--keep class de.greenrobot.dao.** {*;}
--keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
-    public static Java.lang.String TABLENAME;
+-keep class org.greenrobot.greendao.**{*;}
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
 }
 -keep class **$Properties
 
@@ -122,8 +122,8 @@
   public *;
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+## for DexGuard only
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 #AndroidViewAnimations
 -keep class com.daimajia.androidanimations.** { *; }
